@@ -1072,19 +1072,19 @@ document.getElementById('register-btn').addEventListener('click', async () => {
         return;
     }
     
-    // Show loading
-    btn.textContent = '⏳ Se înregistrează...';
-    btn.disabled = true;
-    
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        alert('Introduceți un email valid!');
+        alert('⚠️ Introduceți un email valid!');
         return;
     }
     
     if (pin.length !== 4 || !/^\d{4}$/.test(pin)) {
-        alert('PIN-ul trebuie să fie format din 4 cifre!');
+        alert('⚠️ PIN-ul trebuie să fie format din 4 cifre!');
         return;
     }
+    
+    // Show loading
+    btn.textContent = '⏳ Se înregistrează...';
+    btn.disabled = true;
     
     try {
         const userData = await apiCall(`/users/${username}/check`);
