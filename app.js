@@ -1130,10 +1130,18 @@ async function showGroupSelection() {
     
     if (groups.length === 0) {
         list.innerHTML = `
-            <p style="color: #888; font-style: italic; margin-bottom: 20px;">Nu există grupuri disponibile.</p>
-            <button onclick="skipGroupSelection()" class="btn btn-primary">
-                ✅ Continuă fără grup
-            </button>
+            <div style="text-align: center; padding: 20px;">
+                <p style="color: #888; font-style: italic; margin-bottom: 20px;">
+                    ⚠️ Nu există grupuri disponibile.<br>
+                    Contactează administratorul pentru a crea un grup.
+                </p>
+                <p style="color: #666; font-size: 0.9em;">
+                    Între timp, poți continua în aplicație:
+                </p>
+                <button onclick="skipGroupSelection()" class="btn btn-secondary" style="margin-top: 15px;">
+                    🚀 Continuă fără grup (pentru testare)
+                </button>
+            </div>
         `;
         return;
     }
