@@ -57,6 +57,12 @@ def init_db():
     except:
         pass
     
+    # Add member_count column if not exists
+    try:
+        cursor.execute('ALTER TABLE groups ADD COLUMN member_count INTEGER DEFAULT 0')
+    except:
+        pass
+    
     # Groups table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS groups (
