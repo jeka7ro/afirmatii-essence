@@ -947,6 +947,40 @@ document.getElementById('reg-username').addEventListener('blur', async () => {
     }
 });
 
+// Check email availability
+document.getElementById('reg-email').addEventListener('blur', async () => {
+    const email = document.getElementById('reg-email').value;
+    const statusDiv = document.getElementById('email-status');
+    
+    if (!email) {
+        statusDiv.textContent = '';
+        return;
+    }
+    
+    // Validare format email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        statusDiv.textContent = '⚠️ Format email invalid';
+        statusDiv.className = 'status-message error';
+        return;
+    }
+    
+    try {
+        const users = await apiCall('/users', 'GET');
+        const emailExists = users.some(u => u.email && u.email.toLowerCase() === email.toLowerCase());
+        
+        if (emailExists) {
+            statusDiv.textContent = '❌ Email deja folosit';
+            statusDiv.className = 'status-message error';
+        } else {
+            statusDiv.textContent = '✅ Email disponibil';
+            statusDiv.className = 'status-message success';
+        }
+    } catch (error) {
+        console.error('Error checking email:', error);
+    }
+});
+
 // Avatar selection
 document.querySelectorAll('.avatar-option').forEach(option => {
     option.addEventListener('click', () => {

@@ -199,6 +199,12 @@ def update_user(username):
         fullName = f"{data.get('firstName', '')} {data.get('lastName', '')}".strip() or username
         email = data.get('email', '')
         
+        # Verifică dacă email-ul este unic
+        if email:
+            cursor.execute('SELECT COUNT(*) FROM users WHERE email = ?', (email,))
+            if cursor.fetchone()[0] > 0:
+                return jsonify({'error': 'Email already exists'}), 400
+        
         # Verifică dacă există deja un super_admin
         cursor.execute('SELECT COUNT(*) FROM users WHERE role = ?', ('super_admin',))
         has_super_admin = cursor.fetchone()[0] > 0
