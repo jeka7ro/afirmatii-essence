@@ -53,6 +53,7 @@ def init_db():
             created_by TEXT,
             created_at TEXT,
             member_count INTEGER DEFAULT 0,
+            expiry_date TEXT,
             FOREIGN KEY(created_by) REFERENCES users(username)
         )
     ''')
@@ -258,18 +259,27 @@ def create_group():
         return jsonify({'error': 'Unauthorized'}), 403
     
     import uuid
+    import random
+    import string
     group_id = str(uuid.uuid4())
     
+    # Generate random secret code
+    secret_code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
+    
+    # Get expiry date
+    expiry_date = data.get('expiry') or None
+    
     db.execute('''
-        INSERT INTO groups (id, name, description, secret_code, created_by, created_at, member_count)
-        VALUES (?, ?, ?, ?, ?, ?, 1)
+        INSERT INTO groups (id, name, description, secret_code, created_by, created_at, member_count, expiry_date)
+        VALUES (?, ?, ?, ?, ?, ?, 1, ?)
     ''', (
         group_id,
         data['name'],
         data.get('description'),
-        data['secretCode'],
+        secret_code,
         data['username'],
-        datetime.now().isoformat()
+        datetime.now().isoformat(),
+        expiry_date
     ))
     
     # Add creator as member
@@ -280,7 +290,7 @@ def create_group():
     
     db.commit()
     db.close()
-    return jsonify({'success': True, 'groupId': group_id})
+    return jsonify({'success': True, 'groupId': group_id, 'secret_code': secret_code})
 
 @app.route('/api/groups/<group_id>/join', methods=['POST'])
 def join_group(group_id):

@@ -141,7 +141,7 @@ async function getAllGroups() {
     return await apiCall('/groups');
 }
 
-async function createGroup(name, description) {
+async function createGroup(name, description, expiry) {
     const response = await fetch(`${API_URL}/groups`, {
         method: 'POST',
         headers: {
@@ -150,6 +150,7 @@ async function createGroup(name, description) {
         body: JSON.stringify({ 
             name, 
             description,
+            expiry,
             adminEmail: currentUserEmail,
             username: currentUser
         })
@@ -1395,25 +1396,27 @@ window.copyGroupCode = function(code) {
 document.getElementById('create-group-btn').addEventListener('click', async () => {
     const name = document.getElementById('new-group-name').value;
     const description = document.getElementById('new-group-desc').value;
+    const expiry = document.getElementById('new-group-expiry').value;
     const statusDiv = document.getElementById('group-creation-status');
     
     if (!name) {
-        statusDiv.textContent = '⚠️ Introdu numele grupului!';
+        statusDiv.textContent = 'Introdu numele grupului!';
         statusDiv.className = 'status-message error';
         return;
     }
     
     try {
-        const result = await createGroup(name, description);
-        statusDiv.textContent = `✅ Grup creat! Cod secret: ${result.secret_code}`;
+        const result = await createGroup(name, description, expiry);
+        statusDiv.textContent = `Grup creat! Cod secret: ${result.secret_code}`;
         statusDiv.className = 'status-message success';
         
         document.getElementById('new-group-name').value = '';
         document.getElementById('new-group-desc').value = '';
+        document.getElementById('new-group-expiry').value = '';
         
         await loadAdminGroups();
     } catch (error) {
-        statusDiv.textContent = '❌ Eroare la crearea grupului: ' + error.message;
+        statusDiv.textContent = 'Eroare la crearea grupului: ' + error.message;
         statusDiv.className = 'status-message error';
     }
 });
