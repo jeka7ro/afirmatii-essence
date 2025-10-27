@@ -1095,8 +1095,6 @@ document.getElementById('register-btn').addEventListener('click', async () => {
             return;
         }
         
-        alert('✅ Înregistrare reușită! Caut grupurile disponibile...');
-        
         await apiCall(`/users/${username}`, 'POST', {
             firstName,
             lastName,
@@ -1108,10 +1106,15 @@ document.getElementById('register-btn').addEventListener('click', async () => {
             avatar: selectedAvatar
         });
         
-        // După înregistrare, cere selecția grupului
+        // După înregistrare, intră direct în aplicație
         currentUser = username;
         localStorage.setItem('currentUser', username);
-        await showGroupSelection();
+        
+        alert('✅ Înregistrare reușită! Bine ai venit!');
+        
+        await loadUserData();
+        showMainScreen();
+        await updateCommunityStats();
     } catch (error) {
         console.error('Registration error:', error);
         alert('❌ Eroare la înregistrare: ' + error.message);
