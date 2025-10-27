@@ -885,12 +885,15 @@ async function loadUserData() {
             affirmationEl.value = stats.customAffirmation;
             console.log('AFFIRMATION SET IN UI:', stats.customAffirmation);
             
-            // Auto-resize textarea based on content
-            autoResizeTextarea(affirmationEl);
+            // FORȚEAZĂ ÎNĂLȚIME MARE PENTRU AFIRMAȚIA LUNGĂ
+            affirmationEl.style.height = '400px';
+            affirmationEl.style.minHeight = '400px';
+            affirmationEl.style.overflow = 'visible';
             
             // Add event listener for auto-resize while typing
             affirmationEl.addEventListener('input', function() {
-                autoResizeTextarea(this);
+                this.style.height = 'auto';
+                this.style.height = Math.max(400, this.scrollHeight + 20) + 'px';
             });
         }
         
