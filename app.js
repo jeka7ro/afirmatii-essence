@@ -357,22 +357,27 @@ function displayRecentRepetitions() {
 
 // Salvează afirmația custom
 function saveCustomAffirmation() {
-    const affirmation = document.getElementById('affirmation-text').value;
-    stats.customAffirmation = affirmation;
-    saveStats();
-    
-    // Feedback vizual
-    const btn = document.getElementById('save-affirmation-btn');
-    btn.textContent = '✅ Salvat!';
-    setTimeout(() => {
-        btn.textContent = '💾 Salvează Afirmația';
-    }, 2000);
+    const affirmationEl = document.getElementById('affirmation-text');
+    if (affirmationEl) {
+        stats.customAffirmation = affirmationEl.value;
+        saveStats();
+        
+        // Feedback vizual
+        const btn = document.getElementById('save-affirmation-btn');
+        if (btn) {
+            btn.textContent = 'Salvat!';
+            setTimeout(() => {
+                btn.textContent = 'Salvează Afirmația';
+            }, 2000);
+        }
+    }
 }
 
 // Încarcă afirmația custom
 function loadCustomAffirmation() {
-    if (stats.customAffirmation) {
-        document.getElementById('affirmation-text').value = stats.customAffirmation;
+    const affirmationEl = document.getElementById('affirmation-text');
+    if (stats.customAffirmation && affirmationEl) {
+        affirmationEl.value = stats.customAffirmation;
     }
 }
 
