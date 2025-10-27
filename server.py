@@ -19,7 +19,7 @@ def after_request(response):
 def groups_options():
     return '', 200
 
-DATABASE = 'afirmatii.db'
+DATABASE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'afirmatii.db')
 SUPER_ADMIN_EMAIL = 'jeka7ro@gmail.com'
 
 def get_db():
