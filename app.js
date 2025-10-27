@@ -1130,17 +1130,12 @@ async function showGroupSelection() {
     
     if (groups.length === 0) {
         list.innerHTML = `
-            <div style="text-align: center; padding: 20px;">
-                <p style="color: #888; font-style: italic; margin-bottom: 20px;">
-                    ⚠️ Nu există grupuri disponibile.<br>
-                    Contactează administratorul pentru a crea un grup.
-                </p>
-                <p style="color: #666; font-size: 0.9em;">
-                    Între timp, poți continua în aplicație:
-                </p>
-                <button onclick="skipGroupSelection()" class="btn btn-secondary" style="margin-top: 15px;">
-                    🚀 Continuă fără grup (pentru testare)
-                </button>
+            <div class="group-card" style="cursor: pointer; border: 2px solid #007bff;" onclick="selectSingleMode()">
+                <div>
+                    <h4>🏠 Single Mode - Fără grup</h4>
+                    <p>Folosește doar afirmatiile tale, fără chat și grupuri</p>
+                </div>
+                <span style="font-size: 2em;">→</span>
             </div>
         `;
         return;
@@ -1154,11 +1149,20 @@ async function showGroupSelection() {
             </div>
             <span style="font-size: 2em;">→</span>
         </div>
-    `).join('');
+    `).join('') + `
+        <div class="group-card" style="cursor: pointer; border: 2px solid #888; background: #f9f9f9;" onclick="selectSingleMode()">
+            <div>
+                <h4>🏠 Single Mode - Fără grup</h4>
+                <p>Folosește doar afirmatiile tale, fără chat și grupuri</p>
+            </div>
+            <span style="font-size: 2em;">→</span>
+        </div>
+    `;
 }
 
-// Skip group selection if no groups
-async function skipGroupSelection() {
+// Select single mode (no group)
+async function selectSingleMode() {
+    // Nu adaugă user la niciun grup
     await loadUserData();
     showMainScreen();
     await updateCommunityStats();
