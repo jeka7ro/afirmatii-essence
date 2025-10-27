@@ -77,6 +77,7 @@ const API_URL = typeof window !== 'undefined' && window.location.hostname === 'l
 
 // API Functions
 async function apiCall(endpoint, method = 'GET', data = null) {
+    const url = `${API_URL}${endpoint}`;
     const options = {
         method: method,
         headers: {
@@ -276,9 +277,9 @@ function checkDayProgress() {
     const today = new Date().toDateString();
     const lastDate = stats.challenge.lastDate;
     
-    // Dacă e o zi nouă, resetează repetările zilnice
-    if (lastDate && today !== lastDate) {
-        console.log('New day detected, resetting today repetitions');
+    // Dacă e o zi nouă, resetează repetările zilnice - DOAR dacă nu avem date de pe server
+    if (lastDate && today !== lastDate && !currentUser) {
+        console.log('New day detected, resetting today repetitions (no server data)');
         // Resetează repetările pentru ziua curentă
         stats.challenge.todayRepetitions = 0;
         stats.challenge.todayRecords = [];
