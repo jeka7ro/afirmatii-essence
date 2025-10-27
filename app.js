@@ -702,73 +702,38 @@ async function loginUser(username) {
     username = username.trim();
     
     if (!username) {
-        showStatusMessage('⚠️ Te rog introdu un username!', 'error');
+        showStatusMessage('Te rog introdu un username!', 'error');
+        return;
         return;
     }
     
     try {
         const userData = await apiCall(`/users/${username}`, 'GET');
         
-        // Autentificare cu PIN - arată modal
-        showPINModal(username, userData);
+        // Login direct cu PIN-ul din câmp
+        const enteredPin = document.getElementById('login-pin').value;
+        
+        if (enteredPin === userData.pin) {
+            // Login success
+            currentUser = username;
+            localStorage.setItem('currentUser', username);
+            await loadUserData();
+            showMainScreen();
+            await updateCommunityStats();
+        } else {
+            showStatusMessage('PIN incorect!', 'error');
+        }
     } catch (error) {
         if (error.message.includes('404')) {
-            showStatusMessage('❌ Utilizatorul nu există! Te rog să te înregistrezi mai întâi.', 'error');
+            showStatusMessage('Utilizatorul nu există! Te rog să te înregistrezi mai întâi.', 'error');
         } else {
-            showStatusMessage('❌ Eroare la conectare. Verifică dacă serverul rulează.', 'error');
+            showStatusMessage('Eroare la conectare. Verifică dacă serverul rulează.', 'error');
             console.error(error);
         }
     }
 }
 
-// Show PIN entry modal
-function showPINModal(username, userData) {
-    const modal = document.getElementById('pin-modal');
-    if (!modal) {
-        alert('Introdu codul PIN:'); // Fallback
-        return;
-    }
-    modal.style.display = 'block';
-    document.getElementById('pin-input').value = '';
-    document.getElementById('pin-input').focus();
-    
-    // Store username for after PIN confirmation
-    modal.dataset.username = username;
-    modal.dataset.userPin = userData.pin;
-}
-
-// Confirm PIN and login
-window.confirmPINLogin = async function() {
-    const modal = document.getElementById('pin-modal');
-    const enteredPIN = document.getElementById('pin-input').value;
-    const username = modal.dataset.username;
-    const correctPIN = modal.dataset.userPin;
-    
-    if (!enteredPIN) {
-        showStatusMessage('⚠️ Introduce codul PIN!', 'error');
-        return;
-    }
-    
-    if (enteredPIN !== correctPIN) {
-        showStatusMessage('❌ PIN incorect!', 'error');
-        return;
-    }
-    
-    // Hide modal
-    modal.style.display = 'none';
-    
-    // Login user
-    currentUser = username;
-    localStorage.setItem('currentUser', username);
-    await loadUserData();
-    showMainScreen();
-    await updateCommunityStats();
-};
-
-// Close PIN modal
-window.closePINModal = function() {
-    document.getElementById('pin-modal').style.display = 'none';
-};
+// PIN modal removed - using direct login with PIN field
 
 // Helper function to show status messages
 function showStatusMessage(message, type) {
