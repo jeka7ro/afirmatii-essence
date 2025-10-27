@@ -857,14 +857,20 @@ document.getElementById('cancel-register-btn').addEventListener('click', () => {
     document.getElementById('login-form').style.display = 'block';
 });
 
-// Forgot PIN
-document.getElementById('forgot-pin-btn').addEventListener('click', () => {
-    document.getElementById('forgot-pin-modal').classList.add('active');
-});
+// Forgot PIN - check if elements exist
+const forgotPinBtn = document.getElementById('forgot-pin-btn');
+if (forgotPinBtn) {
+    forgotPinBtn.addEventListener('click', () => {
+        document.getElementById('forgot-pin-modal').classList.add('active');
+    });
+}
 
-document.getElementById('close-forgot-btn').addEventListener('click', () => {
-    document.getElementById('forgot-pin-modal').classList.remove('active');
-});
+const closeForgotBtn = document.getElementById('close-forgot-btn');
+if (closeForgotBtn) {
+    closeForgotBtn.addEventListener('click', () => {
+        document.getElementById('forgot-pin-modal').classList.remove('active');
+    });
+}
 
 // Request reset
 document.getElementById('reset-pin-btn').addEventListener('click', async () => {
