@@ -18,8 +18,8 @@ def after_request(response):
 def groups_options():
     return '', 200
 
-# Use /tmp for persistent storage on Render
-DATABASE = '/tmp/afirmatii.db'
+# Use persistent disk volume path on Render or local path
+DATABASE = os.environ.get('DATABASE_PATH', 'afirmatii.db')
 
 def get_db():
     conn = sqlite3.connect(DATABASE)
