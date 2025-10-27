@@ -4,10 +4,8 @@ import sqlite3
 from datetime import datetime
 
 app = Flask(__name__)
-CORS(app, origins="*", 
-     allow_headers=["Content-Type", "Authorization", "X-Admin-Email"],
-     methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-     supports_credentials=True)
+# Remove CORS to avoid double headers
+# CORS(app, origins="*", ...)
 
 @app.after_request
 def after_request(response):
