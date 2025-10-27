@@ -1158,7 +1158,7 @@ document.getElementById('register-btn').addEventListener('click', async () => {
     const pin = document.getElementById('reg-pin').value;
     const birthDate = document.getElementById('reg-birth-date').value;
     const affirmation = document.getElementById('reg-affirmation').value;
-    const selectedAvatar = document.querySelector('.avatar-option.active')?.dataset.avatar || '👤';
+    const selectedAvatar = window.uploadedAvatar || document.querySelector('.avatar-option.active')?.dataset.avatar || '👤';
     
     if (!username || !firstName || !email || !pin || !birthDate) {
         showStatusMessage('Completează toate câmpurile obligatorii!', 'error');
@@ -1560,7 +1560,7 @@ document.getElementById('settings-modal').addEventListener('click', (e) => {
 
 function loadSettingsContent() {
     // Generează avatarele pentru setări
-    const avatars = ['👤', '👨', '👩', '🧑', '👦', '👧', '🧒', '👴', '👵', '🦸'];
+    const avatars = ['👤', '👨', '👩', '👦', '👧', '🧑‍🦰', '👱‍♂️', '👱‍♀️', '🧑‍🦱', '🧑‍🦳', '👨‍🦰', '👩‍🦰', '👨‍🦱', '👩‍🦱', '🧑‍🦲'];
     const grid = document.getElementById('settings-avatar-grid');
     
     grid.innerHTML = avatars.map((avatar, index) => `
@@ -1625,7 +1625,7 @@ document.getElementById('change-pin-btn').addEventListener('click', async () => 
 
 // Change Avatar
 document.getElementById('change-avatar-btn').addEventListener('click', async () => {
-    const selectedAvatar = document.querySelector('#settings-avatar-grid .avatar-option.active')?.dataset.avatar;
+    const selectedAvatar = window.uploadedAvatar || document.querySelector('#settings-avatar-grid .avatar-option.active')?.dataset.avatar;
     const statusDiv = document.getElementById('avatar-status');
     
     if (!selectedAvatar) {
@@ -2042,3 +2042,36 @@ setInterval(checkDayProgress, 60000);
 
 // Actualizează status reminder la fiecare 30 secunde
 setInterval(updateReminderStatus, 30000);
+
+// Handle avatar upload during registration
+window.handleAvatarUpload = function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const avatarData = e.target.result;
+            // Store in a global variable for registration
+            window.uploadedAvatar = avatarData;
+            // Update active avatar selection
+            document.querySelectorAll('.avatar-option').forEach(opt => opt.classList.remove('active'));
+            // Could show preview here
+            alert('Poza a fost încărcată! Va fi folosită la înregistrare.');
+        };
+        reader.readAsDataURL(file);
+    }
+};
+
+// Handle avatar upload in settings
+window.handleSettingsAvatarUpload = function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const avatarData = e.target.result;
+            // Store for settings save
+            window.uploadedAvatar = avatarData;
+            alert('Poza a fost încărcată! Click pe "Salvează Avatar" pentru a o salva.');
+        };
+        reader.readAsDataURL(file);
+    }
+};

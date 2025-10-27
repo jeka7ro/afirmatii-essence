@@ -106,14 +106,21 @@
                     <div class="avatar-option active" data-avatar="👤">👤</div>
                     <div class="avatar-option" data-avatar="👨">👨</div>
                     <div class="avatar-option" data-avatar="👩">👩</div>
-                    <div class="avatar-option" data-avatar="🧑">🧑</div>
                     <div class="avatar-option" data-avatar="👦">👦</div>
                     <div class="avatar-option" data-avatar="👧">👧</div>
-                    <div class="avatar-option" data-avatar="🧒">🧒</div>
-                    <div class="avatar-option" data-avatar="👴">👴</div>
-                    <div class="avatar-option" data-avatar="👵">👵</div>
-                    <div class="avatar-option" data-avatar="🦸">🦸</div>
+                    <div class="avatar-option" data-avatar="🧑‍🦰">🧑‍🦰</div>
+                    <div class="avatar-option" data-avatar="👱‍♂️">👱‍♂️</div>
+                    <div class="avatar-option" data-avatar="👱‍♀️">👱‍♀️</div>
+                    <div class="avatar-option" data-avatar="🧑‍🦱">🧑‍🦱</div>
+                    <div class="avatar-option" data-avatar="🧑‍🦳">🧑‍🦳</div>
+                    <div class="avatar-option" data-avatar="👨‍🦰">👨‍🦰</div>
+                    <div class="avatar-option" data-avatar="👩‍🦰">👩‍🦰</div>
+                    <div class="avatar-option" data-avatar="👨‍🦱">👨‍🦱</div>
+                    <div class="avatar-option" data-avatar="👩‍🦱">👩‍🦱</div>
+                    <div class="avatar-option" data-avatar="🧑‍🦲">🧑‍🦲</div>
                 </div>
+                <input type="file" id="avatar-upload" accept="image/*" style="display: none;" onchange="handleAvatarUpload(event)">
+                <button type="button" class="btn btn-secondary" onclick="document.getElementById('avatar-upload').click()" style="margin-top: 10px;">Adaugă poza ta</button>
             </div>
             
             <button id="register-btn" class="btn btn-primary">✅ Înregistrează-te</button>
@@ -233,7 +240,9 @@
                         <div class="avatar-grid" id="settings-avatar-grid">
                             <!-- Avatarele vor fi generate aici -->
                         </div>
-                        <button id="change-avatar-btn" class="btn btn-primary">💾 Salvează Avatar</button>
+                        <input type="file" id="settings-avatar-upload" accept="image/*" style="display: none;" onchange="handleSettingsAvatarUpload(event)">
+                        <button type="button" class="btn btn-secondary" onclick="document.getElementById('settings-avatar-upload').click()" style="margin-top: 10px;">Adaugă poza ta</button>
+                        <button id="change-avatar-btn" class="btn btn-primary" style="margin-top: 10px;">💾 Salvează Avatar</button>
                         <div id="avatar-status" class="status-message"></div>
                     </div>
                 </div>
