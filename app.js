@@ -173,14 +173,28 @@ async function getUserGroups() {
 let currentUserEmail = null;
 
 async function getMessages() {
-    return await apiCall('/messages?limit=100');
+    try {
+        return await apiCall(`/users/${currentUser}/direct`);
+    } catch (error) {
+        console.error('Error getting messages:', error);
+        return [];
+    }
 }
 
 async function sendMessage(message) {
-    return await apiCall('/messages', 'POST', {
-        from_user: currentUser,
-        message: message
-    });
+    // Send to "community" for now
+    try {
+        return await apiCall('/messages', 'POST', {
+            sender: currentUser,
+            recipient: 'community',
+            group_id: null,
+            message: message,
+            type: 'direct'
+        });
+    } catch (error) {
+        console.error('Error sending message:', error);
+        throw error;
+    }
 }
 
 // Salvează în localStorage
