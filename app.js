@@ -305,12 +305,12 @@ function updateChallengeDisplay() {
     if (repsProgressBarEl) {
         repsProgressBarEl.style.width = repsProgress + '%';
         
-        // Schimbă culoarea progresului repetărilor
-        if (currentReps >= targetReps) {
-            repsProgressBarEl.style.background = 'linear-gradient(90deg, #28a745, #20c997)';
-        } else {
-            repsProgressBarEl.style.background = 'linear-gradient(90deg, #ff69b4, #ff1493)';
-        }
+    // Schimbă culoarea progresului repetărilor
+    if (currentReps >= targetReps) {
+        repsProgressBarEl.style.background = 'linear-gradient(90deg, #34a853, #28a745)';
+    } else {
+        repsProgressBarEl.style.background = 'linear-gradient(90deg, #4285f4, #34a853)';
+    }
     }
     
     // Afișează ultimele repetări
