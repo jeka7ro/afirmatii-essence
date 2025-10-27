@@ -851,12 +851,6 @@ async function updateFeed() {
     }).join('');
 }
 
-// Show register form
-document.getElementById('show-register-btn').addEventListener('click', () => {
-    document.getElementById('register-form').style.display = 'block';
-    document.getElementById('login-form').style.display = 'none';
-});
-
 // Cancel register
 document.getElementById('cancel-register-btn').addEventListener('click', () => {
     document.getElementById('register-form').style.display = 'none';
