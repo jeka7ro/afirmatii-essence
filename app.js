@@ -518,12 +518,15 @@ document.getElementById('toggle-history-btn').addEventListener('click', function
         this.textContent = '−';
         this.style.transform = 'rotate(180deg)';
         displayRepetitionsHistory();
+        updateChallengeCalendar();
     }
 });
 
 function displayRepetitionsHistory() {
     const records = stats.challenge?.todayRecords || [];
-    const historyList = document.getElementById('history-list');
+    const historyList = document.getElementById('repetitions-list');
+    
+    if (!historyList) return;
     
     if (records.length === 0) {
         historyList.innerHTML = '<p style="color: #888; font-style: italic; padding: 10px;">Nicio repetare înregistrată astăzi.</p>';
@@ -543,6 +546,48 @@ function displayRepetitionsHistory() {
             </div>
         `;
     }).join('');
+    
+    // Update calendar after displaying history
+    updateChallengeCalendar();
+}
+
+function updateChallengeCalendar() {
+    const calendarEl = document.getElementById('challenge-calendar');
+    if (!calendarEl) return;
+    
+    // Get start date or use today
+    const startDate = stats.challenge?.startDate ? new Date(stats.challenge.startDate) : new Date();
+    const currentDay = stats.challenge?.currentDay || 0;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    let calendarHTML = '';
+    
+    // Generate 30 day cells
+    for (let i = 0; i < 30; i++) {
+        const dayDate = new Date(startDate);
+        dayDate.setDate(startDate.getDate() + i);
+        dayDate.setHours(0, 0, 0, 0);
+        
+        const isCompleted = i < currentDay && stats.challenge?.todayRepetitions >= 100;
+        const isToday = dayDate.getTime() === today.getTime();
+        const isPast = dayDate < today && !isCompleted;
+        const isFuture = dayDate > today;
+        
+        let classes = 'day-cell';
+        if (isCompleted) classes += ' completed';
+        if (isToday) classes += ' today';
+        if (isFuture) classes += ' future';
+        
+        calendarHTML += `
+            <div class="${classes}" title="Ziua ${i + 1}">
+                <div class="day-number">${i + 1}</div>
+                <div class="day-status">${isCompleted ? '✓' : isToday ? 'azi' : ''}</div>
+            </div>
+        `;
+    }
+    
+    calendarEl.innerHTML = calendarHTML;
 }
 
 async function addRepetition() {
