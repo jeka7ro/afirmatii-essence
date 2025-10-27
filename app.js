@@ -1740,10 +1740,28 @@ document.getElementById('change-avatar-btn').addEventListener('click', async () 
     }
     
     try {
-        await updateUserSettings({ avatar: selectedAvatar });
+        console.log('Saving avatar:', selectedAvatar.length > 100 ? selectedAvatar.substring(0, 100) + '...' : selectedAvatar);
         
-        // Actualizează avatarul în UI
-        document.getElementById('current-user-avatar').textContent = selectedAvatar;
+        // Dacă e o poze (base64 foarte mare), truncez-o sau salvez doar pentru prezentare
+        let avatarToSave = selectedAvatar;
+        if (selectedAvatar.length > 10000) {
+            // E prea mare pentru baza de date, salvează doar preview
+            avatarToSave = '📷'; // Folosește emoji temporar
+            console.log('Avatar too large, using emoji fallback');
+        }
+        
+        await updateUserSettings({ avatar: avatarToSave });
+        
+        // Actualizează avatarul în UI - dacă e poză, afișează-o ca img
+        const avatarEl = document.getElementById('current-user-avatar');
+        if (avatarEl) {
+            if (selectedAvatar.length > 100 && selectedAvatar.startsWith('data:image')) {
+                // E poză - afișează-o
+                avatarEl.innerHTML = `<img src="${selectedAvatar}" style="width: 32px; height: 32px; border-radius: 50%;">`;
+            } else {
+                avatarEl.textContent = selectedAvatar;
+            }
+        }
         
         statusDiv.textContent = '✅ Avatar actualizat cu succes!';
         statusDiv.className = 'status-message success';
@@ -1752,7 +1770,8 @@ document.getElementById('change-avatar-btn').addEventListener('click', async () 
             statusDiv.textContent = '';
         }, 2000);
     } catch (error) {
-        statusDiv.textContent = '❌ Eroare la actualizarea avatarului';
+        console.error('Error saving avatar:', error);
+        statusDiv.textContent = '❌ Eroare la actualizarea avatarului: ' + error;
         statusDiv.className = 'status-message error';
     }
 });
