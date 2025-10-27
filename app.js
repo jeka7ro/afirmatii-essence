@@ -455,10 +455,12 @@ async function addRepetition() {
         
         // Animație buton
         const btn = document.getElementById('repeat-btn');
-        btn.style.transform = 'scale(0.95)';
-        setTimeout(() => {
-            btn.style.transform = 'scale(1)';
-        }, 100);
+        if (btn) {
+            btn.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                btn.style.transform = 'scale(1)';
+            }, 100);
+        }
         
         // Confirmare vizuală
         const confirmation = document.createElement('div');
