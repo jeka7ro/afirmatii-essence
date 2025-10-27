@@ -723,8 +723,7 @@ async function loadUserData() {
             todayRepetitions: userData.todayRepetitions || 0,
             lastDate: userData.lastDate || new Date().toDateString(),
             totalRepetitions: userData.totalRepetitions || 0,
-            todayRecords: userData.repetitionHistory ? JSON.parse(userData.repetitionHistory || '[]') : []
-            todayRecords: userData.todayRecords || []
+            todayRecords: userData.repetitionHistory ? JSON.parse(userData.repetitionHistory || '[]') : (userData.todayRecords || [])
         };
         
         // Actualizează avatarul în UI (doar dacă elementul există)
