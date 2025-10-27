@@ -407,17 +407,11 @@ function attachRepeatButton() {
     const repeatBtn = document.getElementById('repeat-btn');
     if (repeatBtn && !repeatBtn.hasAttribute('data-listener-attached')) {
         repeatBtn.setAttribute('data-listener-attached', 'true');
-        repeatBtn.addEventListener('click', () => {
-            addRepetition();
+        repeatBtn.addEventListener('click', async () => {
+            await addRepetition();
         });
     }
 }
-
-// Call immediately
-attachRepeatButton();
-
-// Also call after screens are shown
-document.addEventListener('DOMContentLoaded', attachRepeatButton);
 
 // Toggle history button
 document.getElementById('toggle-history-btn').addEventListener('click', function() {

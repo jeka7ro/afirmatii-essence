@@ -491,6 +491,44 @@ register-form {
     flex: 1;
 }
 
+/* AVATAR SELECTION */
+.avatar-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.avatar-option {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    background: white;
+    border: 2px solid #dadce0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.avatar-option:hover {
+    border-color: #34a853;
+    transform: scale(1.05);
+}
+
+.avatar-option.active {
+    border-color: #34a853;
+    background: #e6f4ea;
+}
+
+/* REPEAT BUTTON */
+.btn-repeat {
+    width: 100%;
+    padding: 16px;
+    font-size: 16px;
+}
+
 /* LINKS */
 a {
     color: #34a853;
