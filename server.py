@@ -394,6 +394,32 @@ def get_activities():
     db.close()
     return jsonify([dict(a) for a in activities])
 
+@app.route('/api/stats', methods=['GET'])
+def get_stats():
+    db = get_db()
+    
+    # Total users
+    total_users = db.execute('SELECT COUNT(*) as count FROM users').fetchone()['count']
+    
+    # Total repetitions
+    total_reps = db.execute('SELECT SUM(total_repetitions) as total FROM users').fetchone()['total'] or 0
+    
+    # Active users (users with recent activity)
+    from datetime import timedelta
+    cutoff = (datetime.now() - timedelta(days=1)).isoformat()
+    active_users = db.execute('''
+        SELECT COUNT(DISTINCT username) as count 
+        FROM activities 
+        WHERE timestamp > ?
+    ''', (cutoff,)).fetchone()['count']
+    
+    db.close()
+    return jsonify({
+        'activeUsers': active_users if active_users > 0 else 1,  # At least 1 (current user)
+        'totalUsers': total_users,
+        'totalRepetitions': total_reps
+    })
+
 if __name__ == '__main__':
     init_db()
     app.run(host='0.0.0.0', port=3000, debug=True)
