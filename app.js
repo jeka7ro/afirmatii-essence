@@ -704,7 +704,6 @@ async function loginUser(username) {
     if (!username) {
         showStatusMessage('Te rog introdu un username!', 'error');
         return;
-        return;
     }
     
     try {
