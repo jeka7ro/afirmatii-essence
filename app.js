@@ -1785,8 +1785,18 @@ document.getElementById('close-group-chat-btn').addEventListener('click', () => 
 
 async function loadAvailableGroups() {
     try {
+        // Verifică dacă user este admin
+        const userData = await getCurrentUserData();
+        const isAdmin = userData && (userData.role === 'admin' || userData.role === 'super_admin');
+        
         const groups = await getAllGroups();
         const list = document.getElementById('available-groups-list');
+        const joinSection = document.getElementById('join-group-section');
+        
+        // ASCUNDE section "join group" dacă e admin
+        if (isAdmin && joinSection) {
+            joinSection.style.display = 'none';
+        }
         
         if (groups.length === 0) {
             list.innerHTML = '<p style="color: #888; font-style: italic;">Nu există grupuri disponibile momentan.</p>';
