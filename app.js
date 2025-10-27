@@ -698,7 +698,7 @@ function showMainScreen() {
     document.getElementById('current-user').textContent = currentUser;
 }
 
-async function loginUser(username) {
+async function loginUser(username, pin) {
     username = username.trim();
     
     if (!username) {
@@ -706,11 +706,26 @@ async function loginUser(username) {
         return;
     }
     
+    if (!pin) {
+        showStatusMessage('⚠️ Te rog introdu PIN-ul!', 'error');
+        return;
+    }
+    
     try {
         const userData = await apiCall(`/users/${username}`, 'GET');
         
-        // Autentificare cu PIN - arată modal
-        showPINModal(username, userData);
+        // Verifică PIN direct
+        if (userData.pin !== pin) {
+            showStatusMessage('❌ PIN incorect!', 'error');
+            return;
+        }
+        
+        // Login user
+        currentUser = username;
+        localStorage.setItem('currentUser', username);
+        await loadUserData();
+        showMainScreen();
+        await updateCommunityStats();
     } catch (error) {
         if (error.message.includes('404')) {
             showStatusMessage('❌ Utilizatorul nu există! Te rog să te înregistrezi mai întâi.', 'error');
