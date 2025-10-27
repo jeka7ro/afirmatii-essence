@@ -233,32 +233,35 @@ function saveStats() {
     }
 }
 
-// Încarcă din localStorage
+// NU ÎNCĂRCA DIN LOCALSTORAGE - DOAR DACĂ NU EXISTĂ USER LOGAT
 function loadStats() {
-    const saved = localStorage.getItem('stats');
-    if (saved) {
-        const parsed = JSON.parse(saved);
-        stats.afirmatiiVazute = new Set(parsed.afirmatiiVazute || []);
-        stats.afirmatiiApreciate = new Set(parsed.afirmatiiApreciate || []);
-        stats.totalAfirmatii = parsed.totalAfirmatii || 0;
-        stats.apreciate = parsed.apreciate || 0;
-        stats.customAffirmation = parsed.customAffirmation || "Sunt capabil să realizez tot ce îmi propun.";
-        
-        if (parsed.challenge) {
-            stats.challenge = {
-                ...parsed.challenge,
-                todayRecords: parsed.challenge.todayRecords || []
-            };
-            checkDayProgress();
+    if (!currentUser) {
+        const saved = localStorage.getItem('stats');
+        if (saved) {
+            const parsed = JSON.parse(saved);
+            stats.afirmatiiVazute = new Set(parsed.afirmatiiVazute || []);
+            stats.afirmatiiApreciate = new Set(parsed.afirmatiiApreciate || []);
+            stats.totalAfirmatii = parsed.totalAfirmatii || 0;
+            stats.apreciate = parsed.apreciate || 0;
+            stats.customAffirmation = parsed.customAffirmation || "Sunt capabil să realizez tot ce îmi propun.";
+            
+            if (parsed.challenge) {
+                stats.challenge = {
+                    ...parsed.challenge,
+                    todayRecords: parsed.challenge.todayRecords || []
+                };
+                checkDayProgress();
+            }
+            
+            updateStats();
+            updateChallengeDisplay();
+            loadCustomAffirmation();
+        } else {
+            // Initializează provocarea dacă nu există
+            startChallenge();
         }
-        
-        updateStats();
-        updateChallengeDisplay();
-        loadCustomAffirmation();
-    } else {
-        // Initializează provocarea dacă nu există
-        startChallenge();
     }
+    // Dacă există user logat, datele se încarcă din loadUserData()
 }
 
 // Inițializează provocarea de 30 de zile
@@ -860,7 +863,12 @@ async function loadUserData() {
             }
         }
         
-        loadCustomAffirmation();
+        // Actualizează afirmația în UI
+        const affirmationEl = document.getElementById('affirmation-text');
+        if (affirmationEl && stats.customAffirmation) {
+            affirmationEl.value = stats.customAffirmation;
+        }
+        
         updateStats();
         updateChallengeDisplay();
     }
