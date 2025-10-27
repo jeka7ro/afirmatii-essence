@@ -14,7 +14,7 @@ import re
 import random
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 DATABASE = 'afirmatii.db'
 SUPER_ADMIN_EMAIL = 'jeka7ro@gmail.com'
