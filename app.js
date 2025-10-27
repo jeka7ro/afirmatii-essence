@@ -1041,11 +1041,15 @@ document.getElementById('login-submit-btn').addEventListener('click', async () =
         usernameInput.value = '';
         pinInput.value = '';
     } catch (error) {
-        if (error.message.includes('User not found')) {
+        console.error('Login error:', error);
+        if (error.message.includes('User not found') || error.message.includes('HTTP 404')) {
             alert('❌ Utilizatorul nu există! Înregistrează-te mai întâi.');
+        } else if (error.message.includes('HTTP 500')) {
+            alert('❌ Eroare server! Te rog încearcă din nou în câteva momente.');
         } else {
             alert('❌ Eroare la conectare: ' + error.message);
         }
+    } finally {
         btn.textContent = '🔓 Conectează-te';
         btn.disabled = false;
     }
