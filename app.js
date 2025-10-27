@@ -359,7 +359,7 @@ function updateChallengeDisplay() {
         if (diffTime > 0) {
             const daysRemain = Math.floor(diffTime / (1000 * 60 * 60 * 24));
             const hoursRemain = Math.floor((diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            timeRemainingEl.textContent = `${daysRemain} zile și ${hoursRemain} ore rămase`;
+            timeRemainingEl.textContent = `${daysRemain} zile rămase`;
             
             // Calcul: cât ar trebui să faci pe oră pentru a ajunge la 100/zi
             const totalRepsNeeded = 100 * (30 - stats.challenge.currentDay);
@@ -384,10 +384,18 @@ function updateChallengeDisplay() {
         repsTodayEl.textContent = `${currentReps}/${targetReps}`;
         console.log('Updated repetitions today:', repsTodayEl.textContent);
         
-        // Afișează repetările necesare pe oră
+        // Calcul: ore rămase astăzi (până la sfârșitul zilei)
+        const now = new Date();
+        const endOfDay = new Date(now);
+        endOfDay.setHours(23, 59, 59, 999);
+        const hoursLeftToday = Math.max(0, Math.floor((endOfDay - now) / (1000 * 60 * 60)));
+        
+        // Afișează repetările necesare pe oră și orele rămase astăzi
         const repsPerHourEl = document.getElementById('reps-per-hour-needed');
-        if (repsPerHourEl && window.currentRepsPerHourNeeded) {
-            repsPerHourEl.textContent = `(${window.currentRepsPerHourNeeded} repetări/oră)`;
+        if (repsPerHourEl) {
+            const repsLeft = targetReps - currentReps;
+            const repsPerHourNeeded = hoursLeftToday > 0 && repsLeft > 0 ? Math.ceil(repsLeft / hoursLeftToday) : 0;
+            repsPerHourEl.textContent = `${hoursLeftToday}h rămase (${repsPerHourNeeded} repetări/oră)`;
         }
     } else {
         console.error('repetitions-today element not found!');
