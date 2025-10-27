@@ -749,6 +749,22 @@ function logout() {
 async function updateUsersList() {
     const users = await getAllUsers();
     const usersList = document.getElementById('users-list');
+    const hintParagraph = document.getElementById('login-hint');
+    const noteParagraph = document.getElementById('login-note');
+    
+    // Ascunde dacă nu există utilizatori
+    if (users.length === 0) {
+        usersList.innerHTML = '';
+        if (hintParagraph) hintParagraph.style.display = 'none';
+        if (noteParagraph) noteParagraph.style.display = 'none';
+        if (usersList) usersList.style.display = 'none';
+        return;
+    }
+    
+    // Arată dacă există utilizatori
+    if (hintParagraph) hintParagraph.style.display = 'block';
+    if (noteParagraph) noteParagraph.style.display = 'block';
+    if (usersList) usersList.style.display = 'grid';
     
     usersList.innerHTML = '';
     
