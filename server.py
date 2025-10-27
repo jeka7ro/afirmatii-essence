@@ -14,7 +14,7 @@ import re
 import random
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "*"}})
+CORS(app, origins="*", allow_headers=["Content-Type", "Authorization", "X-Admin-Email"])
 
 @app.errorhandler(500)
 def handle_500(e):
