@@ -290,15 +290,21 @@ function updateStats() {
 // Actualizează afișarea provocării
 function updateChallengeDisplay() {
     // Always update, don't check if screen is visible
+    console.log('updateChallengeDisplay called with:', stats.challenge);
     
     const daysLeft = Math.max(0, 30 - stats.challenge.currentDay);
     const currentReps = stats.challenge.todayRepetitions || 0;
     const targetReps = 100;
     
+    console.log('Current reps:', currentReps, 'Target:', targetReps);
+    
     // Progres zile
     const daysProgress = (stats.challenge.currentDay / 30) * 100;
     const dayProgressEl = document.getElementById('day-progress');
-    if (dayProgressEl) dayProgressEl.textContent = `${stats.challenge.currentDay}/30`;
+    if (dayProgressEl) {
+        dayProgressEl.textContent = `${stats.challenge.currentDay}/30`;
+        console.log('Updated day progress:', dayProgressEl.textContent);
+    }
     
     const daysProgressBarEl = document.getElementById('days-progress-bar');
     if (daysProgressBarEl) daysProgressBarEl.style.width = daysProgress + '%';
@@ -316,18 +322,26 @@ function updateChallengeDisplay() {
     // Progres repetări
     const repsProgress = (currentReps / targetReps) * 100;
     const repsTodayEl = document.getElementById('repetitions-today');
-    if (repsTodayEl) repsTodayEl.textContent = `${currentReps}/${targetReps}`;
+    if (repsTodayEl) {
+        repsTodayEl.textContent = `${currentReps}/${targetReps}`;
+        console.log('Updated repetitions today:', repsTodayEl.textContent);
+    } else {
+        console.error('repetitions-today element not found!');
+    }
     
     const repsProgressBarEl = document.getElementById('repetitions-progress-bar');
     if (repsProgressBarEl) {
         repsProgressBarEl.style.width = repsProgress + '%';
+        console.log('Updated progress bar width:', repsProgress + '%');
         
         // Schimbă culoarea progresului repetărilor
         if (currentReps >= targetReps) {
-            repsProgressBarEl.style.background = 'linear-gradient(90deg, #28a745, #20c997)';
+            repsProgressBarEl.style.background = '#34a853';
         } else {
-            repsProgressBarEl.style.background = 'linear-gradient(90deg, #ff69b4, #ff1493)';
+            repsProgressBarEl.style.background = '#34a853';
         }
+    } else {
+        console.error('repetitions-progress-bar element not found!');
     }
     
     // Afișează ultimele repetări
