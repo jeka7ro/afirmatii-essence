@@ -116,23 +116,22 @@ button:active {
     display: flex;
     gap: 12px;
     margin-bottom: 24px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 }
 
 .admin-stat-card {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 12px 20px;
+    gap: 8px;
+    padding: 8px 16px;
     background: #f8f9fa;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     flex: 1;
-    min-width: 150px;
 }
 
 .stat-icon {
-    font-size: 24px;
+    font-size: 20px;
 }
 
 .stat-info {
@@ -140,15 +139,17 @@ button:active {
 }
 
 .stat-number {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
     color: #202124;
+    line-height: 1.2;
 }
 
 .stat-label {
-    font-size: 12px;
+    font-size: 11px;
     color: #5f6368;
     margin-top: 2px;
+    line-height: 1.2;
 }
 
 #login-screen {
