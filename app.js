@@ -1204,19 +1204,19 @@ if (confirmResetPinBtn) {
 // Check username availability
 const regUsernameInput = document.getElementById('reg-username');
 const regEmailInput = document.getElementById('reg-email');
-const regLastNameInput = document.getElementById('reg-last-name');
+const regFirstNameInput = document.getElementById('reg-first-name');
 
-// Check last name on blur
-if (regLastNameInput) {
-    regLastNameInput.addEventListener('blur', () => {
-        const lastname = regLastNameInput.value;
+// Check first name on blur
+if (regFirstNameInput) {
+    regFirstNameInput.addEventListener('blur', () => {
+        const firstname = regFirstNameInput.value;
         const statusDiv = document.getElementById('lastname-status');
         
-        if (lastname && lastname.length >= 2) {
-            statusDiv.textContent = '✅ Nume OK';
+        if (firstname && firstname.length >= 2) {
+            statusDiv.textContent = '✅ OK';
             statusDiv.className = 'status-message success';
-        } else if (lastname) {
-            statusDiv.textContent = '⚠️ Numele trebuie să aibă cel puțin 2 caractere';
+        } else if (firstname) {
+            statusDiv.textContent = '⚠️ Minimum 2 caractere';
             statusDiv.className = 'status-message error';
         } else {
             statusDiv.textContent = '';
