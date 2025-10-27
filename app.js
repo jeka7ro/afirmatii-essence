@@ -417,11 +417,18 @@ function displayRecentRepetitions() {
 }
 
 // Salvează afirmația custom
-function saveCustomAffirmation() {
+async function saveCustomAffirmation() {
     const affirmationEl = document.getElementById('affirmation-text');
     if (affirmationEl) {
         stats.customAffirmation = affirmationEl.value;
         saveStats();
+        
+        // Salvează și pe server
+        try {
+            await updateUserSettings({ affirmation: affirmationEl.value });
+        } catch (error) {
+            console.error('Error saving affirmation to server:', error);
+        }
         
         // Feedback vizual
         const btn = document.getElementById('save-affirmation-btn');
