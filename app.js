@@ -1062,7 +1062,7 @@ document.getElementById('login-submit-btn').addEventListener('click', async () =
     }
     
     // Show loading
-    btn.textContent = '⏳ Se conectează...';
+    btn.textContent = 'Se conectează...';
     btn.disabled = true;
     
     try {
@@ -1094,7 +1094,7 @@ document.getElementById('login-submit-btn').addEventListener('click', async () =
             showStatusMessage('Eroare la conectare: ' + error.message, 'error');
         }
     } finally {
-        btn.textContent = '🔓 Conectează-te';
+        btn.textContent = 'Conectează-te';
         btn.disabled = false;
     }
 });
@@ -1127,14 +1127,14 @@ document.getElementById('register-btn').addEventListener('click', async () => {
     }
     
     // Show loading
-    btn.textContent = '⏳ Se înregistrează...';
+    btn.textContent = 'Se înregistrează...';
     btn.disabled = true;
     
     try {
         const userData = await apiCall(`/users/${username}/check`);
         if (!userData.available) {
             showStatusMessage('Username-ul este deja folosit!', 'error');
-            btn.textContent = '✅ Înregistrează-te';
+            btn.textContent = 'Înregistrează-te';
             btn.disabled = false;
             return;
         }
@@ -1158,7 +1158,7 @@ document.getElementById('register-btn').addEventListener('click', async () => {
         console.error('Registration error:', error);
         showStatusMessage('Eroare la înregistrare: ' + error.message, 'error');
     } finally {
-        btn.textContent = '✅ Înregistrează-te';
+        btn.textContent = 'Înregistrează-te';
         btn.disabled = false;
     }
 });
