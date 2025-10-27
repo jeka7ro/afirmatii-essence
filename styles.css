@@ -111,7 +111,7 @@ header h1 {
     width: 0;
     height: 0;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.2);
+    background: #202124;
     transform: translate(-50%, -50%);
     transition: width 0.6s, height 0.6s;
 }
@@ -232,7 +232,7 @@ header h1 {
 }
 
 .affirmation-text::placeholder {
-    color: rgba(255, 255, 255, 0.4);
+    color: #202124;
 }
 
 .affirmation-card .btn-secondary {
@@ -245,9 +245,9 @@ header h1 {
     justify-content: space-around;
     margin-bottom: 30px;
     padding: 25px;
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    background: linear-gradient(145deg, #202124, #202124);
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid #202124;
     border-radius: 20px;
 }
 
@@ -266,7 +266,7 @@ header h1 {
 
 .stat-label {
     display: block;
-    color: rgba(255, 255, 255, 0.6);
+    color: #5f6368;
     font-size: 0.95em;
     margin-top: 8px;
     font-weight: 400;
@@ -295,7 +295,7 @@ header h1 {
 }
 
 .challenge-subtitle {
-    color: rgba(255, 255, 255, 0.6);
+    color: #5f6368;
     margin-bottom: 20px;
     font-size: 0.98em;
 }
@@ -322,7 +322,7 @@ header h1 {
 }
 
 .repetition-item {
-    background: rgba(255, 255, 255, 0.1);
+    background: #202124;
     backdrop-filter: blur(10px);
     padding: 10px 14px;
     margin-bottom: 8px;
@@ -336,12 +336,12 @@ header h1 {
 }
 
 .repetition-item:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: #202124;
     transform: translateX(5px);
 }
 
 .repetition-time {
-    color: rgba(255, 255, 255, 0.5);
+    color: #202124;
     font-size: 0.88em;
 }
 
@@ -398,7 +398,7 @@ header h1 {
 .reminder-input-group label {
     min-width: 60px;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.7);
+    color: #202124;
 }
 
 .reminder-input {
@@ -408,7 +408,7 @@ header h1 {
     border-radius: 12px;
     font-size: 1em;
     transition: all 0.3s ease;
-    background: rgba(255, 255, 255, 0.05);
+    background: #202124;
     color: #fff;
     backdrop-filter: blur(10px);
 }
@@ -451,7 +451,7 @@ header h1 {
     justify-content: space-between;
     margin-bottom: 10px;
     font-size: 0.92em;
-    color: rgba(255, 255, 255, 0.7);
+    color: #202124;
     font-weight: 500;
 }
 
@@ -463,7 +463,7 @@ header h1 {
 .progress-bar-container {
     width: 100%;
     height: 14px;
-    background: rgba(255, 255, 255, 0.1);
+    background: #202124;
     border-radius: 10px;
     overflow: hidden;
     position: relative;
@@ -578,9 +578,9 @@ header h1 {
 }
 
 .register-form {
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    background: linear-gradient(145deg, #202124, #202124);
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid #202124;
     border-radius: 20px;
     padding: 30px;
     margin-bottom: 20px;
@@ -604,7 +604,7 @@ header h1 {
     display: block;
     margin-bottom: 8px;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.8);
+    color: #202124;
 }
 
 .form-row {
@@ -619,12 +619,12 @@ header h1 {
 .form-input, .form-textarea {
     width: 100%;
     padding: 14px;
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    border: 2px solid #202124;
     border-radius: 12px;
     font-size: 1em;
     transition: all 0.3s ease;
     font-family: inherit;
-    background: rgba(255, 255, 255, 0.05);
+    background: #202124;
     backdrop-filter: blur(10px);
     color: #fff;
 }
@@ -633,11 +633,11 @@ header h1 {
     outline: none;
     border-color: rgba(102, 126, 234, 0.6);
     box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
-    background: rgba(255, 255, 255, 0.08);
+    background: #202124;
 }
 
 .form-input::placeholder {
-    color: rgba(255, 255, 255, 0.4);
+    color: #202124;
 }
 
 .form-textarea {
@@ -678,9 +678,9 @@ header h1 {
     align-items: center;
     justify-content: center;
     font-size: 2.8em;
-    background: rgba(255, 255, 255, 0.1);
+    background: #202124;
     backdrop-filter: blur(10px);
-    border: 3px solid rgba(255, 255, 255, 0.2);
+    border: 3px solid #202124;
     border-radius: 15px;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -704,32 +704,32 @@ header h1 {
     border-radius: 12px;
     font-size: 1.12em;
     text-align: center;
-    background: rgba(255, 255, 255, 0.05);
+    background: #202124;
     backdrop-filter: blur(10px);
     color: #fff;
 }
 
 .login-hint {
     text-align: center;
-    color: rgba(255, 255, 255, 0.5);
+    color: #202124;
     margin-top: 22px;
     font-size: 0.92em;
 }
 
 .login-note {
     text-align: center;
-    color: rgba(255, 255, 255, 0.6);
+    color: #202124;
     margin-top: 18px;
     padding: 12px;
     background: rgba(240, 248, 255, 0.1);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid #202124;
     border-radius: 12px;
     font-size: 0.88em;
 }
 
 .login-note small {
-    color: rgba(255, 255, 255, 0.5);
+    color: #202124;
 }
 
 .users-list {
@@ -740,9 +740,9 @@ header h1 {
 }
 
 .user-item {
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    background: linear-gradient(145deg, #202124, #202124);
     backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid #202124;
     padding: 12px;
     border-radius: 12px;
     text-align: center;
@@ -774,7 +774,7 @@ header h1 {
 .settings-content {
     background: linear-gradient(145deg, rgba(20, 20, 30, 0.95), rgba(10, 10, 20, 0.95));
     backdrop-filter: blur(30px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid #202124;
     border-radius: 25px;
     max-width: 600px;
     width: 90%;
@@ -788,7 +788,7 @@ header h1 {
     justify-content: space-between;
     align-items: center;
     padding: 25px 30px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid #202124;
 }
 
 .settings-header h2 {
@@ -804,7 +804,7 @@ header h1 {
     border: none;
     font-size: 1.6em;
     cursor: pointer;
-    color: rgba(255, 255, 255, 0.6);
+    color: #202124;
     padding: 0;
     width: 35px;
     height: 35px;
@@ -816,7 +816,7 @@ header h1 {
 }
 
 .close-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: #202124;
     color: #fff;
     transform: rotate(90deg);
 }
@@ -828,7 +828,7 @@ header h1 {
 .setting-section {
     margin-bottom: 35px;
     padding-bottom: 35px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid #202124;
 }
 
 .setting-section:last-child {
@@ -871,15 +871,15 @@ header h1 {
 
 .stat-label-small {
     display: block;
-    color: rgba(255, 255, 255, 0.6);
+    color: #202124;
     font-size: 0.88em;
     margin-top: 6px;
 }
 
 .feed-container {
-    background: rgba(255, 255, 255, 0.05);
+    background: #202124;
     backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid #202124;
     border-radius: 18px;
     padding: 22px;
     margin-bottom: 22px;
@@ -888,9 +888,9 @@ header h1 {
 }
 
 .feed-item {
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    background: linear-gradient(145deg, #202124, #202124);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid #202124;
     padding: 18px;
     margin-bottom: 12px;
     border-radius: 15px;
@@ -899,7 +899,7 @@ header h1 {
 }
 
 .feed-item:hover {
-    background: rgba(255, 255, 255, 0.12);
+    background: #202124;
     transform: translateX(5px);
 }
 
@@ -911,12 +911,12 @@ header h1 {
 }
 
 .feed-message {
-    color: rgba(255, 255, 255, 0.7);
+    color: #202124;
     font-size: 0.98em;
 }
 
 .feed-time {
-    color: rgba(255, 255, 255, 0.4);
+    color: #202124;
     font-size: 0.88em;
     margin-top: 6px;
 }
@@ -940,9 +940,9 @@ header h1 {
 }
 
 .chat-container {
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    background: linear-gradient(145deg, #202124, #202124);
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid #202124;
     border-radius: 20px;
     margin-bottom: 22px;
     overflow: hidden;
@@ -996,9 +996,9 @@ header h1 {
 }
 
 .chat-message {
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    background: linear-gradient(145deg, #202124, #202124);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid #202124;
     padding: 12px 18px;
     margin-bottom: 12px;
     border-radius: 15px;
@@ -1022,7 +1022,7 @@ header h1 {
     backdrop-filter: blur(10px);
     border-left-color: #fff;
     margin-left: 20%;
-    border-color: rgba(255, 255, 255, 0.2);
+    border-color: #202124;
 }
 
 .chat-message-header {
@@ -1039,12 +1039,12 @@ header h1 {
 }
 
 .chat-message-time {
-    color: rgba(255, 255, 255, 0.5);
+    color: #202124;
     font-size: 0.82em;
 }
 
 .chat-message-text {
-    color: rgba(255, 255, 255, 0.9);
+    color: #202124;
     font-size: 0.98em;
     word-wrap: break-word;
 }
@@ -1053,25 +1053,25 @@ header h1 {
     display: flex;
     gap: 12px;
     padding: 18px;
-    background: rgba(255, 255, 255, 0.05);
+    background: #202124;
     backdrop-filter: blur(10px);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid #202124;
 }
 
 .chat-input {
     flex: 1;
     padding: 14px;
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    border: 2px solid #202124;
     border-radius: 12px;
     font-size: 1em;
     transition: all 0.3s ease;
-    background: rgba(255, 255, 255, 0.05);
+    background: #202124;
     backdrop-filter: blur(10px);
     color: #fff;
 }
 
 .chat-input::placeholder {
-    color: rgba(255, 255, 255, 0.4);
+    color: #202124;
 }
 
 .chat-input:focus {
@@ -1129,7 +1129,7 @@ header h1 {
     display: flex;
     gap: 12px;
     margin-bottom: 24px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid #202124;
 }
 
 .admin-tab {
@@ -1140,7 +1140,7 @@ header h1 {
     cursor: pointer;
     font-size: 1em;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.6);
+    color: #202124;
     transition: all 0.3s ease;
 }
 
@@ -1167,9 +1167,9 @@ header h1 {
 }
 
 .admin-user-card {
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    background: linear-gradient(145deg, #202124, #202124);
     backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid #202124;
     padding: 22px;
     border-radius: 15px;
     box-shadow: var(--shadow-soft);
@@ -1180,7 +1180,7 @@ header h1 {
 }
 
 .admin-user-card:hover {
-    background: rgba(255, 255, 255, 0.12);
+    background: #202124;
     transform: translateY(-3px);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
 }
@@ -1202,7 +1202,7 @@ header h1 {
 
 .admin-user-details p {
     margin: 0;
-    color: rgba(255, 255, 255, 0.6);
+    color: #202124;
     font-size: 0.92em;
 }
 
@@ -1257,9 +1257,9 @@ header h1 {
 }
 
 .analytics-card {
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    background: linear-gradient(145deg, #202124, #202124);
     backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid #202124;
     padding: 24px;
     border-radius: 18px;
     box-shadow: var(--shadow-soft);
@@ -1275,9 +1275,9 @@ header h1 {
 }
 
 .groups-section {
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    background: linear-gradient(145deg, #202124, #202124);
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid #202124;
     border-radius: 20px;
     padding: 28px;
     margin-bottom: 22px;
@@ -1292,9 +1292,9 @@ header h1 {
 }
 
 .group-card {
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.08));
+    background: linear-gradient(145deg, #202124, #202124);
     backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid #202124;
     padding: 18px;
     margin-bottom: 12px;
     border-radius: 15px;
@@ -1306,7 +1306,7 @@ header h1 {
 }
 
 .group-card:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: #202124;
     transform: translateX(5px);
 }
 
@@ -1318,7 +1318,7 @@ header h1 {
 
 .group-card p {
     margin: 0;
-    color: rgba(255, 255, 255, 0.6);
+    color: #202124;
     font-size: 0.92em;
 }
 
@@ -1336,9 +1336,9 @@ header h1 {
 }
 
 .group-chat-container {
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    background: linear-gradient(145deg, #202124, #202124);
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid #202124;
     border-radius: 20px;
     padding: 24px;
     margin-bottom: 22px;
@@ -1352,7 +1352,7 @@ header h1 {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 18px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid #202124;
     padding-bottom: 12px;
 }
 
@@ -1366,7 +1366,7 @@ header h1 {
 
 .group-chat-header p {
     margin: 6px 0 0 0;
-    color: rgba(255, 255, 255, 0.5);
+    color: #202124;
     font-size: 0.92em;
 }
 
@@ -1376,7 +1376,7 @@ header h1 {
     gap: 12px;
     margin-bottom: 18px;
     padding-bottom: 18px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid #202124;
 }
 
 .group-member {
@@ -1397,9 +1397,9 @@ header h1 {
 }
 
 .group-message {
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    background: linear-gradient(145deg, #202124, #202124);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid #202124;
     padding: 14px 18px;
     border-radius: 15px;
     margin-bottom: 12px;
@@ -1416,7 +1416,7 @@ header h1 {
 }
 
 .group-message-text {
-    color: rgba(255, 255, 255, 0.9);
+    color: #202124;
 }
 
 .chat-input-container {
