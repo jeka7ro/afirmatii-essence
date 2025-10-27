@@ -99,7 +99,7 @@ textarea {
     min-height: 150px;
     height: auto !important;
     max-height: none;
-    resize: vertical;
+    resize: none;
     overflow: visible !important;
     white-space: pre-wrap;
     word-wrap: break-word;

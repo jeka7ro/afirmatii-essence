@@ -451,7 +451,14 @@ function displayRecentRepetitions() {
 // Auto-resize textarea function
 function autoResizeTextarea(textarea) {
     textarea.style.height = 'auto';
-    textarea.style.height = Math.max(150, textarea.scrollHeight + 20) + 'px';
+    textarea.style.height = 'auto';
+    const computed = window.getComputedStyle(textarea);
+    const height = parseInt(computed.getPropertyValue('border-top-width'), 10)
+                 + parseInt(computed.getPropertyValue('padding-top'), 10)
+                 + textarea.scrollHeight
+                 + parseInt(computed.getPropertyValue('padding-bottom'), 10)
+                 + parseInt(computed.getPropertyValue('border-bottom-width'), 10);
+    textarea.style.height = Math.max(150, height + 10) + 'px';
     textarea.style.overflow = 'visible';
 }
 
