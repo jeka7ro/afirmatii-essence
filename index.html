@@ -32,6 +32,7 @@
                 <input type="tel" id="login-pin" class="form-input" placeholder="1234" maxlength="4" inputmode="numeric">
             </div>
             <button class="btn btn-primary" id="login-submit-btn" style="width: 100%;">🔓 Conectează-te</button>
+            <div id="login-status-message" class="status-message" style="margin-top: 10px;"></div>
             <div style="margin-top: 15px; text-align: center;">
                 <button class="btn btn-secondary" onclick="document.getElementById('register-form').style.display='block'; document.getElementById('login-form').style.display='none';" style="width: 100%;">
                     ✏️ Înregistrare Nouă
@@ -119,6 +120,18 @@
         </div>
         
         <!-- Forgot PIN Modal -->
+        <!-- PIN Entry Modal -->
+        <div id="pin-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 10000; display: flex; align-items: center; justify-content: center;">
+            <div style="background: white; padding: 30px; border-radius: 15px; max-width: 400px; width: 90%; text-align: center;">
+                <h3 style="margin: 0 0 20px 0; color: #333;">🔐 Introdu Codul PIN</h3>
+                <input type="tel" id="pin-input" inputmode="numeric" pattern="[0-9]*" maxlength="4" style="width: 100%; padding: 15px; font-size: 24px; text-align: center; border: 2px solid #007bff; border-radius: 10px; margin: 20px 0; letter-spacing: 10px;" placeholder="0000">
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button onclick="closePINModal()" class="btn" style="flex: 1; background: #6c757d;">Anulează</button>
+                    <button onclick="confirmPINLogin()" class="btn btn-primary" style="flex: 1;">✅ Confirmă</button>
+                </div>
+            </div>
+        </div>
+        
         <div class="forgot-pin-modal" id="forgot-pin-modal" style="display: none;">
             <div class="settings-content">
                 <div class="settings-header">

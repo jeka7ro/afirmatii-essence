@@ -709,35 +709,86 @@ async function loginUser(username) {
     username = username.trim();
     
     if (!username) {
-        alert('Te rog introdu un username!');
+        showStatusMessage('⚠️ Te rog introdu un username!', 'error');
         return;
     }
     
     try {
         const userData = await apiCall(`/users/${username}`, 'GET');
         
-        // Autentificare cu PIN
-        const pin = prompt('Introdu codul PIN:');
-        if (!pin) return;
-        
-        // Verifică PIN (simplificat - în producție ar trebui endpoint separat)
-        if (userData.pin !== pin) {
-            alert('PIN incorect!');
-            return;
-        }
-        
-        currentUser = username;
-        localStorage.setItem('currentUser', username);
-        await loadUserData();
-        showMainScreen();
-        await updateCommunityStats();
+        // Autentificare cu PIN - arată modal
+        showPINModal(username, userData);
     } catch (error) {
         if (error.message.includes('404')) {
-            alert('Utilizatorul nu există! Te rog să te înregistrezi mai întâi.');
+            showStatusMessage('❌ Utilizatorul nu există! Te rog să te înregistrezi mai întâi.', 'error');
         } else {
-            alert('Eroare la conectare. Verifică dacă serverul rulează.');
+            showStatusMessage('❌ Eroare la conectare. Verifică dacă serverul rulează.', 'error');
             console.error(error);
         }
+    }
+}
+
+// Show PIN entry modal
+function showPINModal(username, userData) {
+    const modal = document.getElementById('pin-modal');
+    if (!modal) {
+        alert('Introdu codul PIN:'); // Fallback
+        return;
+    }
+    modal.style.display = 'block';
+    document.getElementById('pin-input').value = '';
+    document.getElementById('pin-input').focus();
+    
+    // Store username for after PIN confirmation
+    modal.dataset.username = username;
+    modal.dataset.userPin = userData.pin;
+}
+
+// Confirm PIN and login
+window.confirmPINLogin = async function() {
+    const modal = document.getElementById('pin-modal');
+    const enteredPIN = document.getElementById('pin-input').value;
+    const username = modal.dataset.username;
+    const correctPIN = modal.dataset.userPin;
+    
+    if (!enteredPIN) {
+        showStatusMessage('⚠️ Introduce codul PIN!', 'error');
+        return;
+    }
+    
+    if (enteredPIN !== correctPIN) {
+        showStatusMessage('❌ PIN incorect!', 'error');
+        return;
+    }
+    
+    // Hide modal
+    modal.style.display = 'none';
+    
+    // Login user
+    currentUser = username;
+    localStorage.setItem('currentUser', username);
+    await loadUserData();
+    showMainScreen();
+    await updateCommunityStats();
+};
+
+// Close PIN modal
+window.closePINModal = function() {
+    document.getElementById('pin-modal').style.display = 'none';
+};
+
+// Helper function to show status messages
+function showStatusMessage(message, type) {
+    const statusDiv = document.getElementById('login-status-message');
+    if (statusDiv) {
+        statusDiv.textContent = message;
+        statusDiv.className = `status-message ${type}`;
+        setTimeout(() => {
+            statusDiv.textContent = '';
+            statusDiv.className = '';
+        }, 5000);
+    } else {
+        alert(message); // Fallback
     }
 }
 
