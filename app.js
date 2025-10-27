@@ -1106,15 +1106,10 @@ document.getElementById('register-btn').addEventListener('click', async () => {
             avatar: selectedAvatar
         });
         
-        // După înregistrare, intră direct în aplicație
+        // După înregistrare, cere selecția grupului
         currentUser = username;
         localStorage.setItem('currentUser', username);
-        
-        alert('✅ Înregistrare reușită! Bine ai venit!');
-        
-        await loadUserData();
-        showMainScreen();
-        await updateCommunityStats();
+        await showGroupSelection();
     } catch (error) {
         console.error('Registration error:', error);
         alert('❌ Eroare la înregistrare: ' + error.message);
@@ -1134,7 +1129,12 @@ async function showGroupSelection() {
     const list = document.getElementById('registration-groups-list');
     
     if (groups.length === 0) {
-        list.innerHTML = '<p style="color: #888; font-style: italic;">Nu există grupuri disponibile. Contactează administratorul.</p>';
+        list.innerHTML = `
+            <p style="color: #888; font-style: italic; margin-bottom: 20px;">Nu există grupuri disponibile.</p>
+            <button onclick="skipGroupSelection()" class="btn btn-primary">
+                ✅ Continuă fără grup
+            </button>
+        `;
         return;
     }
     
@@ -1147,6 +1147,13 @@ async function showGroupSelection() {
             <span style="font-size: 2em;">→</span>
         </div>
     `).join('');
+}
+
+// Skip group selection if no groups
+async function skipGroupSelection() {
+    await loadUserData();
+    showMainScreen();
+    await updateCommunityStats();
 }
 
 // Join group from registration
