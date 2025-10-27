@@ -448,6 +448,12 @@ function displayRecentRepetitions() {
     }).join('');
 }
 
+// Auto-resize textarea function
+function autoResizeTextarea(textarea) {
+    textarea.style.height = 'auto';
+    textarea.style.height = Math.max(150, textarea.scrollHeight) + 'px';
+}
+
 // Salvează afirmația custom
 async function saveCustomAffirmation() {
     const affirmationEl = document.getElementById('affirmation-text');
@@ -870,6 +876,14 @@ async function loadUserData() {
         if (affirmationEl) {
             affirmationEl.value = stats.customAffirmation;
             console.log('AFFIRMATION SET IN UI:', stats.customAffirmation);
+            
+            // Auto-resize textarea based on content
+            autoResizeTextarea(affirmationEl);
+            
+            // Add event listener for auto-resize while typing
+            affirmationEl.addEventListener('input', function() {
+                autoResizeTextarea(this);
+            });
         }
         
         updateStats();
