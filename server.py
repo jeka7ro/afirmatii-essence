@@ -16,6 +16,10 @@ import random
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 
+@app.errorhandler(500)
+def handle_500(e):
+    return jsonify({'error': str(e)}), 500
+
 DATABASE = 'afirmatii.db'
 SUPER_ADMIN_EMAIL = 'jeka7ro@gmail.com'
 
