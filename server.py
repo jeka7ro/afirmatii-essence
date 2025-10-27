@@ -53,6 +53,12 @@ def init_db():
         )
     ''')
     
+    # Add start_date column if not exists
+    try:
+        cursor.execute('ALTER TABLE groups ADD COLUMN start_date TEXT')
+    except:
+        pass
+    
     # Groups table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS groups (
