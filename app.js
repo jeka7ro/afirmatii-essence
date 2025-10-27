@@ -794,12 +794,14 @@ async function loadUserData() {
         console.log('Current user email set to:', currentUserEmail);
         stats.challenge = {
             startDate: userData.createdAt || new Date().toISOString(),
-            currentDay: userData.currentDay || 0,
-            todayRepetitions: userData.todayRepetitions || 0,
+            currentDay: userData.currentDay !== undefined ? userData.currentDay : 0,
+            todayRepetitions: userData.todayRepetitions !== undefined ? userData.todayRepetitions : 0,
             lastDate: userData.lastDate || new Date().toDateString(),
-            totalRepetitions: userData.totalRepetitions || 0,
+            totalRepetitions: userData.totalRepetitions !== undefined ? userData.totalRepetitions : 0,
             todayRecords: userData.repetitionHistory ? JSON.parse(userData.repetitionHistory || '[]') : (userData.todayRecords || [])
         };
+        
+        console.log('Loaded challenge data from server:', stats.challenge);
         
         // Actualizează avatarul în UI (doar dacă elementul există)
         const avatarEl = document.getElementById('current-user-avatar');
