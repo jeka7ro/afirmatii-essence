@@ -401,10 +401,22 @@ document.getElementById('save-affirmation-btn').addEventListener('click', () => 
     saveCustomAffirmation();
 });
 
-// Adaugă repetare
-document.getElementById('repeat-btn').addEventListener('click', () => {
-    addRepetition();
-});
+// Adaugă repetare - attach when ready
+function attachRepeatButton() {
+    const repeatBtn = document.getElementById('repeat-btn');
+    if (repeatBtn && !repeatBtn.hasAttribute('data-listener-attached')) {
+        repeatBtn.setAttribute('data-listener-attached', 'true');
+        repeatBtn.addEventListener('click', () => {
+            addRepetition();
+        });
+    }
+}
+
+// Call immediately
+attachRepeatButton();
+
+// Also call after screens are shown
+document.addEventListener('DOMContentLoaded', attachRepeatButton);
 
 // Toggle history button
 document.getElementById('toggle-history-btn').addEventListener('click', function() {
@@ -733,6 +745,9 @@ function showMainScreen() {
     if (currentUserEl) {
         currentUserEl.textContent = currentUser;
     }
+    
+    // Attach repeat button listener
+    attachRepeatButton();
 }
 
 async function loginUser(username) {
