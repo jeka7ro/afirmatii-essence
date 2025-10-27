@@ -830,9 +830,11 @@ async function initUserSession() {
 async function loadUserData() {
     const userData = await getCurrentUserData();
     if (userData) {
-        stats.customAffirmation = userData.affirmation;
+        // AFIRMAȚIA RĂMÂNE PERMANENT - ÎNCARCĂ ÎNTOTDEAUNA DIN SERVER
+        stats.customAffirmation = userData.affirmation || "Sunt capabil să realizez tot ce îmi propun.";
         currentUserEmail = userData.email || '';
         console.log('Current user email set to:', currentUserEmail);
+        console.log('LOADED AFFIRMATION FROM SERVER:', stats.customAffirmation);
         
         // FOLOSEȘTE DOAR DATELE DE PE SERVER - IGNORĂ COMPLET LOCALSTORAGE
         stats.challenge = {
@@ -863,10 +865,11 @@ async function loadUserData() {
             }
         }
         
-        // Actualizează afirmația în UI
+        // AFIRMAȚIA SE ÎNCARCĂ ÎNTOTDEAUNA DIN SERVER
         const affirmationEl = document.getElementById('affirmation-text');
-        if (affirmationEl && stats.customAffirmation) {
+        if (affirmationEl) {
             affirmationEl.value = stats.customAffirmation;
+            console.log('AFFIRMATION SET IN UI:', stats.customAffirmation);
         }
         
         updateStats();
