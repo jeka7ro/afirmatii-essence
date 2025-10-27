@@ -274,33 +274,50 @@ function updateStats() {
 
 // Actualizează afișarea provocării
 function updateChallengeDisplay() {
+    // Check if main-screen is visible
+    const mainScreen = document.getElementById('main-screen');
+    if (!mainScreen || mainScreen.style.display === 'none') {
+        console.log('Main screen not visible, skipping updateChallengeDisplay');
+        return;
+    }
+    
     const daysLeft = Math.max(0, 30 - stats.challenge.currentDay);
     const currentReps = stats.challenge.todayRepetitions || 0;
     const targetReps = 100;
     
     // Progres zile
     const daysProgress = (stats.challenge.currentDay / 30) * 100;
-    document.getElementById('day-progress').textContent = `${stats.challenge.currentDay}/30`;
-    document.getElementById('days-progress-bar').style.width = daysProgress + '%';
+    const dayProgressEl = document.getElementById('day-progress');
+    if (dayProgressEl) dayProgressEl.textContent = `${stats.challenge.currentDay}/30`;
+    
+    const daysProgressBarEl = document.getElementById('days-progress-bar');
+    if (daysProgressBarEl) daysProgressBarEl.style.width = daysProgress + '%';
     
     const daysRemainingEl = document.getElementById('days-remaining');
-    if (stats.challenge.currentDay >= 30) {
-        daysRemainingEl.textContent = '✅ Provocare completă!';
-        daysRemainingEl.style.color = '#28a745';
-    } else {
-        daysRemainingEl.textContent = `${daysLeft} zile rămase`;
+    if (daysRemainingEl) {
+        if (stats.challenge.currentDay >= 30) {
+            daysRemainingEl.textContent = '✅ Provocare completă!';
+            daysRemainingEl.style.color = '#28a745';
+        } else {
+            daysRemainingEl.textContent = `${daysLeft} zile rămase`;
+        }
     }
     
     // Progres repetări
     const repsProgress = (currentReps / targetReps) * 100;
-    document.getElementById('repetitions-today').textContent = `${currentReps}/${targetReps}`;
-    document.getElementById('repetitions-progress-bar').style.width = repsProgress + '%';
+    const repsTodayEl = document.getElementById('repetitions-today');
+    if (repsTodayEl) repsTodayEl.textContent = `${currentReps}/${targetReps}`;
     
-    // Schimbă culoarea progresului repetărilor
-    if (currentReps >= targetReps) {
-        document.getElementById('repetitions-progress-bar').style.background = 'linear-gradient(90deg, #28a745, #20c997)';
-    } else {
-        document.getElementById('repetitions-progress-bar').style.background = 'linear-gradient(90deg, #ff69b4, #ff1493)';
+    const repsProgressBarEl = document.getElementById('repetitions-progress-bar');
+    if (repsProgressBarEl) {
+        repsProgressBarEl.style.width = repsProgress + '%';
+        
+        // Schimbă culoarea progresului repetărilor
+        if (currentReps >= targetReps) {
+            repsProgressBarEl.style.background = 'linear-gradient(90deg, #28a745, #20c997)';
+        } else {
+            repsProgressBarEl.style.background = 'linear-gradient(90deg, #ff69b4, #ff1493)';
+        }
     }
     
     // Afișează ultimele repetări
@@ -310,6 +327,11 @@ function updateChallengeDisplay() {
 // Afișează ultimele repetări
 function displayRecentRepetitions() {
     const list = document.getElementById('repetitions-list');
+    if (!list) {
+        console.log('repetitions-list not found');
+        return;
+    }
+    
     const records = stats.challenge.todayRecords || [];
     
     if (records.length === 0) {
