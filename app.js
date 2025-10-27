@@ -954,10 +954,16 @@ async function updateUsersList() {
 async function updateCommunityStats() {
     try {
         const stats = await getCommunityStats();
-        document.getElementById('community-active').textContent = stats.activeUsers;
+        // Dacă există cel puțin 1 utilizator logat, afișează minim 1 utilizator activ
+        const activeUsers = stats.activeUsers > 0 ? stats.activeUsers : (currentUser ? 1 : 0);
+        document.getElementById('community-active').textContent = activeUsers;
         document.getElementById('community-total').textContent = stats.totalRepetitions;
     } catch (error) {
         console.error('Error updating community stats:', error);
+        // Dacă eșuează, dar utilizatorul este logat, afișează 1
+        if (currentUser) {
+            document.getElementById('community-active').textContent = 1;
+        }
     }
 }
 
