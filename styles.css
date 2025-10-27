@@ -17,6 +17,16 @@ body {
     margin: 0 auto;
 }
 
+.logo-container {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.logo {
+    height: 80px;
+    max-width: 300px;
+}
+
 h1 {
     font-size: 36px;
     font-weight: 400;
