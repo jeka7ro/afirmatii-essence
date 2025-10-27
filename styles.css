@@ -111,6 +111,46 @@ button:active {
     box-shadow: 0 1px 4px rgba(52, 168, 83, 0.2);
 }
 
+/* Admin stats in row */
+.admin-stats {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.admin-stat-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
+    background: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    flex: 1;
+    min-width: 150px;
+}
+
+.stat-icon {
+    font-size: 24px;
+}
+
+.stat-info {
+    flex: 1;
+}
+
+.stat-number {
+    font-size: 20px;
+    font-weight: 600;
+    color: #202124;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: #5f6368;
+    margin-top: 2px;
+}
+
 #login-screen {
     margin-top: 40px;
 }
