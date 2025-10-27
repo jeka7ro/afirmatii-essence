@@ -73,7 +73,7 @@ let currentUser = null;
 // Production API URL
 const API_URL = typeof window !== 'undefined' && window.location.hostname === 'localhost' ?
     'http://localhost:3000/api' :
-    'https://essence-afirmatii-api.onrender.com/api';
+    'https://afirmatii-essence-backend.onrender.com/api';
 
 // API Functions
 async function apiCall(endpoint, method = 'GET', data = null) {

@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: essence-afirmatii-api
+    name: afirmatii-essence-backend
     env: python
     plan: free
     buildCommand: pip install --no-cache-dir -r requirements.txt
