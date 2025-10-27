@@ -292,7 +292,19 @@ function updateChallengeDisplay() {
     // Always update, don't check if screen is visible
     console.log('updateChallengeDisplay called with:', stats.challenge);
     
-    const daysLeft = Math.max(0, 30 - stats.challenge.currentDay);
+    // Asigură-te că challenge există și are toate proprietățile necesare
+    if (!stats.challenge) {
+        stats.challenge = {
+            startDate: new Date().toISOString(),
+            currentDay: 0,
+            todayRepetitions: 0,
+            lastDate: new Date().toDateString(),
+            totalRepetitions: 0,
+            todayRecords: []
+        };
+    }
+    
+    const daysLeft = Math.max(0, 30 - (stats.challenge.currentDay || 0));
     const currentReps = stats.challenge.todayRepetitions || 0;
     const targetReps = 100;
     
