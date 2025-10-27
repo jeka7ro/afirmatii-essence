@@ -629,7 +629,9 @@ async function initUserSession() {
             showMainScreen();
         } catch (error) {
             console.error('Error loading user data:', error);
-            // Dacă nu poate încărca, afișează login screen
+            // Dacă nu poate încărca (user nu există), curăță și afișează login screen
+            localStorage.removeItem('currentUser');
+            currentUser = null;
             showLoginScreen();
         }
     } else {
