@@ -142,17 +142,17 @@ async function getAllGroups() {
 }
 
 async function createGroup(name, description) {
-    const headers = {
-        'X-Admin-Email': currentUserEmail
-    };
-    
     const response = await fetch(`${API_URL}/groups`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
-            ...headers
+            'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ name, description })
+        body: JSON.stringify({ 
+            name, 
+            description,
+            adminEmail: currentUserEmail,
+            username: currentUser
+        })
     });
     
     if (!response.ok) throw new Error(response.statusText);
