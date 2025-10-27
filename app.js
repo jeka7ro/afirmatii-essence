@@ -72,7 +72,7 @@ let notificationPermission = false;
 let currentUser = null;
 // Production API URL
 const API_URL = typeof window !== 'undefined' && window.location.hostname === 'localhost' ?
-    'http://localhost:3000/api' :
+    'http://localhost:10000/api' :
     'https://essence-afirmatii-api.onrender.com/api';
 
 // API Functions

@@ -317,51 +317,55 @@ def get_groups():
 
 @app.route('/api/groups', methods=['POST'])
 def create_group():
-    data = request.json
-    admin_email = data.get('adminEmail')
-    
-    # Verify admin
-    db = get_db()
-    admin = db.execute('SELECT role FROM users WHERE email = ?', (admin_email,)).fetchone()
-    if not admin or admin['role'] not in ['admin', 'super_admin']:
+    try:
+        data = request.json
+        admin_email = data.get('adminEmail')
+        
+        # Verify admin
+        db = get_db()
+        admin = db.execute('SELECT role FROM users WHERE email = ?', (admin_email,)).fetchone()
+        if not admin or admin['role'] not in ['admin', 'super_admin']:
+            db.close()
+            return jsonify({'error': 'Unauthorized'}), 403
+        
+        import uuid
+        import random
+        import string
+        group_id = str(uuid.uuid4())
+        
+        # Generate random secret code
+        secret_code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
+        
+        # Get start and end dates
+        start_date = data.get('startDate')
+        end_date = data.get('endDate')
+        
+        db.execute('''
+            INSERT INTO groups (id, name, description, secret_code, created_by, created_at, member_count, start_date, expiry_date)
+            VALUES (?, ?, ?, ?, ?, ?, 1, ?, ?)
+        ''', (
+            group_id,
+            data['name'],
+            data.get('description', ''),
+            secret_code,
+            data['username'],
+            datetime.now().isoformat(),
+            start_date,
+            end_date
+        ))
+        
+        # Add creator as member
+        db.execute('''
+            INSERT INTO group_members (group_id, username, joined_at)
+            VALUES (?, ?, ?)
+        ''', (group_id, data['username'], datetime.now().isoformat()))
+        
+        db.commit()
         db.close()
-        return jsonify({'error': 'Unauthorized'}), 403
-    
-    import uuid
-    import random
-    import string
-    group_id = str(uuid.uuid4())
-    
-    # Generate random secret code
-    secret_code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
-    
-    # Get start and end dates
-    start_date = data.get('startDate')
-    end_date = data.get('endDate')
-    
-    db.execute('''
-        INSERT INTO groups (id, name, description, secret_code, created_by, created_at, member_count, start_date, expiry_date)
-        VALUES (?, ?, ?, ?, ?, ?, 1, ?, ?)
-    ''', (
-        group_id,
-        data['name'],
-        data.get('description'),
-        secret_code,
-        data['username'],
-        datetime.now().isoformat(),
-        start_date,
-        end_date
-    ))
-    
-    # Add creator as member
-    db.execute('''
-        INSERT INTO group_members (group_id, username, joined_at)
-        VALUES (?, ?, ?)
-    ''', (group_id, data['username'], datetime.now().isoformat()))
-    
-    db.commit()
-    db.close()
-    return jsonify({'success': True, 'groupId': group_id, 'secret_code': secret_code})
+        return jsonify({'success': True, 'groupId': group_id, 'secret_code': secret_code})
+    except Exception as e:
+        print(f"ERROR creating group: {e}")
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/api/groups/<group_id>/join', methods=['POST'])
 def join_group(group_id):
