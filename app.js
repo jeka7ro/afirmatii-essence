@@ -958,19 +958,28 @@ document.querySelectorAll('.avatar-option').forEach(option => {
 // Register button
 // Login submit button
 document.getElementById('login-submit-btn').addEventListener('click', async () => {
-    const username = document.getElementById('login-username').value.trim();
-    const pin = document.getElementById('login-pin').value;
+    const btn = document.getElementById('login-submit-btn');
+    const usernameInput = document.getElementById('login-username');
+    const pinInput = document.getElementById('login-pin');
+    const username = usernameInput.value.trim();
+    const pin = pinInput.value;
     
     if (!username || !pin) {
-        alert('Te rog completează username și PIN!');
+        alert('⚠️ Te rog completează username și PIN!');
         return;
     }
+    
+    // Show loading
+    btn.textContent = '⏳ Se conectează...';
+    btn.disabled = true;
     
     try {
         const userData = await apiCall(`/users/${username}`, 'GET');
         
         if (userData.pin !== pin) {
-            alert('PIN incorect!');
+            alert('❌ PIN incorect!');
+            btn.textContent = '🔓 Conectează-te';
+            btn.disabled = false;
             return;
         }
         
@@ -979,8 +988,18 @@ document.getElementById('login-submit-btn').addEventListener('click', async () =
         await loadUserData();
         showMainScreen();
         await updateCommunityStats();
+        
+        // Clear inputs
+        usernameInput.value = '';
+        pinInput.value = '';
     } catch (error) {
-        alert('Eroare la conectare: ' + error.message);
+        if (error.message.includes('User not found')) {
+            alert('❌ Utilizatorul nu există! Înregistrează-te mai întâi.');
+        } else {
+            alert('❌ Eroare la conectare: ' + error.message);
+        }
+        btn.textContent = '🔓 Conectează-te';
+        btn.disabled = false;
     }
 });
 
