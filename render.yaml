@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: afirmatii-essence-27oct
+    name: essence-afirmatii-api
     env: python
     plan: free
     buildCommand: pip install --no-cache-dir -r requirements.txt
@@ -8,5 +8,3 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
-      - key: PIP_NO_CACHE_DIR
-        value: "1"

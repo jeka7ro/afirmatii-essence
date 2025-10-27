@@ -538,5 +538,6 @@ def get_all_users_admin():
 
 if __name__ == '__main__':
     init_db()
-    port = int(os.environ.get('PORT', 3000))
+    port = int(os.environ.get('PORT', 10000))
+    print(f"Starting server on port {port}")
     app.run(host='0.0.0.0', port=port, debug=False)
