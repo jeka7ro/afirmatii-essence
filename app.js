@@ -468,11 +468,18 @@ function displayRepetitionsHistory() {
 }
 
 async function addRepetition() {
+    console.log('addRepetition called, stats:', stats);
+    console.log('todayRepetitions before:', stats.challenge.todayRepetitions);
+    
     if (stats.challenge.todayRepetitions < 100) {
         stats.challenge.todayRepetitions++;
         stats.challenge.totalRepetitions++;
+        console.log('todayRepetitions after:', stats.challenge.todayRepetitions);
         
         // Adaugă înregistrare cu timestamp
+        if (!stats.challenge.todayRecords) {
+            stats.challenge.todayRecords = [];
+        }
         stats.challenge.todayRecords.push({
             timestamp: new Date().toISOString(),
             repetition: stats.challenge.todayRepetitions
@@ -486,6 +493,7 @@ async function addRepetition() {
             console.error('Error saving repetition:', error);
         }
         
+        console.log('Calling updateChallengeDisplay...');
         updateChallengeDisplay();
         
         // Animație buton
