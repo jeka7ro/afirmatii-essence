@@ -25,6 +25,8 @@ def get_db():
     if DATABASE_URL:
         # PostgreSQL for production
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+        # PostgreSQL returns tuples, not Row objects
+        # Need to convert to dict format
         return conn
     else:
         # SQLite for local development
@@ -32,6 +34,16 @@ def get_db():
         conn = sqlite3.connect('afirmatii.db')
         conn.row_factory = sqlite3.Row
         return conn
+
+# Helper to convert PostgreSQL tuples to dicts
+def row_to_dict(cursor, row):
+    if row is None:
+        return None
+    if hasattr(row, 'keys'):
+        return dict(row)
+    # PostgreSQL returns tuples
+    colnames = [desc[0] for desc in cursor.description]
+    return dict(zip(colnames, row))
 
 def init_db():
     conn = get_db()
