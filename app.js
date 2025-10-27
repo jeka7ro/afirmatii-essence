@@ -1134,14 +1134,17 @@ document.getElementById('register-btn').addEventListener('click', async () => {
 
 // Show group selection screen
 async function showGroupSelection() {
+    console.log('Showing group selection...');
     document.getElementById('register-form').style.display = 'none';
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('group-selection-screen').style.display = 'block';
     
     const groups = await getAllGroups();
+    console.log('Groups found:', groups.length);
     const list = document.getElementById('registration-groups-list');
     
     if (groups.length === 0) {
+        console.log('No groups found, showing single mode');
         list.innerHTML = `
             <div class="group-card" style="cursor: pointer; border: 2px solid #007bff;" onclick="selectSingleMode()">
                 <div>
@@ -1174,12 +1177,12 @@ async function showGroupSelection() {
 }
 
 // Select single mode (no group)
-async function selectSingleMode() {
-    // Nu adaugă user la niciun grup
+window.selectSingleMode = async function() {
+    console.log('Selecting single mode (no group)');
     await loadUserData();
     showMainScreen();
     await updateCommunityStats();
-}
+};
 
 // Join group from registration
 document.getElementById('join-reg-group-btn').addEventListener('click', async () => {
