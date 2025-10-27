@@ -718,11 +718,12 @@ async function loadUserData() {
         currentUserEmail = userData.email || '';
         console.log('Current user email set to:', currentUserEmail);
         stats.challenge = {
-            startDate: userData.createdAt,
-            currentDay: userData.currentDay,
-            todayRepetitions: userData.todayRepetitions,
-            lastDate: userData.lastDate,
-            totalRepetitions: userData.totalRepetitions,
+            startDate: userData.createdAt || new Date().toISOString(),
+            currentDay: userData.currentDay || 0,
+            todayRepetitions: userData.todayRepetitions || 0,
+            lastDate: userData.lastDate || new Date().toDateString(),
+            totalRepetitions: userData.totalRepetitions || 0,
+            todayRecords: userData.repetitionHistory ? JSON.parse(userData.repetitionHistory || '[]') : []
             todayRecords: userData.todayRecords || []
         };
         
