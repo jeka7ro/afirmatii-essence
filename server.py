@@ -1,9 +1,8 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import psycopg2
+import sqlite3
 import os
 from datetime import datetime
-from urllib.parse import urlparse
 
 app = Flask(__name__)
 SUPER_ADMIN_EMAIL = 'jeka7ro@gmail.com'
@@ -19,31 +18,13 @@ def after_request(response):
 def groups_options():
     return '', 200
 
-# Use PostgreSQL if available, otherwise SQLite for local
-DATABASE_URL = os.environ.get('DATABASE_URL')
-def get_db():
-    if DATABASE_URL:
-        # PostgreSQL for production
-        conn = psycopg2.connect(DATABASE_URL, sslmode='require')
-        # PostgreSQL returns tuples, not Row objects
-        # Need to convert to dict format
-        return conn
-    else:
-        # SQLite for local development
-        import sqlite3
-        conn = sqlite3.connect('afirmatii.db')
-        conn.row_factory = sqlite3.Row
-        return conn
+# Use /tmp for persistent storage on Render
+DATABASE = '/tmp/afirmatii.db'
 
-# Helper to convert PostgreSQL tuples to dicts
-def row_to_dict(cursor, row):
-    if row is None:
-        return None
-    if hasattr(row, 'keys'):
-        return dict(row)
-    # PostgreSQL returns tuples
-    colnames = [desc[0] for desc in cursor.description]
-    return dict(zip(colnames, row))
+def get_db():
+    conn = sqlite3.connect(DATABASE)
+    conn.row_factory = sqlite3.Row
+    return conn
 
 def init_db():
     conn = get_db()
