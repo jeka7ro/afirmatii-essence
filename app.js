@@ -375,6 +375,7 @@ function updateChallengeDisplay() {
     if (repsTodayEl) {
         repsTodayEl.textContent = `${currentReps}/${targetReps}`;
         console.log('Updated repetitions today:', repsTodayEl.textContent);
+        console.log('DEBUG: currentReps =', currentReps, 'stats.challenge.todayRepetitions =', stats.challenge.todayRepetitions);
         
         // Calcul: ore rămase astăzi (până la sfârșitul zilei)
         const now = new Date();
@@ -829,6 +830,8 @@ async function loadUserData() {
         stats.customAffirmation = userData.affirmation;
         currentUserEmail = userData.email || '';
         console.log('Current user email set to:', currentUserEmail);
+        
+        // FORȚEAZĂ încărcarea datelor de pe server, ignoră localStorage
         stats.challenge = {
             startDate: userData.challenge_start_date || userData.createdAt || new Date().toISOString(),
             currentDay: userData.current_day !== undefined ? userData.current_day : 0,
@@ -838,7 +841,11 @@ async function loadUserData() {
             todayRecords: userData.repetition_history ? JSON.parse(userData.repetition_history || '[]') : []
         };
         
+        console.log('FORCED RELOAD from server - userData.today_repetitions:', userData.today_repetitions);
         console.log('Loaded challenge data from server:', stats.challenge);
+        
+        // Salvează în localStorage pentru a sincroniza
+        saveStats();
         
         // Actualizează avatarul în UI (doar dacă elementul există)
         const avatarEl = document.getElementById('current-user-avatar');
