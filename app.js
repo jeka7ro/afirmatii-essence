@@ -190,9 +190,9 @@ function saveStats() {
     } else {
         const toSave = {
             ...stats,
-            afirmațiiVazute: Array.from(stats.afirmatiiVazute),
-            afirmațiiApreciate: Array.from(stats.afirmatiiApreciate),
-            challenge: stats.challenge
+            afirmațiiVazute: stats.afirmatiiVazute ? Array.from(stats.afirmatiiVazute) : [],
+            afirmațiiApreciate: stats.afirmatiiApreciate ? Array.from(stats.afirmatiiApreciate) : [],
+            challenge: stats.challenge || {}
         };
         localStorage.setItem('stats', JSON.stringify(toSave));
     }
