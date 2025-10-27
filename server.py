@@ -4,7 +4,17 @@ import sqlite3
 from datetime import datetime
 
 app = Flask(__name__)
-CORS(app, origins="*", allow_headers=["Content-Type", "Authorization", "X-Admin-Email"])
+CORS(app, origins="*", 
+     allow_headers=["Content-Type", "Authorization", "X-Admin-Email"],
+     methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+     supports_credentials=True)
+
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization,X-Admin-Email')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+    return response
 
 DATABASE = 'afirmatii.db'
 SUPER_ADMIN_EMAIL = 'jeka7ro@gmail.com'
@@ -429,6 +439,41 @@ def get_stats():
         'totalUsers': total_users,
         'totalRepetitions': total_reps
     })
+
+@app.route('/api/users/<username>/groups', methods=['GET'])
+def get_user_groups(username):
+    db = get_db()
+    groups = db.execute('''
+        SELECT g.* FROM groups g
+        JOIN group_members gm ON g.id = gm.group_id
+        WHERE gm.username = ?
+    ''', (username,)).fetchall()
+    db.close()
+    return jsonify([dict(g) for g in groups])
+
+@app.route('/api/admin/overview', methods=['GET'])
+def get_admin_overview():
+    db = get_db()
+    
+    total_users = db.execute('SELECT COUNT(*) as count FROM users').fetchone()['count']
+    total_reps = db.execute('SELECT SUM(total_repetitions) as total FROM users').fetchone()['total'] or 0
+    total_messages = db.execute('SELECT COUNT(*) as count FROM messages').fetchone()['count']
+    total_groups = db.execute('SELECT COUNT(*) as count FROM groups').fetchone()['count']
+    
+    db.close()
+    return jsonify({
+        'totalUsers': total_users,
+        'totalRepetitions': total_reps,
+        'totalMessages': total_messages,
+        'totalGroups': total_groups
+    })
+
+@app.route('/api/admin/users/all', methods=['GET'])
+def get_all_users_admin():
+    db = get_db()
+    users = db.execute('SELECT username, email, total_repetitions, role FROM users').fetchall()
+    db.close()
+    return jsonify([dict(u) for u in users])
 
 if __name__ == '__main__':
     init_db()
