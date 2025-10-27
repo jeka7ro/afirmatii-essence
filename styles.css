@@ -87,9 +87,12 @@ input:focus, textarea:focus {
 }
 
 textarea {
-    min-height: 150px;
+    min-height: auto;
+    height: auto;
     resize: none;
-    overflow: auto;
+    overflow: hidden;
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
 
 .affirmation-text {
@@ -97,6 +100,8 @@ textarea {
     height: auto;
     resize: none;
     overflow: visible;
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
 
 label {
