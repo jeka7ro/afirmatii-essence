@@ -942,12 +942,22 @@ if (confirmResetPinBtn) {
 }
 
 // Check username availability
-document.getElementById('reg-username').addEventListener('blur', async () => {
-    const username = document.getElementById('reg-username').value;
-    if (username) {
+const regUsernameInput = document.getElementById('reg-username');
+const regEmailInput = document.getElementById('reg-email');
+
+if (regUsernameInput) {
+    regUsernameInput.addEventListener('blur', async () => {
+        const username = regUsernameInput.value;
+        const statusDiv = document.getElementById('username-status');
+        
+        if (!username) {
+            statusDiv.textContent = '';
+            statusDiv.className = '';
+            return;
+        }
+        
         try {
             const result = await apiCall(`/users/${username}/check`);
-            const statusDiv = document.getElementById('username-status');
             if (result.available) {
                 statusDiv.textContent = '✅ Username disponibil';
                 statusDiv.className = 'status-message success';
@@ -958,42 +968,45 @@ document.getElementById('reg-username').addEventListener('blur', async () => {
         } catch (error) {
             console.error('Error checking username:', error);
         }
-    }
-});
+    });
+}
 
 // Check email availability
-document.getElementById('reg-email').addEventListener('blur', async () => {
-    const email = document.getElementById('reg-email').value;
-    const statusDiv = document.getElementById('email-status');
-    
-    if (!email) {
-        statusDiv.textContent = '';
-        return;
-    }
-    
-    // Validare format email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-        statusDiv.textContent = '⚠️ Format email invalid';
-        statusDiv.className = 'status-message error';
-        return;
-    }
-    
-    try {
-        const users = await apiCall('/users', 'GET');
-        const emailExists = users.some(u => u.email && u.email.toLowerCase() === email.toLowerCase());
+if (regEmailInput) {
+    regEmailInput.addEventListener('blur', async () => {
+        const email = regEmailInput.value;
+        const statusDiv = document.getElementById('email-status');
         
-        if (emailExists) {
-            statusDiv.textContent = '❌ Email deja folosit';
-            statusDiv.className = 'status-message error';
-        } else {
-            statusDiv.textContent = '✅ Email disponibil';
-            statusDiv.className = 'status-message success';
+        if (!email) {
+            statusDiv.textContent = '';
+            statusDiv.className = '';
+            return;
         }
-    } catch (error) {
-        console.error('Error checking email:', error);
-    }
-});
+        
+        // Validare format email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            statusDiv.textContent = '⚠️ Format email invalid';
+            statusDiv.className = 'status-message error';
+            return;
+        }
+        
+        try {
+            const users = await apiCall('/users', 'GET');
+            const emailExists = users.some(u => u.email && u.email.toLowerCase() === email.toLowerCase());
+            
+            if (emailExists) {
+                statusDiv.textContent = '❌ Email deja folosit';
+                statusDiv.className = 'status-message error';
+            } else {
+                statusDiv.textContent = '✅ Email disponibil';
+                statusDiv.className = 'status-message success';
+            }
+        } catch (error) {
+            console.error('Error checking email:', error);
+        }
+    });
+}
 
 // Avatar selection
 document.querySelectorAll('.avatar-option').forEach(option => {
