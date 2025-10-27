@@ -110,15 +110,31 @@ async function getCurrentUserData() {
 async function saveCurrentUserData() {
     if (!currentUser) return;
     
-    const data = {
-        affirmation: stats.customAffirmation,
-        totalRepetitions: stats.challenge.totalRepetitions,
-        currentDay: stats.challenge.currentDay,
-        todayRepetitions: stats.challenge.todayRepetitions,
-        lastDate: stats.challenge.lastDate
-    };
-    
-    await apiCall(`/users/${currentUser}`, 'PUT', data);
+    try {
+        // Obține toate datele curente
+        const userData = await getCurrentUserData();
+        
+        const data = {
+            firstName: userData.firstName,
+            lastName: userData.lastName,
+            email: userData.email,
+            pin: userData.pin,
+            birthDate: userData.birthDate,
+            phone: userData.phone,
+            affirmation: stats.customAffirmation || userData.affirmation,
+            avatar: userData.avatar,
+            totalRepetitions: stats.challenge.totalRepetitions || 0,
+            currentDay: stats.challenge.currentDay || 0,
+            todayRepetitions: stats.challenge.todayRepetitions || 0,
+            lastDate: stats.challenge.lastDate || new Date().toDateString(),
+            repetitionHistory: JSON.stringify(stats.challenge.todayRecords || [])
+        };
+        
+        await apiCall(`/users/${currentUser}`, 'PUT', data);
+        console.log('User data saved to server:', data);
+    } catch (error) {
+        console.error('Error saving user data to server:', error);
+    }
 }
 
 async function addRepetitionToServer(repetitionNum) {
@@ -435,12 +451,8 @@ async function saveCustomAffirmation() {
         stats.customAffirmation = affirmationEl.value;
         saveStats();
         
-        // Salvează și pe server
-        try {
-            await updateUserSettings({ affirmation: affirmationEl.value });
-        } catch (error) {
-            console.error('Error saving affirmation to server:', error);
-        }
+    // Salvează și pe server
+    await saveCurrentUserData();
         
         // Feedback vizual
         const btn = document.getElementById('save-affirmation-btn');
