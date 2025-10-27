@@ -2,6 +2,16 @@ const API_URL = window.location.hostname === 'localhost'
     ? 'http://localhost:3000/api' 
     : 'https://afirmatii-backend.onrender.com/api';
 
+function showRegister() {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('register-screen').style.display = 'block';
+}
+
+function showLogin() {
+    document.getElementById('register-screen').style.display = 'none';
+    document.getElementById('login-screen').style.display = 'block';
+}
+
 async function login() {
     const username = document.getElementById('username').value;
     const pin = document.getElementById('pin').value;
@@ -41,12 +51,13 @@ async function register() {
         });
         
         alert('Inregistrat cu succes!');
+        showLogin();
     } catch (e) {
         alert('Eroare: ' + e.message);
     }
 }
 
 function logout() {
-    document.getElementById('login-screen').style.display = 'block';
     document.getElementById('main-screen').style.display = 'none';
+    document.getElementById('login-screen').style.display = 'block';
 }
