@@ -146,6 +146,10 @@ def init_db():
     conn.commit()
     conn.close()
 
+@app.route('/')
+def home():
+    return jsonify({'service': 'afirmatii-backend', 'status': 'ok', 'version': '1.0'})
+
 @app.route('/api/users', methods=['GET'])
 def get_users():
     db = get_db()
