@@ -202,11 +202,34 @@ def update_user(username):
     update_fields = []
     values = []
     
-    for field in ['first_name', 'last_name', 'email', 'phone', 'pin', 'birth_date', 'affirmation', 'avatar']:
-        camel_field = ''.join(word.capitalize() if word != 'birthDate' else 'birthDate' for word in field.split('_'))
-        if camel_field in data:
-            update_fields.append(f'{field} = ?')
-            values.append(data[camel_field])
+    for field in ['first_name', 'last_name', 'email', 'phone', 'pin', 'birth_date', 'affirmation', 'avatar', 
+                  'total_repetitions', 'current_day', 'today_repetitions', 'last_date', 'repetition_history']:
+        # Convert camelCase to snake_case for database fields
+        field_mapping = {
+            'firstName': 'first_name',
+            'lastName': 'last_name',
+            'birthDate': 'birth_date',
+            'totalRepetitions': 'total_repetitions',
+            'currentDay': 'current_day',
+            'todayRepetitions': 'today_repetitions',
+            'lastDate': 'last_date',
+            'repetitionHistory': 'repetition_history'
+        }
+        
+        # Check if field exists in data
+        if field in data or any(key in data for key in field_mapping.values()):
+            # Find the correct mapping
+            db_field = field
+            for key, value in field_mapping.items():
+                if key in data:
+                    db_field = value
+                    update_fields.append(f'{value} = ?')
+                    values.append(data[key])
+                    break
+            else:
+                if field in data:
+                    update_fields.append(f'{field} = ?')
+                    values.append(data[field])
     
     if update_fields:
         values.append(username)
