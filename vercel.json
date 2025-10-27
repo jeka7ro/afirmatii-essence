@@ -8,19 +8,17 @@
   ],
   "routes": [
     {
-      "src": "/(.*\\.(js|css|png|jpg|svg|json))",
-      "headers": { "cache-control": "s-maxage=31536000,immutable" }
-    },
-    {
-      "src": "/api/(.*)",
-      "dest": "https://YOUR-RENDER-BACKEND.onrender.com/api/$1"
+      "src": "/(.*\\.(js|css|png|jpg|svg))",
+      "headers": { 
+        "cache-control": "s-maxage=31536000,immutable" 
+      }
     },
     {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "/index.html",
+      "headers": {
+        "cache-control": "public, max-age=0"
+      }
     }
-  ],
-  "env": {
-    "API_URL": "https://YOUR-RENDER-BACKEND.onrender.com/api"
-  }
+  ]
 }
