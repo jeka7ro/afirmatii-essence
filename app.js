@@ -873,7 +873,9 @@ if (closeForgotBtn) {
 }
 
 // Request reset
-document.getElementById('reset-pin-btn').addEventListener('click', async () => {
+const resetPinBtn = document.getElementById('reset-pin-btn');
+if (resetPinBtn) {
+    resetPinBtn.addEventListener('click', async () => {
     const username = document.getElementById('forgot-username').value;
     const email = document.getElementById('forgot-email').value;
     const statusDiv = document.getElementById('reset-status');
@@ -893,10 +895,13 @@ document.getElementById('reset-pin-btn').addEventListener('click', async () => {
         statusDiv.textContent = '❌ ' + error.message;
         statusDiv.className = 'status-message error';
     }
-});
+    });
+}
 
 // Confirm reset
-document.getElementById('confirm-reset-pin-btn').addEventListener('click', async () => {
+const confirmResetPinBtn = document.getElementById('confirm-reset-pin-btn');
+if (confirmResetPinBtn) {
+    confirmResetPinBtn.addEventListener('click', async () => {
     const username = document.getElementById('forgot-username').value;
     const resetCode = document.getElementById('reset-code').value;
     const newPin = document.getElementById('new-reset-pin').value;
