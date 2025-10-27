@@ -468,11 +468,11 @@ async function addRepetition() {
         if (stats.challenge.todayRepetitions === 100) {
             setTimeout(() => {
                 updateCommunityStats();
-                alert('🎉 Felicitări! Ai completat 100 de repetări astăzi!');
+                console.log('🎉 Felicitări! Ai completat 100 de repetări astăzi!');
             }, 300);
         }
     } else {
-        alert('✅ Ai atins deja targetul zilnic de 100 repetări!');
+        showStatusMessage('Ai atins deja targetul zilnic de 100 repetări!', 'error');
     }
 }
 
@@ -747,8 +747,6 @@ function showStatusMessage(message, type) {
             statusDiv.textContent = '';
             statusDiv.className = '';
         }, 5000);
-    } else {
-        alert(message); // Fallback
     }
 }
 
@@ -965,7 +963,7 @@ if (confirmResetPinBtn) {
             
             setTimeout(() => {
                 document.getElementById('forgot-pin-modal').classList.remove('active');
-                alert('PIN resetat cu succes! Te poți conecta acum.');
+                showStatusMessage('PIN resetat cu succes! Te poți conecta acum.', 'success');
             }, 2000);
         } catch (error) {
             statusDiv.textContent = '❌ ' + error.message;
@@ -1058,8 +1056,8 @@ document.getElementById('login-submit-btn').addEventListener('click', async () =
     const username = usernameInput.value.trim();
     const pin = pinInput.value;
     
-    if (!username || !pin) {
-        alert('⚠️ Te rog completează username și PIN!');
+        if (!username || !pin) {
+        showStatusMessage('Te rog completează username și PIN!', 'error');
         return;
     }
     
@@ -1071,8 +1069,8 @@ document.getElementById('login-submit-btn').addEventListener('click', async () =
         const userData = await apiCall(`/users/${username}`, 'GET');
         
         if (userData.pin !== pin) {
-            alert('❌ PIN incorect!');
-            btn.textContent = '🔓 Conectează-te';
+            showStatusMessage('PIN incorect!', 'error');
+            btn.textContent = 'Conectează-te';
             btn.disabled = false;
             return;
         }
@@ -1089,11 +1087,11 @@ document.getElementById('login-submit-btn').addEventListener('click', async () =
     } catch (error) {
         console.error('Login error:', error);
         if (error.message.includes('User not found') || error.message.includes('HTTP 404')) {
-            alert('❌ Utilizatorul nu există! Înregistrează-te mai întâi.');
+            showStatusMessage('Utilizatorul nu există! Înregistrează-te mai întâi.', 'error');
         } else if (error.message.includes('HTTP 500')) {
-            alert('❌ Eroare server! Te rog încearcă din nou în câteva momente.');
+            showStatusMessage('Eroare server! Te rog încearcă din nou în câteva momente.', 'error');
         } else {
-            alert('❌ Eroare la conectare: ' + error.message);
+            showStatusMessage('Eroare la conectare: ' + error.message, 'error');
         }
     } finally {
         btn.textContent = '🔓 Conectează-te';
@@ -1114,17 +1112,17 @@ document.getElementById('register-btn').addEventListener('click', async () => {
     const selectedAvatar = document.querySelector('.avatar-option.active')?.dataset.avatar || '👤';
     
     if (!username || !firstName || !email || !pin || !birthDate) {
-        alert('⚠️ Completează toate câmpurile obligatorii!');
+        showStatusMessage('Completează toate câmpurile obligatorii!', 'error');
         return;
     }
     
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        alert('⚠️ Introduceți un email valid!');
+        showStatusMessage('Introduceți un email valid!', 'error');
         return;
     }
     
     if (pin.length !== 4 || !/^\d{4}$/.test(pin)) {
-        alert('⚠️ PIN-ul trebuie să fie format din 4 cifre!');
+        showStatusMessage('PIN-ul trebuie să fie format din 4 cifre!', 'error');
         return;
     }
     
@@ -1135,7 +1133,7 @@ document.getElementById('register-btn').addEventListener('click', async () => {
     try {
         const userData = await apiCall(`/users/${username}/check`);
         if (!userData.available) {
-            alert('⚠️ Username-ul este deja folosit!');
+            showStatusMessage('Username-ul este deja folosit!', 'error');
             btn.textContent = '✅ Înregistrează-te';
             btn.disabled = false;
             return;
@@ -1158,7 +1156,7 @@ document.getElementById('register-btn').addEventListener('click', async () => {
         await showGroupSelection();
     } catch (error) {
         console.error('Registration error:', error);
-        alert('❌ Eroare la înregistrare: ' + error.message);
+        showStatusMessage('Eroare la înregistrare: ' + error.message, 'error');
     } finally {
         btn.textContent = '✅ Înregistrează-te';
         btn.disabled = false;
@@ -1261,7 +1259,7 @@ async function finalizeRegistration() {
     await updateCommunityStats();
     
     // Alert
-    alert('Bun venit! Te-ai alăturat grupului cu succes! 🎉');
+    console.log('Bun venit! Te-ai alăturat grupului cu succes!');
 }
 
 // Admin functionality
@@ -1358,7 +1356,7 @@ async function loadAdminGroups() {
 
 window.copyGroupCode = function(code) {
     navigator.clipboard.writeText(code);
-    alert(`Cod copiat: ${code}`);
+    console.log(`Cod copiat: ${code}`);
 };
 
 // Create group
@@ -1471,7 +1469,7 @@ window.deleteUser = async function(username) {
         await loadAdminUsers();
         await loadAdminOverview();
     } catch (error) {
-        alert('Eroare la ștergerea utilizatorului');
+        console.error('Eroare la ștergerea utilizatorului');
         console.error(error);
     }
 };
@@ -1715,7 +1713,7 @@ document.getElementById('send-chat-btn').addEventListener('click', async () => {
         input.value = '';
         loadChatMessages();
     } catch (error) {
-        alert('Eroare la trimiterea mesajului');
+        console.error('Eroare la trimiterea mesajului');
         console.error(error);
     }
 });
