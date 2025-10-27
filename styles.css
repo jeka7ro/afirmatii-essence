@@ -68,7 +68,7 @@ button {
     background: #34a853;
     color: #ffffff;
     border: none;
-    border-radius: 8px;
+    border-radius: 20px;
     font-size: 14px;
     font-weight: 500;
     font-family: 'Inter', sans-serif;
@@ -107,7 +107,7 @@ button:active {
 .btn-small {
     padding: 8px 16px;
     font-size: 13px;
-    border-radius: 6px;
+    border-radius: 16px;
     box-shadow: 0 1px 4px rgba(52, 168, 83, 0.2);
 }
 
