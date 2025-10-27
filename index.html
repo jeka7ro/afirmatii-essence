@@ -451,7 +451,11 @@
                     <h3>Crează Grup Nou</h3>
                     <input type="text" id="new-group-name" class="form-input" placeholder="Nume grup">
                     <textarea id="new-group-desc" class="form-textarea" placeholder="Descriere (opțional)"></textarea>
-                    <input type="date" id="new-group-expiry" class="form-input" placeholder="Data expirare (opțional)">
+                    
+                    <label style="display: block; margin: 10px 0 5px 0; font-weight: 500; color: #202124;">Perioada grupului:</label>
+                    <input type="date" id="new-group-start-date" class="form-input" placeholder="Data început">
+                    <input type="date" id="new-group-end-date" class="form-input" placeholder="Data sfârșit">
+                    
                     <button id="create-group-btn" class="btn btn-primary">Creează Grup</button>
                     <div id="group-creation-status" class="status-message"></div>
                 </div>

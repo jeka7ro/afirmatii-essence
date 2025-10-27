@@ -141,7 +141,7 @@ async function getAllGroups() {
     return await apiCall('/groups');
 }
 
-async function createGroup(name, description, expiry) {
+async function createGroup(name, description, startDate, endDate) {
     const response = await fetch(`${API_URL}/groups`, {
         method: 'POST',
         headers: {
@@ -150,7 +150,8 @@ async function createGroup(name, description, expiry) {
         body: JSON.stringify({ 
             name, 
             description,
-            expiry,
+            startDate,
+            endDate,
             adminEmail: currentUserEmail,
             username: currentUser
         })
@@ -1412,7 +1413,8 @@ window.copyGroupCode = function(code) {
 document.getElementById('create-group-btn').addEventListener('click', async () => {
     const name = document.getElementById('new-group-name').value;
     const description = document.getElementById('new-group-desc').value;
-    const expiry = document.getElementById('new-group-expiry').value;
+    const startDate = document.getElementById('new-group-start-date').value;
+    const endDate = document.getElementById('new-group-end-date').value;
     const statusDiv = document.getElementById('group-creation-status');
     
     if (!name) {
@@ -1421,14 +1423,21 @@ document.getElementById('create-group-btn').addEventListener('click', async () =
         return;
     }
     
+    if (!startDate || !endDate) {
+        statusDiv.textContent = 'Introdu data de început și sfârșit!';
+        statusDiv.className = 'status-message error';
+        return;
+    }
+    
     try {
-        const result = await createGroup(name, description, expiry);
+        const result = await createGroup(name, description, startDate, endDate);
         statusDiv.textContent = `Grup creat! Cod secret: ${result.secret_code}`;
         statusDiv.className = 'status-message success';
         
         document.getElementById('new-group-name').value = '';
         document.getElementById('new-group-desc').value = '';
-        document.getElementById('new-group-expiry').value = '';
+        document.getElementById('new-group-start-date').value = '';
+        document.getElementById('new-group-end-date').value = '';
         
         await loadAdminGroups();
     } catch (error) {

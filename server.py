@@ -63,6 +63,7 @@ def init_db():
             created_by TEXT,
             created_at TEXT,
             member_count INTEGER DEFAULT 0,
+            start_date TEXT,
             expiry_date TEXT,
             FOREIGN KEY(created_by) REFERENCES users(username)
         )
@@ -276,12 +277,13 @@ def create_group():
     # Generate random secret code
     secret_code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
     
-    # Get expiry date
-    expiry_date = data.get('expiry') or None
+    # Get start and end dates
+    start_date = data.get('startDate')
+    end_date = data.get('endDate')
     
     db.execute('''
-        INSERT INTO groups (id, name, description, secret_code, created_by, created_at, member_count, expiry_date)
-        VALUES (?, ?, ?, ?, ?, ?, 1, ?)
+        INSERT INTO groups (id, name, description, secret_code, created_by, created_at, member_count, start_date, expiry_date)
+        VALUES (?, ?, ?, ?, ?, ?, 1, ?, ?)
     ''', (
         group_id,
         data['name'],
@@ -289,7 +291,8 @@ def create_group():
         secret_code,
         data['username'],
         datetime.now().isoformat(),
-        expiry_date
+        start_date,
+        end_date
     ))
     
     # Add creator as member
