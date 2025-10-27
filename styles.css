@@ -100,7 +100,7 @@ textarea {
     height: auto !important;
     max-height: none;
     resize: vertical;
-    overflow-y: auto;
+    overflow: visible !important;
     white-space: pre-wrap;
     word-wrap: break-word;
     border: 1px solid #dadce0;

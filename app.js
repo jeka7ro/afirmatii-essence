@@ -451,7 +451,8 @@ function displayRecentRepetitions() {
 // Auto-resize textarea function
 function autoResizeTextarea(textarea) {
     textarea.style.height = 'auto';
-    textarea.style.height = Math.max(150, textarea.scrollHeight) + 'px';
+    textarea.style.height = Math.max(150, textarea.scrollHeight + 20) + 'px';
+    textarea.style.overflow = 'visible';
 }
 
 // Salvează afirmația custom
