@@ -687,7 +687,8 @@ async function loadUserData() {
     const userData = await getCurrentUserData();
     if (userData) {
         stats.customAffirmation = userData.affirmation;
-        currentUserEmail = userData.email;
+        currentUserEmail = userData.email || '';
+        console.log('Current user email set to:', currentUserEmail);
         stats.challenge = {
             startDate: userData.createdAt,
             currentDay: userData.currentDay,
