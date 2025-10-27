@@ -1089,9 +1089,13 @@ document.getElementById('register-btn').addEventListener('click', async () => {
     try {
         const userData = await apiCall(`/users/${username}/check`);
         if (!userData.available) {
-            alert('Username-ul este deja folosit!');
+            alert('⚠️ Username-ul este deja folosit!');
+            btn.textContent = '✅ Înregistrează-te';
+            btn.disabled = false;
             return;
         }
+        
+        alert('✅ Înregistrare reușită! Caut grupurile disponibile...');
         
         await apiCall(`/users/${username}`, 'POST', {
             firstName,
