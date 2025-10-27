@@ -796,19 +796,25 @@ function showStatusMessage(message, type) {
 async function quickLogin(username) {
     // Login rapid fără PIN pentru utilizatori autentificați
     username = username.trim();
+    console.log('Quick login initiated for:', username);
     
     if (!username) return;
     
     try {
-        await apiCall(`/users/${username}`, 'GET');
+        const userData = await apiCall(`/users/${username}`, 'GET');
+        console.log('User data loaded:', userData);
         
         currentUser = username;
         localStorage.setItem('currentUser', username);
+        console.log('Loading user data...');
         await loadUserData();
+        console.log('Showing main screen...');
         showMainScreen();
         await updateCommunityStats();
+        console.log('Quick login successful!');
     } catch (error) {
         console.error('Error in quick login:', error);
+        alert('Eroare la login: ' + error);
         // Dacă eșuează, cere PIN
         loginUser(username);
     }
