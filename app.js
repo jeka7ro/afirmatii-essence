@@ -524,6 +524,7 @@ document.getElementById('toggle-history-btn').addEventListener('click', function
         this.style.transform = 'rotate(180deg)';
         displayRepetitionsHistory();
         updateChallengeCalendar();
+        updateMainCalendar();
     }
 });
 
@@ -553,6 +554,13 @@ function displayRepetitionsHistory() {
     }).join('');
     
     // Update calendar after displaying history
+    updateChallengeCalendar();
+}
+
+function updateMainCalendar() {
+    const mainCalendar = document.getElementById('main-calendar');
+    if (!mainCalendar) return;
+    
     updateChallengeCalendar();
 }
 
