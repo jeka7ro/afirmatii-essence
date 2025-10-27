@@ -71,9 +71,7 @@ let autoInterval = null;
 let notificationPermission = false;
 let currentUser = null;
 // Production API URL
-const API_URL = typeof window !== 'undefined' && window.location.hostname === 'localhost' ?
-    'http://localhost:10000/api' :
-    'https://essence-afirmatii-api.onrender.com/api';
+const API_URL = 'https://essence-afirmatii-api.onrender.com/api';
 
 // API Functions
 async function apiCall(endpoint, method = 'GET', data = null) {
