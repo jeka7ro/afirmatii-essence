@@ -123,12 +123,14 @@ async function saveCurrentUserData() {
             phone: userData.phone,
             affirmation: stats.customAffirmation || userData.affirmation,
             avatar: userData.avatar,
-            totalRepetitions: stats.challenge.totalRepetitions || 0,
-            currentDay: stats.challenge.currentDay || 0,
-            todayRepetitions: stats.challenge.todayRepetitions || 0,
-            lastDate: stats.challenge.lastDate || new Date().toDateString(),
+            totalRepetitions: stats.challenge.totalRepetitions !== undefined ? stats.challenge.totalRepetitions : (userData.totalRepetitions || 0),
+            currentDay: stats.challenge.currentDay !== undefined ? stats.challenge.currentDay : (userData.currentDay || 0),
+            todayRepetitions: stats.challenge.todayRepetitions !== undefined ? stats.challenge.todayRepetitions : (userData.todayRepetitions || 0),
+            lastDate: stats.challenge.lastDate || userData.lastDate || new Date().toDateString(),
             repetitionHistory: JSON.stringify(stats.challenge.todayRecords || [])
         };
+        
+        console.log('Saving to server - totalRepetitions:', data.totalRepetitions, 'todayRepetitions:', data.todayRepetitions, 'currentDay:', data.currentDay);
         
         await apiCall(`/users/${currentUser}`, 'PUT', data);
         console.log('User data saved to server:', data);
