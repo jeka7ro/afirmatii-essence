@@ -289,12 +289,7 @@ function updateStats() {
 
 // Actualizează afișarea provocării
 function updateChallengeDisplay() {
-    // Check if main-screen is visible
-    const mainScreen = document.getElementById('main-screen');
-    if (!mainScreen || mainScreen.style.display === 'none') {
-        console.log('Main screen not visible, skipping updateChallengeDisplay');
-        return;
-    }
+    // Always update, don't check if screen is visible
     
     const daysLeft = Math.max(0, 30 - stats.challenge.currentDay);
     const currentReps = stats.challenge.todayRepetitions || 0;

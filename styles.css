@@ -38,9 +38,14 @@ body {
 
 .header-buttons {
     display: flex;
-    gap: 6px;
+    gap: 4px;
     flex-wrap: nowrap;
     align-items: center;
+}
+
+.header-buttons .btn-small {
+    padding: 6px 12px;
+    font-size: 12px;
 }
 
 .header-logo {
