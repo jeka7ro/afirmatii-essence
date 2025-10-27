@@ -111,36 +111,6 @@
             <button id="cancel-register-btn" class="btn btn-secondary">❌ Anulează</button>
         </div>
         
-        <div class="login-form" id="login-form">
-            <h3>🔓 Conectează-te</h3>
-            <div class="form-group">
-                <label>Username:</label>
-                <input type="text" id="login-username" class="form-input" placeholder="Username">
-            </div>
-            <div class="form-group">
-                <label>Cod PIN (4 cifre):</label>
-                <input type="password" id="login-pin" class="form-input" placeholder="1234" maxlength="4">
-            </div>
-            <button class="btn btn-primary" id="login-submit-btn" style="width: 100%;">🔓 Conectează-te</button>
-            <div style="margin-top: 15px; text-align: center;">
-                <button class="btn btn-secondary" onclick="document.getElementById('register-form').style.display='block'; document.getElementById('login-form').style.display='none';" style="width: 100%;">
-                    ✏️ Înregistrare Nouă
-                </button>
-            </div>
-            <div style="margin-top: 10px; text-align: center;">
-                <button class="forgot-btn" onclick="showForgotPinModal()" style="background: transparent; border: none; color: #667eea; text-decoration: underline; cursor: pointer;">
-                    🔑 Am uitat PIN-ul
-                </button>
-            </div>
-            
-            <p class="login-hint" id="login-hint" style="display: none;">Sau alege un utilizator pentru conectare rapidă:</p>
-            <div class="users-list" id="users-list" style="display: none;"></div>
-            <p class="login-note" id="login-note" style="display: none;">
-                <small>💡 Click pe utilizatorul tău pentru login rapid (fără PIN)<br>
-                Click pe alți utilizatori pentru login cu PIN</small>
-            </p>
-        </div>
-        
         <!-- Forgot PIN Modal -->
         <div class="forgot-pin-modal" id="forgot-pin-modal" style="display: none;">
             <div class="settings-content">
