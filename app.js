@@ -1056,6 +1056,7 @@ document.getElementById('login-submit-btn').addEventListener('click', async () =
 });
 
 document.getElementById('register-btn').addEventListener('click', async () => {
+    const btn = document.getElementById('register-btn');
     const username = document.getElementById('reg-username').value;
     const firstName = document.getElementById('reg-first-name').value;
     const lastName = document.getElementById('reg-last-name').value;
@@ -1067,9 +1068,13 @@ document.getElementById('register-btn').addEventListener('click', async () => {
     const selectedAvatar = document.querySelector('.avatar-option.active')?.dataset.avatar || '👤';
     
     if (!username || !firstName || !email || !pin || !birthDate) {
-        alert('Completează toate câmpurile obligatorii!');
+        alert('⚠️ Completează toate câmpurile obligatorii!');
         return;
     }
+    
+    // Show loading
+    btn.textContent = '⏳ Se înregistrează...';
+    btn.disabled = true;
     
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         alert('Introduceți un email valid!');
@@ -1104,7 +1109,11 @@ document.getElementById('register-btn').addEventListener('click', async () => {
         localStorage.setItem('currentUser', username);
         await showGroupSelection();
     } catch (error) {
-        alert('Eroare la înregistrare: ' + error.message);
+        console.error('Registration error:', error);
+        alert('❌ Eroare la înregistrare: ' + error.message);
+    } finally {
+        btn.textContent = '✅ Înregistrează-te';
+        btn.disabled = false;
     }
 });
 
