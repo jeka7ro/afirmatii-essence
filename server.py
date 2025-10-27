@@ -14,6 +14,10 @@ def after_request(response):
     response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
     return response
 
+@app.route('/api/groups', methods=['OPTIONS'])
+def groups_options():
+    return '', 200
+
 DATABASE = 'afirmatii.db'
 SUPER_ADMIN_EMAIL = 'jeka7ro@gmail.com'
 
