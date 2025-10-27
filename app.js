@@ -830,12 +830,12 @@ async function loadUserData() {
         currentUserEmail = userData.email || '';
         console.log('Current user email set to:', currentUserEmail);
         stats.challenge = {
-            startDate: userData.createdAt || new Date().toISOString(),
-            currentDay: userData.currentDay !== undefined ? userData.currentDay : 0,
-            todayRepetitions: userData.todayRepetitions !== undefined ? userData.todayRepetitions : 0,
-            lastDate: userData.lastDate || new Date().toDateString(),
-            totalRepetitions: userData.totalRepetitions !== undefined ? userData.totalRepetitions : 0,
-            todayRecords: userData.repetitionHistory ? JSON.parse(userData.repetitionHistory || '[]') : (userData.todayRecords || [])
+            startDate: userData.challenge_start_date || userData.createdAt || new Date().toISOString(),
+            currentDay: userData.current_day !== undefined ? userData.current_day : 0,
+            todayRepetitions: userData.today_repetitions !== undefined ? userData.today_repetitions : 0,
+            lastDate: userData.last_date || new Date().toDateString(),
+            totalRepetitions: userData.total_repetitions !== undefined ? userData.total_repetitions : 0,
+            todayRecords: userData.repetition_history ? JSON.parse(userData.repetition_history || '[]') : []
         };
         
         console.log('Loaded challenge data from server:', stats.challenge);
