@@ -1,12 +1,12 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import sqlite3
+import psycopg2
 import os
 from datetime import datetime
+from urllib.parse import urlparse
 
 app = Flask(__name__)
-# Remove CORS to avoid double headers
-# CORS(app, origins="*", ...)
+SUPER_ADMIN_EMAIL = 'jeka7ro@gmail.com'
 
 @app.after_request
 def after_request(response):
@@ -19,13 +19,19 @@ def after_request(response):
 def groups_options():
     return '', 200
 
-DATABASE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'afirmatii.db')
-SUPER_ADMIN_EMAIL = 'jeka7ro@gmail.com'
-
+# Use PostgreSQL if available, otherwise SQLite for local
+DATABASE_URL = os.environ.get('DATABASE_URL')
 def get_db():
-    conn = sqlite3.connect(DATABASE)
-    conn.row_factory = sqlite3.Row
-    return conn
+    if DATABASE_URL:
+        # PostgreSQL for production
+        conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+        return conn
+    else:
+        # SQLite for local development
+        import sqlite3
+        conn = sqlite3.connect('afirmatii.db')
+        conn.row_factory = sqlite3.Row
+        return conn
 
 def init_db():
     conn = get_db()
