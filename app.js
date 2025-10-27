@@ -237,29 +237,22 @@ function startChallenge() {
     }
 }
 
-// Verifică progresul zilnic
+// Verifică progresul zilnic - DOAR LA ÎNCEPUT, NU AUTO-RESET
 function checkDayProgress() {
     const today = new Date().toDateString();
     const lastDate = stats.challenge.lastDate;
     
-    if (today !== lastDate) {
-        // Zi nouă
-        if (today === new Date(stats.challenge.startDate).toDateString()) {
-            // Prima zi
-            stats.challenge.currentDay = 0;
-        } else if (lastDate) {
-            // Calculează zilele trecute
-            const daysDiff = Math.floor((new Date(today) - new Date(lastDate)) / (1000 * 60 * 60 * 24));
-            stats.challenge.currentDay = Math.min(29, stats.challenge.currentDay + daysDiff);
-        }
-        
-        stats.challenge.todayRepetitions = 0;
-        stats.challenge.todayRecords = []; // Resetează înregistrările pentru ziua nouă
+    // NU reseta automat decât dacă chiar e altă zi
+    if (lastDate && today !== lastDate) {
+        console.log('New day detected, but keeping today repetitions');
+        // NU reseta repetările - păstrează progresul zilnic
+        // Doar actualizează lastDate pentru următoarea verificare
         stats.challenge.lastDate = today;
         
-        // Dacă e zi nouă după ce s-a terminat provocarea
-        if (stats.challenge.currentDay >= 30) {
-            stats.challenge.currentDay = 30;
+        // Calculează zilele trecute
+        if (lastDate) {
+            const daysDiff = Math.floor((new Date(today) - new Date(lastDate)) / (1000 * 60 * 60 * 24));
+            stats.challenge.currentDay = Math.min(29, stats.challenge.currentDay + daysDiff);
         }
         
         saveStats();
