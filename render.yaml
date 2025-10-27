@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: afirmatii-essence-backend
+    name: afirmatii-app-2025
     env: python
     plan: free
     buildCommand: pip install --no-cache-dir -r requirements.txt
