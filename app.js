@@ -264,8 +264,11 @@ function checkDayProgress() {
 
 // Actualizează statisticile vizuale
 function updateStats() {
-    document.getElementById('total-count').textContent = stats.totalAfirmatii || 0;
-    document.getElementById('liked-count').textContent = stats.apreciate || 0;
+    const totalCountEl = document.getElementById('total-count');
+    const likedCountEl = document.getElementById('liked-count');
+    
+    if (totalCountEl) totalCountEl.textContent = stats.totalAfirmatii || 0;
+    if (likedCountEl) likedCountEl.textContent = stats.apreciate || 0;
 }
 
 // Actualizează afișarea provocării
@@ -672,16 +675,20 @@ async function loadUserData() {
             todayRecords: userData.todayRecords || []
         };
         
-        // Actualizează avatarul în UI
-        if (userData.avatar) {
-            document.getElementById('current-user-avatar').textContent = userData.avatar;
+        // Actualizează avatarul în UI (doar dacă elementul există)
+        const avatarEl = document.getElementById('current-user-avatar');
+        if (userData.avatar && avatarEl) {
+            avatarEl.textContent = userData.avatar;
         }
         
-        // Verifică dacă e admin sau super admin și arată butonul
-        if (userData.role === 'admin' || userData.role === 'super_admin') {
-            document.getElementById('admin-btn').style.display = 'block';
-        } else {
-            document.getElementById('admin-btn').style.display = 'none';
+        // Verifică dacă e admin sau super admin și arată butonul (doar dacă elementul există)
+        const adminBtn = document.getElementById('admin-btn');
+        if (adminBtn) {
+            if (userData.role === 'admin' || userData.role === 'super_admin') {
+                adminBtn.style.display = 'block';
+            } else {
+                adminBtn.style.display = 'none';
+            }
         }
         
         loadCustomAffirmation();
@@ -698,7 +705,11 @@ function showLoginScreen() {
 function showMainScreen() {
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('main-screen').style.display = 'block';
-    document.getElementById('current-user').textContent = currentUser;
+    
+    const currentUserEl = document.getElementById('current-user');
+    if (currentUserEl) {
+        currentUserEl.textContent = currentUser;
+    }
 }
 
 async function loginUser(username) {
