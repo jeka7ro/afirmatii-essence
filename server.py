@@ -63,6 +63,12 @@ def init_db():
     except:
         pass
     
+    # Add expiry_date column if not exists
+    try:
+        cursor.execute('ALTER TABLE groups ADD COLUMN expiry_date TEXT')
+    except:
+        pass
+    
     # Groups table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS groups (
