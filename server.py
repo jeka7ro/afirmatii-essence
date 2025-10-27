@@ -51,10 +51,24 @@ def init_db():
             today_repetitions INTEGER DEFAULT 0,
             last_date TEXT,
             repetition_history TEXT,
+            completed_days TEXT,
+            challenge_start_date TEXT,
             created_at TEXT,
             last_login TEXT
         )
     ''')
+    
+    # Add completed_days column if not exists
+    try:
+        cursor.execute('ALTER TABLE users ADD COLUMN completed_days TEXT')
+    except:
+        pass
+    
+    # Add challenge_start_date column if not exists
+    try:
+        cursor.execute('ALTER TABLE users ADD COLUMN challenge_start_date TEXT')
+    except:
+        pass
     
     # Add start_date column if not exists
     try:
