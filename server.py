@@ -157,6 +157,16 @@ def get_users():
     db.close()
     return jsonify([dict(u) for u in users])
 
+@app.route('/api/users/<username>/check', methods=['GET'])
+def check_username(username):
+    db = get_db()
+    user = db.execute('SELECT username FROM users WHERE username = ?', (username,)).fetchone()
+    db.close()
+    
+    if user:
+        return jsonify({'available': False})
+    return jsonify({'available': True})
+
 @app.route('/api/users/<username>', methods=['GET'])
 def get_user(username):
     db = get_db()
