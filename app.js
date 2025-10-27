@@ -319,12 +319,48 @@ function updateChallengeDisplay() {
         }
     }
     
+    // Afișează timp până la expirare
+    const timeRemainingEl = document.getElementById('time-remaining-display');
+    if (timeRemainingEl && stats.challenge.startDate) {
+        const startDate = new Date(stats.challenge.startDate);
+        const expiryDate = new Date(startDate);
+        expiryDate.setDate(expiryDate.getDate() + 30);
+        const now = new Date();
+        const diffTime = expiryDate - now;
+        
+        if (diffTime > 0) {
+            const daysRemain = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            const hoursRemain = Math.floor((diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            timeRemainingEl.textContent = `${daysRemain} zile și ${hoursRemain} ore rămase`;
+            
+            // Calcul: cât ar trebui să faci pe oră pentru a ajunge la 100/zi
+            const totalRepsNeeded = 100 * (30 - stats.challenge.currentDay);
+            const hoursRemaining = (daysRemain * 24) + hoursRemain;
+            const repsPerHourNeeded = hoursRemaining > 0 ? Math.ceil(totalRepsNeeded / hoursRemaining) : 0;
+            
+            console.log('Total reps needed:', totalRepsNeeded, 'Hours remaining:', hoursRemaining, 'Reps/hour needed:', repsPerHourNeeded);
+            
+            // Salvează pentru afișare mai jos
+            window.currentRepsPerHourNeeded = repsPerHourNeeded;
+        } else {
+            timeRemainingEl.textContent = 'Provocarea a expirat';
+        }
+    } else if (timeRemainingEl && !stats.challenge.startDate) {
+        timeRemainingEl.textContent = 'Începe provocarea pentru a vedea timpul rămas';
+    }
+    
     // Progres repetări
     const repsProgress = (currentReps / targetReps) * 100;
     const repsTodayEl = document.getElementById('repetitions-today');
     if (repsTodayEl) {
         repsTodayEl.textContent = `${currentReps}/${targetReps}`;
         console.log('Updated repetitions today:', repsTodayEl.textContent);
+        
+        // Afișează repetările necesare pe oră
+        const repsPerHourEl = document.getElementById('reps-per-hour-needed');
+        if (repsPerHourEl && window.currentRepsPerHourNeeded) {
+            repsPerHourEl.textContent = `(${window.currentRepsPerHourNeeded} repetări/oră)`;
+        }
     } else {
         console.error('repetitions-today element not found!');
     }

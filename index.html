@@ -322,7 +322,10 @@
 
         <div class="challenge-box">
             <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 style="margin: 0;">🎯 Provocare 30 Zile</h3>
+                <div>
+                    <h3 style="margin: 0;">🎯 Provocare 30 Zile</h3>
+                    <p class="challenge-subtitle" id="time-remaining-display" style="margin: 5px 0 0 0; color: #5f6368; font-size: 12px;"></p>
+                </div>
                 <button id="toggle-history-btn" class="btn btn-small" style="padding: 8px 15px; font-size: 0.9em; background: #667eea; border: none; border-radius: 8px;">📜 Istoric</button>
             </div>
             <p class="challenge-subtitle">Repeteți afirmația 100 de ori pe zi</p>
@@ -370,6 +373,7 @@
                 <div class="progress-item">
                     <div class="progress-label">
                         <span>Repetări Astăzi: <strong id="repetitions-today">0/100</strong></span>
+                        <span id="reps-per-hour-needed" style="color: #5f6368; font-size: 0.9em; margin-left: 10px;"></span>
                     </div>
                     <div class="progress-bar-container">
                         <div class="progress-bar" id="repetitions-progress-bar"></div>
