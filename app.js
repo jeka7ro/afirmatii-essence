@@ -408,8 +408,12 @@ function attachRepeatButton() {
     if (repeatBtn && !repeatBtn.hasAttribute('data-listener-attached')) {
         repeatBtn.setAttribute('data-listener-attached', 'true');
         repeatBtn.addEventListener('click', async () => {
+            console.log('Am repetat button clicked!');
             await addRepetition();
         });
+        console.log('Repeat button listener attached successfully');
+    } else if (!repeatBtn) {
+        console.error('repeat-btn element not found!');
     }
 }
 
@@ -2011,6 +2015,16 @@ initUserSession().catch(err => {
     console.error('Error initializing session:', err);
     showLoginScreen();
 });
+
+// Try to attach repeat button on page load as well
+setTimeout(() => {
+    attachRepeatButton();
+}, 500);
+
+// Also try after a short delay
+setTimeout(() => {
+    attachRepeatButton();
+}, 1000);
 
 // Actualizează feed la fiecare 30 secunde
 setInterval(async () => {
