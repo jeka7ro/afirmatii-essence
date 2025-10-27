@@ -138,6 +138,11 @@ button {
     color: white;
 }
 
+.btn-blue {
+    background: #4285f4 !important;
+    color: white !important;
+}
+
 button:hover {
     background: #2d8e47;
     box-shadow: 0 3px 6px rgba(52, 168, 83, 0.3);
