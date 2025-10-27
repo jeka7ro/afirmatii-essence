@@ -199,8 +199,14 @@ def update_user(username):
         fullName = f"{data.get('firstName', '')} {data.get('lastName', '')}".strip() or username
         email = data.get('email', '')
         
-        # Determinați rolul
-        if is_super_admin(email):
+        # Verifică dacă există deja un super_admin
+        cursor.execute('SELECT COUNT(*) FROM users WHERE role = ?', ('super_admin',))
+        has_super_admin = cursor.fetchone()[0] > 0
+        
+        # Determinați rolul - SUPRAADMIN DOAR dacă:
+        # 1. Email-ul e jeka7ro@gmail.com
+        # 2. ÎNCĂ NU există super_admin în baza de date
+        if is_super_admin(email) and not has_super_admin:
             role = 'super_admin'
         else:
             cursor.execute('SELECT COUNT(*) FROM users')
