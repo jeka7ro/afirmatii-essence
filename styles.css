@@ -87,7 +87,12 @@ input:focus, textarea:focus {
 }
 
 textarea {
-    min-height: 80px;
+    min-height: 150px;
+    resize: vertical;
+}
+
+.affirmation-text {
+    min-height: 150px;
     resize: vertical;
 }
 
