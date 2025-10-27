@@ -96,7 +96,8 @@ textarea {
 }
 
 .affirmation-text {
-    min-height: 150px;
+    min-height: 350px !important;
+    height: 350px !important;
     max-height: none;
     resize: vertical;
     overflow-y: auto;
