@@ -19,7 +19,7 @@
         <div class="card">
             <h2>Login</h2>
             <input type="text" id="username" placeholder="Username">
-            <input type="text" id="pin" placeholder="PIN" maxlength="4">
+            <input type="password" id="pin" placeholder="PIN" maxlength="4" autocomplete="off">
             <button onclick="login()">Login</button>
             <p style="text-align: center; margin-top: 20px;">
                 <a href="#" onclick="showRegister()">Înregistrare Nouă</a>
@@ -38,7 +38,7 @@
             <input type="text" id="reg-firstName" placeholder="Prenume">
             <input type="text" id="reg-lastName" placeholder="Nume">
             <input type="email" id="reg-email" placeholder="Email">
-            <input type="text" id="reg-pin" placeholder="PIN 4 cifre" maxlength="4">
+            <input type="password" id="reg-pin" placeholder="PIN 4 cifre" maxlength="4" autocomplete="off">
             <input type="date" id="reg-birthDate" placeholder="Data nașterii">
             <textarea id="reg-affirmation" placeholder="Afirmația ta (opțional)">Sunt capabil să realizez tot ce îmi propun.</textarea>
             <button onclick="register()">Înregistrează-te</button>
