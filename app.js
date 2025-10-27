@@ -876,7 +876,7 @@ if (closeForgotBtn) {
 const resetPinBtn = document.getElementById('reset-pin-btn');
 if (resetPinBtn) {
     resetPinBtn.addEventListener('click', async () => {
-    const username = document.getElementById('forgot-username').value;
+        const username = document.getElementById('forgot-username').value;
     const email = document.getElementById('forgot-email').value;
     const statusDiv = document.getElementById('reset-status');
     
@@ -894,7 +894,7 @@ if (resetPinBtn) {
     } catch (error) {
         statusDiv.textContent = '❌ ' + error.message;
         statusDiv.className = 'status-message error';
-    }
+        }
     });
 }
 
@@ -902,41 +902,42 @@ if (resetPinBtn) {
 const confirmResetPinBtn = document.getElementById('confirm-reset-pin-btn');
 if (confirmResetPinBtn) {
     confirmResetPinBtn.addEventListener('click', async () => {
-    const username = document.getElementById('forgot-username').value;
-    const resetCode = document.getElementById('reset-code').value;
-    const newPin = document.getElementById('new-reset-pin').value;
-    const statusDiv = document.getElementById('reset-status');
-    
-    if (!resetCode || !newPin) {
-        statusDiv.textContent = '⚠️ Completează toate câmpurile!';
-        statusDiv.className = 'status-message error';
-        return;
-    }
-    
-    if (!/^\d{4}$/.test(newPin)) {
-        statusDiv.textContent = '❌ PIN-ul trebuie să fie format din 4 cifre!';
-        statusDiv.className = 'status-message error';
-        return;
-    }
-    
-    try {
-        const result = await apiCall(`/users/${username}/reset-confirm`, 'POST', {
-            code: resetCode,
-            newPin: newPin
-        });
+        const username = document.getElementById('forgot-username').value;
+        const resetCode = document.getElementById('reset-code').value;
+        const newPin = document.getElementById('new-reset-pin').value;
+        const statusDiv = document.getElementById('reset-status');
         
-        statusDiv.textContent = '✅ ' + result.message;
-        statusDiv.className = 'status-message success';
+        if (!resetCode || !newPin) {
+            statusDiv.textContent = '⚠️ Completează toate câmpurile!';
+            statusDiv.className = 'status-message error';
+            return;
+        }
         
-        setTimeout(() => {
-            document.getElementById('forgot-pin-modal').classList.remove('active');
-            alert('PIN resetat cu succes! Te poți conecta acum.');
-        }, 2000);
-    } catch (error) {
-        statusDiv.textContent = '❌ ' + error.message;
-        statusDiv.className = 'status-message error';
-    }
-});
+        if (!/^\d{4}$/.test(newPin)) {
+            statusDiv.textContent = '❌ PIN-ul trebuie să fie format din 4 cifre!';
+            statusDiv.className = 'status-message error';
+            return;
+        }
+        
+        try {
+            const result = await apiCall(`/users/${username}/reset-confirm`, 'POST', {
+                code: resetCode,
+                newPin: newPin
+            });
+            
+            statusDiv.textContent = '✅ ' + result.message;
+            statusDiv.className = 'status-message success';
+            
+            setTimeout(() => {
+                document.getElementById('forgot-pin-modal').classList.remove('active');
+                alert('PIN resetat cu succes! Te poți conecta acum.');
+            }, 2000);
+        } catch (error) {
+            statusDiv.textContent = '❌ ' + error.message;
+            statusDiv.className = 'status-message error';
+        }
+    });
+}
 
 // Check username availability
 document.getElementById('reg-username').addEventListener('blur', async () => {
