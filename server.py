@@ -157,6 +157,26 @@ def get_users():
     db.close()
     return jsonify([dict(u) for u in users])
 
+@app.route('/api/repetition', methods=['POST', 'OPTIONS'])
+def add_repetition():
+    if request.method == 'OPTIONS':
+        return jsonify({}), 200
+    
+    data = request.json
+    username = data.get('username')
+    repetition = data.get('repetition')
+    
+    db = get_db()
+    user = db.execute('SELECT * FROM users WHERE username = ?', (username,)).fetchone()
+    
+    if user:
+        db.execute('UPDATE users SET total_repetitions = ?, today_repetitions = ? WHERE username = ?', 
+                   (user['total_repetitions'] + 1, user['today_repetitions'] + 1, username))
+        db.commit()
+    
+    db.close()
+    return jsonify({'success': True})
+
 @app.route('/api/users/<username>/check', methods=['GET'])
 def check_username(username):
     db = get_db()
