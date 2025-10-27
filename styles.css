@@ -96,12 +96,16 @@ textarea {
 }
 
 .affirmation-text {
-    min-height: auto;
-    height: auto;
-    resize: none;
-    overflow: visible;
+    min-height: 150px;
+    max-height: none;
+    resize: vertical;
+    overflow-y: auto;
     white-space: pre-wrap;
     word-wrap: break-word;
+    border: 1px solid #dadce0;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 14px;
 }
 
 label {
