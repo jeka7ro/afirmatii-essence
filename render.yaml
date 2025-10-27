@@ -3,12 +3,10 @@ services:
     name: afirmatii-backend
     env: python
     plan: free
-    buildCommand: pip install -r requirements.txt
+    buildCommand: pip install --no-cache-dir -r requirements.txt
     startCommand: python server.py
     envVars:
       - key: PYTHON_VERSION
-        value: 3.9.16
-    disk:
-      name: afirmatii-data
-      mountPath: /opt/render/project/src
-      sizeGB: 1
+        value: 3.11.0
+      - key: PIP_NO_CACHE_DIR
+        value: "1"
