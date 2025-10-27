@@ -23,6 +23,7 @@ def init_db():
             email TEXT,
             pin TEXT,
             affirmation TEXT,
+            role TEXT DEFAULT 'user',
             total_repetitions INTEGER DEFAULT 0
         )
     ''')
@@ -32,21 +33,34 @@ def init_db():
 @app.route('/api/users', methods=['GET'])
 def get_users():
     db = get_db()
-    users = db.execute('SELECT username, total_repetitions FROM users').fetchall()
+    users = db.execute('SELECT username, total_repetitions, role, email FROM users').fetchall()
     db.close()
     return jsonify([dict(u) for u in users])
+
+@app.route('/api/users/<username>', methods=['GET'])
+def get_user(username):
+    db = get_db()
+    user = db.execute('SELECT * FROM users WHERE username = ?', (username,)).fetchone()
+    db.close()
+    if user:
+        return jsonify(dict(user))
+    return jsonify({'error': 'User not found'}), 404
 
 @app.route('/api/users/<username>', methods=['POST'])
 def create_user(username):
     data = request.json
+    
+    # Setează super_admin dacă email este jeka7ro@gmail.com
+    role = 'super_admin' if data['email'] == 'jeka7ro@gmail.com' else 'user'
+    
     db = get_db()
     db.execute('''
-        INSERT INTO users (username, first_name, last_name, email, pin, affirmation)
-        VALUES (?, ?, ?, ?, ?, ?)
-    ''', (username, data['firstName'], data['lastName'], data['email'], data['pin'], data['affirmation']))
+        INSERT INTO users (username, first_name, last_name, email, pin, affirmation, role)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    ''', (username, data['firstName'], data['lastName'], data['email'], data['pin'], data['affirmation'], role))
     db.commit()
     db.close()
-    return jsonify({'success': True})
+    return jsonify({'success': True, 'role': role})
 
 if __name__ == '__main__':
     init_db()
