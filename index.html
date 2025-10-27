@@ -448,13 +448,12 @@
         <div class="admin-content">
             <div class="admin-tab-content active" id="tab-groups">
                 <div class="form-group">
-                    <h3>Crează Grup Nou</h3>
+                    <h3>Crează Grup Nou (30 zile)</h3>
                     <input type="text" id="new-group-name" class="form-input" placeholder="Nume grup">
                     <textarea id="new-group-desc" class="form-textarea" placeholder="Descriere (opțional)"></textarea>
                     
-                    <label style="display: block; margin: 10px 0 5px 0; font-weight: 500; color: #202124;">Perioada grupului:</label>
                     <input type="date" id="new-group-start-date" class="form-input" placeholder="Data început">
-                    <input type="date" id="new-group-end-date" class="form-input" placeholder="Data sfârșit">
+                    <div style="font-size: 12px; color: #5f6368; margin-top: -10px; margin-bottom: 10px;">Grupul va dura 30 zile de la data început</div>
                     
                     <button id="create-group-btn" class="btn btn-primary">Creează Grup</button>
                     <div id="group-creation-status" class="status-message"></div>
