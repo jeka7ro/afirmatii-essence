@@ -534,8 +534,10 @@ def send_message():
     
     return jsonify({'success': True})
 
+# Initialize DB at module load
+init_db()
+
 if __name__ == '__main__':
-    init_db()
     port = int(os.environ.get('PORT', 3000))
     print(f"🚀 Server pornit pe http://0.0.0.0:{port}")
     print("📊 Baza de date SQLite inițializată")
