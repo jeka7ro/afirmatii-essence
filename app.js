@@ -946,6 +946,34 @@ document.querySelectorAll('.avatar-option').forEach(option => {
 });
 
 // Register button
+// Login submit button
+document.getElementById('login-submit-btn').addEventListener('click', async () => {
+    const username = document.getElementById('login-username').value.trim();
+    const pin = document.getElementById('login-pin').value;
+    
+    if (!username || !pin) {
+        alert('Te rog completează username și PIN!');
+        return;
+    }
+    
+    try {
+        const userData = await apiCall(`/users/${username}`, 'GET');
+        
+        if (userData.pin !== pin) {
+            alert('PIN incorect!');
+            return;
+        }
+        
+        currentUser = username;
+        localStorage.setItem('currentUser', username);
+        await loadUserData();
+        showMainScreen();
+        await updateCommunityStats();
+    } catch (error) {
+        alert('Eroare la conectare: ' + error.message);
+    }
+});
+
 document.getElementById('register-btn').addEventListener('click', async () => {
     const username = document.getElementById('reg-username').value;
     const firstName = document.getElementById('reg-first-name').value;

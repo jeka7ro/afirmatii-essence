@@ -20,6 +20,30 @@
             <p class="subtitle">Conectează-te cu comunitatea ta</p>
         </header>
         
+        <!-- Login Form -->
+        <div class="register-form" id="login-form">
+            <h3>🔓 Conectează-te</h3>
+            <div class="form-group">
+                <label>Username:</label>
+                <input type="text" id="login-username" class="form-input" placeholder="Username">
+            </div>
+            <div class="form-group">
+                <label>Cod PIN (4 cifre):</label>
+                <input type="password" id="login-pin" class="form-input" placeholder="1234" maxlength="4">
+            </div>
+            <button class="btn btn-primary" id="login-submit-btn" style="width: 100%;">🔓 Conectează-te</button>
+            <div style="margin-top: 15px; text-align: center;">
+                <button class="btn btn-secondary" onclick="document.getElementById('register-form').style.display='block'; document.getElementById('login-form').style.display='none';" style="width: 100%;">
+                    ✏️ Înregistrare Nouă
+                </button>
+            </div>
+            <div style="margin-top: 10px; text-align: center;">
+                <button class="forgot-btn" onclick="showForgotPinModal()" style="background: transparent; border: none; color: #667eea; text-decoration: underline; cursor: pointer;">
+                    🔑 Am uitat PIN-ul
+                </button>
+            </div>
+        </div>
+        
         <div class="register-form" id="register-form" style="display: none;">
             <h3>📝 Înregistrare Nouă</h3>
             
