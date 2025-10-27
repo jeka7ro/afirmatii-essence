@@ -11,28 +11,34 @@
 </head>
 <body>
     <div class="container">
-        <h1>Afirmatii Essence Advanced</h1>
+        <h1>Afirmatii Essence</h1>
         
         <div id="login-screen">
-            <h2>Login</h2>
-            <input type="text" id="username" placeholder="Username">
-            <input type="text" id="pin" placeholder="PIN" maxlength="4">
-            <button onclick="login()">Login</button>
+            <div class="card">
+                <h2>Login</h2>
+                <input type="text" id="username" placeholder="Username">
+                <input type="text" id="pin" placeholder="PIN" maxlength="4">
+                <button onclick="login()">Login</button>
+            </div>
             
-            <h3>Înregistrare Nouă</h3>
-            <input type="text" id="reg-username" placeholder="Username">
-            <input type="text" id="reg-firstName" placeholder="Prenume">
-            <input type="text" id="reg-lastName" placeholder="Nume">
-            <input type="email" id="reg-email" placeholder="Email">
-            <input type="text" id="reg-pin" placeholder="PIN 4 cifre" maxlength="4">
-            <textarea id="reg-affirmation" placeholder="Afirmatie">Sunt capabil să realizez tot ce îmi propun.</textarea>
-            <button onclick="register()">Înregistrează-te</button>
+            <div class="card">
+                <h2>Inregistrare Noua</h2>
+                <input type="text" id="reg-username" placeholder="Username">
+                <input type="text" id="reg-firstName" placeholder="Prenume">
+                <input type="text" id="reg-lastName" placeholder="Nume">
+                <input type="email" id="reg-email" placeholder="Email">
+                <input type="text" id="reg-pin" placeholder="PIN 4 cifre" maxlength="4">
+                <textarea id="reg-affirmation" placeholder="Afirmatie">Sunt capabil să realizez tot ce îmi propun.</textarea>
+                <button onclick="register()">Inregistreazate</button>
+            </div>
         </div>
         
         <div id="main-screen" style="display:none;">
-            <h2>Afirmația Mea</h2>
-            <p id="affirmation-display"></p>
-            <button onclick="logout()">Logout</button>
+            <div class="card">
+                <h2>Afirmatia Mea</h2>
+                <p id="affirmation-display"></p>
+                <button onclick="logout()">Logout</button>
+            </div>
         </div>
     </div>
     <script src="app.js"></script>
