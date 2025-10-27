@@ -501,11 +501,11 @@ document.getElementById('toggle-history-btn').addEventListener('click', function
     
     if (isVisible) {
         historyDiv.style.display = 'none';
-        this.textContent = '+';
+        this.textContent = '📜 Istoric';
         this.style.transform = 'rotate(0deg)';
     } else {
         historyDiv.style.display = 'block';
-        this.textContent = '−';
+        this.textContent = '📜 Ascunde';
         this.style.transform = 'rotate(180deg)';
         displayRepetitionsHistory();
         updateChallengeCalendar();
@@ -831,21 +831,18 @@ async function loadUserData() {
         currentUserEmail = userData.email || '';
         console.log('Current user email set to:', currentUserEmail);
         
-        // FORȚEAZĂ încărcarea datelor de pe server, ignoră localStorage
+        // FOLOSEȘTE DOAR DATELE DE PE SERVER - IGNORĂ COMPLET LOCALSTORAGE
         stats.challenge = {
             startDate: userData.challenge_start_date || userData.createdAt || new Date().toISOString(),
-            currentDay: userData.current_day !== undefined ? userData.current_day : 0,
-            todayRepetitions: userData.today_repetitions !== undefined ? userData.today_repetitions : 0,
+            currentDay: userData.current_day || 0,
+            todayRepetitions: userData.today_repetitions || 0,
             lastDate: userData.last_date || new Date().toDateString(),
-            totalRepetitions: userData.total_repetitions !== undefined ? userData.total_repetitions : 0,
-            todayRecords: userData.repetition_history ? JSON.parse(userData.repetition_history || '[]') : []
+            totalRepetitions: userData.total_repetitions || 0,
+            todayRecords: []
         };
         
-        console.log('FORCED RELOAD from server - userData.today_repetitions:', userData.today_repetitions);
-        console.log('Loaded challenge data from server:', stats.challenge);
-        
-        // Salvează în localStorage pentru a sincroniza
-        saveStats();
+        console.log('SERVER DATA:', userData.today_repetitions, userData.total_repetitions);
+        console.log('STATS CHALLENGE:', stats.challenge);
         
         // Actualizează avatarul în UI (doar dacă elementul există)
         const avatarEl = document.getElementById('current-user-avatar');
