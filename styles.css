@@ -65,7 +65,7 @@ textarea {
 
 button {
     padding: 12px 24px;
-    background: linear-gradient(135deg, #34a853 0%, #2d8e47 100%);
+    background: #34a853;
     color: #ffffff;
     border: none;
     border-radius: 8px;
@@ -73,36 +73,19 @@ button {
     font-weight: 500;
     font-family: 'Inter', sans-serif;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(52, 168, 83, 0.25);
-    position: relative;
-    overflow: hidden;
-}
-
-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: left 0.5s;
-}
-
-button:hover::before {
-    left: 100%;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(52, 168, 83, 0.2);
 }
 
 button:hover {
-    background: linear-gradient(135deg, #2d8e47 0%, #27a744 100%);
-    box-shadow: 0 4px 12px rgba(52, 168, 83, 0.35);
-    transform: translateY(-2px);
+    background: #2d8e47;
+    box-shadow: 0 3px 10px rgba(52, 168, 83, 0.3);
+    transform: translateY(-1px);
 }
 
 button:active {
     transform: translateY(0);
-    box-shadow: 0 2px 6px rgba(52, 168, 83, 0.25);
+    box-shadow: 0 1px 3px rgba(52, 168, 83, 0.2);
 }
 
 #main-screen p {
