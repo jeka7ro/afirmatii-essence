@@ -863,7 +863,7 @@ async function loadUserData() {
             todayRepetitions: userData.today_repetitions || 0,
             lastDate: userData.last_date || new Date().toDateString(),
             totalRepetitions: userData.total_repetitions || 0,
-            todayRecords: []
+            todayRecords: userData.repetition_history ? JSON.parse(userData.repetition_history) : []
         };
         
         console.log('SERVER DATA:', userData.today_repetitions, userData.total_repetitions);
@@ -905,6 +905,7 @@ async function loadUserData() {
         
         updateStats();
         updateChallengeDisplay();
+        updateMainCalendar();
     }
 }
 
