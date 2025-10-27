@@ -107,6 +107,10 @@ def get_db():
 def is_super_admin(email):
     return email and email.lower() == SUPER_ADMIN_EMAIL
 
+@app.route('/', methods=['GET'])
+def health():
+    return jsonify({'status': 'ok', 'service': 'afirmatii-backend'})
+
 @app.route('/api/users', methods=['GET'])
 def get_users():
     conn = get_db()
