@@ -1,0 +1,7 @@
+server.py
+requirements.txt
+render.yaml
+afirmatii.db
+*.py
+__pycache__/
+
