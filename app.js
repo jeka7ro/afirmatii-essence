@@ -1950,6 +1950,9 @@ document.getElementById('settings-modal').addEventListener('click', (e) => {
 });
 
 function loadSettingsContent() {
+    // Încarcă datele personale curente
+    loadPersonalData();
+    
     // Generează avatarele pentru setări
     const avatars = ['👤', '👨', '👩', '👦', '👧', '🧑‍🦰', '👱‍♂️', '👱‍♀️', '🧑‍🦱', '🧑‍🦳', '👨‍🦰', '👩‍🦰', '👨‍🦱', '👩‍🦱', '🧑‍🦲'];
     const grid = document.getElementById('settings-avatar-grid');
@@ -1965,6 +1968,18 @@ function loadSettingsContent() {
             option.classList.add('active');
         });
     });
+}
+
+// Încarcă datele personale în formular
+async function loadPersonalData() {
+    const userData = await getCurrentUserData();
+    if (userData) {
+        document.getElementById('settings-first-name').value = userData.firstName || '';
+        document.getElementById('settings-last-name').value = userData.lastName || '';
+        document.getElementById('settings-email').value = userData.email || '';
+        document.getElementById('settings-phone').value = userData.phone || '';
+        document.getElementById('settings-birth-date').value = userData.birthDate || '';
+    }
 }
 
 // Change PIN
@@ -2093,6 +2108,53 @@ async function updateUserSettings(settings) {
     
     await apiCall(`/users/${currentUser}`, 'PUT', data);
 }
+
+// Save personal data button
+document.getElementById('save-personal-data-btn').addEventListener('click', async () => {
+    const statusDiv = document.getElementById('personal-data-status');
+    const firstName = document.getElementById('settings-first-name').value;
+    const lastName = document.getElementById('settings-last-name').value;
+    const email = document.getElementById('settings-email').value;
+    const phone = document.getElementById('settings-phone').value;
+    const birthDate = document.getElementById('settings-birth-date').value;
+    
+    if (!email) {
+        statusDiv.textContent = '⚠️ Email-ul este obligatoriu';
+        statusDiv.className = 'status-message error';
+        return;
+    }
+    
+    try {
+        const userData = await getCurrentUserData();
+        const data = {
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            phone: phone,
+            birthDate: birthDate,
+            pin: userData.pin,
+            affirmation: userData.affirmation || stats.customAffirmation,
+            avatar: userData.avatar,
+            totalRepetitions: stats.challenge.totalRepetitions,
+            currentDay: stats.challenge.currentDay,
+            todayRepetitions: stats.challenge.todayRepetitions,
+            lastDate: stats.challenge.lastDate
+        };
+        
+        await apiCall(`/users/${currentUser}`, 'PUT', data);
+        
+        statusDiv.textContent = '✅ Date actualizate cu succes!';
+        statusDiv.className = 'status-message success';
+        
+        setTimeout(() => {
+            statusDiv.textContent = '';
+        }, 2000);
+    } catch (error) {
+        console.error('Error saving personal data:', error);
+        statusDiv.textContent = '❌ Eroare la actualizarea datelor: ' + error;
+        statusDiv.className = 'status-message error';
+    }
+});
 
 // Logout button
 document.getElementById('logout-btn').addEventListener('click', () => {
