@@ -577,14 +577,10 @@ document.getElementById('toggle-history-btn').addEventListener('click', function
     if (isVisible) {
         historyDiv.style.display = 'none';
         this.textContent = '📜 Istoric';
-        this.style.transform = 'rotate(0deg)';
     } else {
         historyDiv.style.display = 'block';
-        this.textContent = '📜 Ascunde';
-        this.style.transform = 'rotate(180deg)';
+        this.textContent = '📜 Ascunde Istoric';
         displayRepetitionsHistory();
-        updateChallengeCalendar();
-        updateMainCalendar();
     }
 });
 
