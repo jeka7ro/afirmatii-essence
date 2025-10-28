@@ -71,8 +71,8 @@ let autoInterval = null;
 let notificationPermission = false;
 let currentUser = null;
 // Production API URL
-const API_URL = 'http://localhost:10000/api';
-// Local development API URL
+const API_URL = 'https://essence-afirmatii-api.onrender.com/api';
+// Local development API URL - uncomment for local testing
 // const API_URL = 'http://localhost:10000/api';
 
 // API Functions
