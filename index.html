@@ -319,19 +319,19 @@
             <div style="text-align: center;">
                 <button class="btn btn-secondary" id="save-affirmation-btn">💾 Salvează Afirmația</button>
             </div>
-        </div>
-
-        <!-- Calendar on main page -->
-        <div id="main-calendar-section" style="display: block;">
-            <div class="calendar-section" style="margin: 20px 0;">
-                <h4 style="margin-bottom: 10px;">📅 Calendar Provocare</h4>
-                <div id="main-calendar" class="challenge-calendar">
-                    <!-- Calendar will be generated here -->
+            
+            <!-- Calendar moved under affirmation -->
+            <div id="main-calendar-section" style="display: block; margin-top: 20px;">
+                <div class="calendar-section">
+                    <h4 style="margin-bottom: 10px;">📅 Calendar Provocare</h4>
+                    <div id="main-calendar" class="challenge-calendar">
+                        <!-- Calendar will be generated here -->
+                    </div>
+                    <p style="font-size: 12px; color: #5f6368; margin-top: 10px;">
+                        <span style="display: inline-block; width: 12px; height: 12px; background: #34a853; border-radius: 2px; margin-right: 5px;"></span> Zi completă (100 repetări)
+                        <span style="display: inline-block; width: 12px; height: 12px; background: #f0f0f0; border: 1px solid #ddd; border-radius: 2px; margin-left: 15px; margin-right: 5px;"></span> Zi în așteptare
+                    </p>
                 </div>
-                <p style="font-size: 12px; color: #5f6368; margin-top: 10px;">
-                    <span style="display: inline-block; width: 12px; height: 12px; background: #34a853; border-radius: 2px; margin-right: 5px;"></span> Zi completă (100 repetări)
-                    <span style="display: inline-block; width: 12px; height: 12px; background: #f0f0f0; border: 1px solid #ddd; border-radius: 2px; margin-left: 15px; margin-right: 5px;"></span> Zi în așteptare
-                </p>
             </div>
         </div>
 
@@ -409,9 +409,15 @@
                 </div>
             </div>
 
-            <div class="repeat-controls">
+            <div class="repeat-controls" style="display: flex; gap: 8px; justify-content: center; align-items: center;">
+                <button class="btn btn-repeat" id="repeat-minus-10" style="background: #dc3545;">
+                    Am repetat (-10)
+                </button>
                 <button class="btn btn-repeat" id="repeat-btn">
                     Am repetat (+1)
+                </button>
+                <button class="btn btn-repeat" id="repeat-plus-10" style="background: #34a853;">
+                    Am repetat (+10)
                 </button>
             </div>
         </div>

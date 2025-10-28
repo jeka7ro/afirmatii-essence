@@ -497,6 +497,9 @@ document.getElementById('save-affirmation-btn').addEventListener('click', () => 
 // Adaugă repetare - attach when ready
 function attachRepeatButton() {
     const repeatBtn = document.getElementById('repeat-btn');
+    const repeatPlus10Btn = document.getElementById('repeat-plus-10');
+    const repeatMinus10Btn = document.getElementById('repeat-minus-10');
+    
     if (repeatBtn && !repeatBtn.hasAttribute('data-listener-attached')) {
         repeatBtn.setAttribute('data-listener-attached', 'true');
         repeatBtn.addEventListener('click', async () => {
@@ -506,6 +509,61 @@ function attachRepeatButton() {
         console.log('Repeat button listener attached successfully');
     } else if (!repeatBtn) {
         console.error('repeat-btn element not found!');
+    }
+    
+    // Add +10 handler
+    if (repeatPlus10Btn && !repeatPlus10Btn.hasAttribute('data-listener-attached')) {
+        repeatPlus10Btn.setAttribute('data-listener-attached', 'true');
+        repeatPlus10Btn.addEventListener('click', async () => {
+            console.log('Am repetat +10 button clicked!');
+            for (let i = 0; i < 10; i++) {
+                await addRepetition();
+            }
+        });
+    }
+    
+    // Add -10 handler
+    if (repeatMinus10Btn && !repeatMinus10Btn.hasAttribute('data-listener-attached')) {
+        repeatMinus10Btn.setAttribute('data-listener-attached', 'true');
+        repeatMinus10Btn.addEventListener('click', async () => {
+            console.log('Am repetat -10 button clicked!');
+            await subtractRepetition(10);
+        });
+    }
+}
+
+async function subtractRepetition(count) {
+    if (stats.challenge.todayRepetitions >= count) {
+        stats.challenge.todayRepetitions -= count;
+        stats.challenge.totalRepetitions = Math.max(0, stats.challenge.totalRepetitions - count);
+        
+        // Remove last records
+        if (stats.challenge.todayRecords && stats.challenge.todayRecords.length > count) {
+            stats.challenge.todayRecords = stats.challenge.todayRecords.slice(0, -count);
+        } else {
+            stats.challenge.todayRecords = [];
+        }
+        
+        try {
+            await saveCurrentUserData();
+            await updateCommunityStats();
+        } catch (error) {
+            console.error('Error saving repetition:', error);
+        }
+        
+        updateChallengeDisplay();
+        
+        // Confirmare vizuală
+        const confirmation = document.createElement('div');
+        confirmation.style.cssText = 'position: fixed; top: 20px; right: 20px; background: #dc3545; color: white; padding: 15px 25px; border-radius: 10px; z-index: 1000; font-weight: 600; box-shadow: 0 4px 12px rgba(0,0,0,0.3);';
+        confirmation.textContent = `⚠️ Șterse ${count} repetări!`;
+        document.body.appendChild(confirmation);
+        
+        setTimeout(() => {
+            confirmation.style.opacity = '0';
+            confirmation.style.transition = 'opacity 0.5s';
+            setTimeout(() => confirmation.remove(), 500);
+        }, 2000);
     }
 }
 
