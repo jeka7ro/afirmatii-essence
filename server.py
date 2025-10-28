@@ -5,6 +5,7 @@ import os
 from datetime import datetime
 
 app = Flask(__name__)
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 SUPER_ADMIN_EMAIL = 'jeka7ro@gmail.com'
 
 @app.after_request
