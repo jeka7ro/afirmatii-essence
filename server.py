@@ -3,10 +3,29 @@ from flask_cors import CORS
 import sqlite3
 import os
 from datetime import datetime
+import psycopg2
+from psycopg2.extras import RealDictCursor
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 SUPER_ADMIN_EMAIL = 'jeka7ro@gmail.com'
+
+# Use PostgreSQL if available, otherwise SQLite
+DATABASE_URL = os.environ.get('DATABASE_URL')
+
+if DATABASE_URL:
+    # PostgreSQL (production)
+    def get_db():
+        conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+        conn.cursor_factory = RealDictCursor
+        return conn
+else:
+    # SQLite (development)
+    DATABASE = '/tmp/afirmatii_db.sqlite'
+    def get_db():
+        conn = sqlite3.connect(DATABASE)
+        conn.row_factory = sqlite3.Row
+        return conn
 
 @app.after_request
 def after_request(response):
