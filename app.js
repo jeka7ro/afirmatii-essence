@@ -782,28 +782,54 @@ async function addRepetition() {
     }
 }
 
-document.getElementById('reset-btn').addEventListener('click', () => {
-    if (confirm('Ești sigur că vrei să resetezi toată provocarea? Toate datele vor fi șterse.')) {
+document.getElementById('reset-btn').addEventListener('click', async () => {
+    if (confirm('Ești sigur că vrei să resetezi toată provocarea? Toate progresul va fi șters și vei începe un ciclu nou de 30 zile.')) {
         stats.afirmatiiVazute.clear();
         stats.afirmatiiApreciate.clear();
         stats.totalAfirmatii = 0;
         stats.apreciate = 0;
         stats.challenge = {
-            startDate: null,
+            startDate: new Date().toISOString(),
             currentDay: 0,
             todayRepetitions: 0,
-            lastDate: null,
+            lastDate: new Date().toDateString(),
             totalRepetitions: 0,
-            todayRecords: []
+            todayRecords: [],
+            repetition_history: []
         };
         
         if (stats.autoMode) stopAutoMode();
-        startChallenge();
-        saveStats();
+        await saveCurrentUserData();
         updateStats();
         updateChallengeDisplay();
+        updateChallengeCalendar();
+        updateMainCalendar();
+        
+        alert('✅ Provocarea a fost resetată! Ai început un ciclu nou de 30 zile.');
     }
 });
+
+// Reset ziua curentă - set today's repetitions to 0
+const resetTodayBtn = document.getElementById('reset-today-btn');
+if (resetTodayBtn) {
+    resetTodayBtn.addEventListener('click', async () => {
+        if (confirm('Resetezi toate repetările de astăzi? Vei rămâne cu 0/100 pentru ziua de azi.')) {
+            stats.challenge.todayRepetitions = 0;
+            stats.challenge.todayRecords = [];
+            
+            // Save to server
+            await saveCurrentUserData();
+            
+            // Update display
+            updateStats();
+            updateChallengeDisplay();
+            updateChallengeCalendar();
+            updateMainCalendar();
+            
+            alert('✅ Ziua de astăzi a fost resetată! Poți începe de la 0 repetări.');
+        }
+    });
+}
 
 // Initializează reminder-ul
 function initReminder() {
