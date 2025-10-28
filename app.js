@@ -709,7 +709,6 @@ function updateChallengeCalendar() {
         // REAL DATE - October 28, etc
         const realDay = dayDate.getDate();
         const realMonth = dayDate.toLocaleDateString('ro-RO', { month: 'short' });
-        const dayLabel = isToday ? realDay : realDay;
         
         // Check if this day is in history
         const historyKey = dayDate.toISOString().split('T')[0];
