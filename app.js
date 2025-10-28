@@ -275,18 +275,36 @@ function startChallenge() {
     }
 }
 
-// Verifică progresul zilnic
+// Verifică progresul zilnic - RESETEAZĂ LA 00:00
 function checkDayProgress() {
-    const today = new Date().toDateString();
+    const today = new Date().toDateString(); // "Mon Oct 28 2025"
     const lastDate = stats.challenge.lastDate;
     
-    // NU reseta repetările în funcție de zi, păstrează-le așa cum sunt salvate
-    // Doar dacă lastDate lipsește, setează-l
-    if (!lastDate) {
+    // Dacă e o zi NOUĂ (00:00 - 23:59:59), resetează repetările de azi
+    if (lastDate && lastDate !== today) {
+        console.log('ZI NOUĂ - Resetare repetări de azi:', lastDate, '->', today);
+        stats.challenge.todayRepetitions = 0;
+        stats.challenge.todayRecords = [];
+        stats.challenge.lastDate = today;
+        
+        // Dacă a completat ieri (100 repetări), incrementează ziua
+        if (stats.challenge.todayRepetitions >= 100) {
+            stats.challenge.currentDay += 1;
+        }
+        
+        saveStats();
+    } else if (!lastDate) {
         // Prima dată când rulează
         stats.challenge.lastDate = today;
         saveStats();
     }
+    
+    // Filtrează doar repetările de AZI din todayRecords
+    const todayStr = new Date().toDateString();
+    stats.challenge.todayRecords = stats.challenge.todayRecords.filter(record => {
+        const recordDate = new Date(record.timestamp).toDateString();
+        return recordDate === todayStr;
+    });
 }
 
 // Actualizează statisticile vizuale
