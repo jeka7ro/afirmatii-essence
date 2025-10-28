@@ -14,13 +14,18 @@ SUPER_ADMIN_EMAIL = 'jeka7ro@gmail.com'
 # Use PostgreSQL if available, otherwise SQLite
 DATABASE_URL = os.environ.get('DATABASE_URL')
 
-if DATABASE_URL:
-    # PostgreSQL (production)
-    def get_db():
-        conn = psycopg2.connect(DATABASE_URL, sslmode='require')
-        conn.cursor_factory = RealDictCursor
-        return conn
-else:
+if DATABASE_URL and DATABASE_URL.startswith('postgresql://'):
+    try:
+        # PostgreSQL (production)
+        def get_db():
+            conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+            conn.cursor_factory = RealDictCursor
+            return conn
+    except Exception as e:
+        print(f"PostgreSQL connection failed: {e}. Falling back to SQLite.")
+        DATABASE_URL = None
+
+if not DATABASE_URL or not DATABASE_URL.startswith('postgresql://'):
     # SQLite (development)
     DATABASE = '/tmp/afirmatii_db.sqlite'
     def get_db():
