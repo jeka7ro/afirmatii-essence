@@ -1063,13 +1063,14 @@ async function updateUsersList() {
             <div style="font-weight: 600;">${user.username} ${isCurrentUser ? '✓' : ''}</div>
             <div style="font-size: 0.8em; color: #888;">${user.total_repetitions || 0} repetări</div>
         `;
-        userItem.addEventListener('click', () => {
+        userItem.addEventListener('click', async () => {
+            console.log('User clicked:', user.username, 'isCurrentUser:', isCurrentUser);
             if (isCurrentUser) {
                 // User curent - login direct
-                quickLogin(user.username);
+                await quickLogin(user.username);
             } else {
                 // Alt utilizator - cere PIN
-                loginUser(user.username);
+                await loginUser(user.username);
             }
         });
         usersList.appendChild(userItem);
