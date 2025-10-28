@@ -315,7 +315,9 @@ function updateStats() {
     const totalCountEl = document.getElementById('total-count');
     const likedCountEl = document.getElementById('liked-count');
     
-    if (totalCountEl) totalCountEl.textContent = stats.challenge.todayRepetitions || 0;
+    // Folosește todayRecords.length pentru acuratețe
+    const todayCount = stats.challenge.todayRecords ? stats.challenge.todayRecords.length : (stats.challenge.todayRepetitions || 0);
+    if (totalCountEl) totalCountEl.textContent = todayCount;
     if (likedCountEl) likedCountEl.textContent = stats.apreciate || 0;
 }
 
