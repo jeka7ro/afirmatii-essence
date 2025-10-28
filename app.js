@@ -1465,9 +1465,10 @@ async function showGroupSelection() {
     `;
 }
 
-// Select single mode (no group)
+// Select single mode (no group)  
 window.selectSingleMode = async function() {
     console.log('Selecting single mode (no group)');
+    document.getElementById('group-selection-screen').style.display = 'none';
     await loadUserData();
     showMainScreen();
     await updateCommunityStats();
