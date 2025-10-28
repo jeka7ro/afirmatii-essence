@@ -622,9 +622,50 @@ function updateMainCalendar() {
     updateChallengeCalendar();
 }
 
+async function markCalendarDayComplete(dayIndex, isComplete) {
+    // Get start date
+    const startDate = stats.challenge?.startDate ? new Date(stats.challenge.startDate) : new Date();
+    const dayDate = new Date(startDate);
+    dayDate.setDate(startDate.getDate() + dayIndex);
+    
+    // Update or initialize repetition history
+    if (!stats.challenge.repetition_history) {
+        stats.challenge.repetition_history = [];
+    }
+    
+    const historyKey = dayDate.toISOString().split('T')[0];
+    const existingIndex = stats.challenge.repetition_history.findIndex(h => h.date === historyKey);
+    
+    if (isComplete) {
+        if (existingIndex >= 0) {
+            // Already marked, remove it (toggle off)
+            stats.challenge.repetition_history.splice(existingIndex, 1);
+        } else {
+            // Mark as complete
+            stats.challenge.repetition_history.push({
+                date: historyKey,
+                repetitions: 100,
+                completed: true
+            });
+        }
+    } else {
+        // Remove if exists
+        if (existingIndex >= 0) {
+            stats.challenge.repetition_history.splice(existingIndex, 1);
+        }
+    }
+    
+    // Save to server
+    await saveCurrentUserData();
+    
+    // Update calendar display
+    updateChallengeCalendar();
+    updateMainCalendar();
+}
+
 function updateChallengeCalendar() {
     const calendarEl = document.getElementById('challenge-calendar');
-    if (!calendarEl) return;
+    const mainCalendarEl = document.getElementById('main-calendar');
     
     // Get start date or use today
     const startDate = stats.challenge?.startDate ? new Date(stats.challenge.startDate) : new Date();
@@ -632,7 +673,13 @@ function updateChallengeCalendar() {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     
+    // Initialize repetition history if needed
+    if (!stats.challenge.repetition_history) {
+        stats.challenge.repetition_history = [];
+    }
+    
     let calendarHTML = '';
+    let mainCalendarHTML = '';
     
     // Generate 30 day cells
     for (let i = 0; i < 30; i++) {
@@ -640,25 +687,37 @@ function updateChallengeCalendar() {
         dayDate.setDate(startDate.getDate() + i);
         dayDate.setHours(0, 0, 0, 0);
         
-        const isCompleted = i < currentDay && stats.challenge?.todayRepetitions >= 100;
+        // Check if this day is in history
+        const historyKey = dayDate.toISOString().split('T')[0];
+        const dayHistory = stats.challenge.repetition_history.find(h => h.date === historyKey);
+        const isCompletedInHistory = dayHistory && dayHistory.completed;
+        
         const isToday = dayDate.getTime() === today.getTime();
-        const isPast = dayDate < today && !isCompleted;
+        const isPast = dayDate < today;
         const isFuture = dayDate > today;
         
         let classes = 'day-cell';
-        if (isCompleted) classes += ' completed';
+        if (isCompletedInHistory) classes += ' completed';
         if (isToday) classes += ' today';
         if (isFuture) classes += ' future';
         
-        calendarHTML += `
-            <div class="${classes}" title="Ziua ${i + 1}">
+        // Make clickable if in past
+        const clickable = isPast || isToday;
+        const style = clickable ? 'cursor: pointer;' : '';
+        
+        const dayHTML = `
+            <div class="${classes}" data-day="${i}" data-date="${historyKey}" style="${style}" onclick="${clickable ? `markCalendarDayComplete(${i}, !${isCompletedInHistory ? 'true' : 'false'})` : ''}">
                 <div class="day-number">${i + 1}</div>
-                <div class="day-status">${isCompleted ? '✓' : isToday ? 'azi' : ''}</div>
+                <div class="day-status">${isCompletedInHistory ? '✓' : isToday ? 'azi' : ''}</div>
             </div>
         `;
+        
+        calendarHTML += dayHTML;
+        mainCalendarHTML += dayHTML;
     }
     
-    calendarEl.innerHTML = calendarHTML;
+    if (calendarEl) calendarEl.innerHTML = calendarHTML;
+    if (mainCalendarEl) mainCalendarEl.innerHTML = mainCalendarHTML;
 }
 
 async function addRepetition() {
