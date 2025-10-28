@@ -22,6 +22,29 @@ def groups_options():
 # Use persistent storage - Render's filesystem persists in /tmp across restarts
 DATABASE = '/tmp/afirmatii_db.sqlite'
 
+# Backup cron job - salvează baza de date periodic
+import schedule
+import threading
+
+def backup_database():
+    try:
+        import shutil
+        backup_path = f'/tmp/afirmatii_db_backup_{datetime.now().strftime("%Y%m%d_%H%M%S")}.sqlite'
+        shutil.copy(DATABASE, backup_path)
+        print(f"Database backed up to {backup_path}")
+    except Exception as e:
+        print(f"Backup failed: {e}")
+
+def run_backup_scheduler():
+    schedule.every(6).hours.do(backup_database)
+    while True:
+        schedule.run_pending()
+        time.sleep(60)
+
+# Start backup thread
+backup_thread = threading.Thread(target=run_backup_scheduler, daemon=True)
+backup_thread.start()
+
 def get_db():
     conn = sqlite3.connect(DATABASE)
     conn.row_factory = sqlite3.Row
