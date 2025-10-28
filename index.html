@@ -412,16 +412,18 @@
                 </div>
             </div>
 
-            <div class="repeat-controls" style="display: flex; gap: 8px; justify-content: center; align-items: center;">
-                <button class="btn btn-repeat" id="repeat-minus-10" style="background: #dc3545;">
-                    Am repetat (-10)
-                </button>
-                <button class="btn btn-repeat" id="repeat-btn">
+            <div class="repeat-controls" style="display: flex; flex-direction: column; gap: 8px; justify-content: center; align-items: center;">
+                <button class="btn btn-repeat" id="repeat-btn" style="width: 100%; font-size: 18px; padding: 20px;">
                     Am repetat (+1)
                 </button>
-                <button class="btn btn-repeat" id="repeat-plus-10" style="background: #34a853;">
-                    Am repetat (+10)
-                </button>
+                <div style="display: flex; gap: 8px; width: 100%;">
+                    <button class="btn btn-repeat" id="repeat-minus-10" style="background: #dc3545; flex: 1;">
+                        Am repetat (-10)
+                    </button>
+                    <button class="btn btn-repeat" id="repeat-plus-10" style="background: #34a853; flex: 1;">
+                        Am repetat (+10)
+                    </button>
+                </div>
             </div>
         </div>
 
