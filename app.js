@@ -490,15 +490,17 @@ async function saveCustomAffirmation() {
         stats.customAffirmation = affirmationEl.value;
         saveStats();
         
-    // Salvează și pe server
-    await saveCurrentUserData();
+        // Salvează și pe server
+        await saveCurrentUserData();
         
         // Feedback vizual
         const btn = document.getElementById('save-affirmation-btn');
         if (btn) {
-            btn.textContent = 'Salvat!';
+            btn.textContent = '✅ Salvat!';
             setTimeout(() => {
-                btn.textContent = 'Salvează Afirmația';
+                btn.textContent = '✏️ Editează';
+                affirmationEl.readOnly = true;
+                affirmationEl.style.backgroundColor = '#f5f5f5';
             }, 2000);
         }
     }
@@ -2412,8 +2414,18 @@ async function loadUserGroups() {
 
 // Salvează afirmația
 document.getElementById('save-affirmation-btn').addEventListener('click', async () => {
-    saveCustomAffirmation();
-    await saveCurrentUserData();
+    const btn = document.getElementById('save-affirmation-btn');
+    const affirmationEl = document.getElementById('affirmation-text');
+    
+    // Dacă e în mod editare, activează editarea
+    if (btn.textContent.includes('Editează') || affirmationEl.readOnly) {
+        affirmationEl.readOnly = false;
+        affirmationEl.style.backgroundColor = 'white';
+        btn.textContent = '💾 Salvează Afirmația';
+    } else {
+        // Salvează afirmația
+        await saveCustomAffirmation();
+    }
 });
 
 // Încarcă statisticile la start
