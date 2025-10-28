@@ -700,34 +700,52 @@ function updateChallengeCalendar() {
     let calendarHTML = '';
     let mainCalendarHTML = '';
     
-    // Generate 30 day cells
+    // Generate 30 day cells with REAL DATES
     for (let i = 0; i < 30; i++) {
         const dayDate = new Date(startDate);
         dayDate.setDate(startDate.getDate() + i);
         dayDate.setHours(0, 0, 0, 0);
         
+        // REAL DATE - October 28, etc
+        const realDay = dayDate.getDate();
+        const realMonth = dayDate.toLocaleDateString('ro-RO', { month: 'short' });
+        const dayLabel = isToday ? realDay : realDay;
+        
         // Check if this day is in history
         const historyKey = dayDate.toISOString().split('T')[0];
         const dayHistory = stats.challenge.repetition_history.find(h => h.date === historyKey);
         const isCompletedInHistory = dayHistory && dayHistory.completed;
+        const wasCompleted = dayHistory && dayHistory.repetitions >= 100;
         
-        const isToday = dayDate.getTime() === today.getTime();
+        const isTodayReal = dayDate.getTime() === today.getTime();
         const isPast = dayDate < today;
         const isFuture = dayDate > today;
         
         let classes = 'day-cell';
-        if (isCompletedInHistory) classes += ' completed';
-        if (isToday) classes += ' today';
-        if (isFuture) classes += ' future';
+        let cellStyle = '';
         
-        // Make clickable if in past
-        const clickable = isPast || isToday;
-        const style = clickable ? 'cursor: pointer;' : '';
+        if (isCompletedInHistory || wasCompleted) {
+            classes += ' completed'; // VERDE - completat
+        } else if (isPast && !isCompletedInHistory) {
+            cellStyle += 'background: #dc3545; color: white;'; // ROSU - nu completat
+        }
+        
+        if (isTodayReal) {
+            cellStyle += ' border: 2px solid #667eea;';
+        }
+        if (isFuture) {
+            classes += ' future';
+            cellStyle += 'opacity: 0.4;';
+        }
+        
+        // Make clickable if in past or today
+        const clickable = isPast || isTodayReal;
+        if (clickable) cellStyle += ' cursor: pointer;';
         
         const dayHTML = `
-            <div class="${classes}" data-day="${i}" data-date="${historyKey}" style="${style}" onclick="${clickable ? `markCalendarDayComplete(${i}, !${isCompletedInHistory ? 'true' : 'false'})` : ''}">
-                <div class="day-number">${i + 1}</div>
-                <div class="day-status">${isCompletedInHistory ? '✓' : isToday ? 'azi' : ''}</div>
+            <div class="${classes}" data-day="${i}" data-date="${historyKey}" style="${cellStyle}" onclick="${clickable ? `markCalendarDayComplete(${i}, !${isCompletedInHistory ? 'true' : 'false'})` : ''}">
+                <div class="day-number">${realDay}</div>
+                <div class="day-status">${isCompletedInHistory ? '✓' : isTodayReal ? 'azi' : realMonth}</div>
             </div>
         `;
         
