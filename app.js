@@ -1046,13 +1046,25 @@ async function loadUserData() {
         console.log('RAW userData.affirmation:', userData.affirmation, 'Type:', typeof userData.affirmation);
         
         // FOLOSEȘTE DOAR DATELE DE PE SERVER - IGNORĂ COMPLET LOCALSTORAGE
+        // Parse repetition_history from server
+        let parsedHistory = [];
+        if (userData.repetition_history) {
+            try {
+                parsedHistory = typeof userData.repetition_history === 'string' ? JSON.parse(userData.repetition_history) : userData.repetition_history;
+            } catch (e) {
+                console.error('Error parsing repetition_history:', e);
+                parsedHistory = [];
+            }
+        }
+        
         stats.challenge = {
             startDate: userData.challenge_start_date || userData.createdAt || new Date().toISOString(),
             currentDay: userData.current_day || 0,
             todayRepetitions: userData.today_repetitions || 0,
             lastDate: userData.last_date || new Date().toDateString(),
             totalRepetitions: userData.total_repetitions || 0,
-            todayRecords: userData.repetition_history ? (typeof userData.repetition_history === 'string' ? JSON.parse(userData.repetition_history) : userData.repetition_history) : []
+            todayRecords: parsedHistory,
+            repetition_history: parsedHistory  // ADD THIS LINE for calendar
         };
         
         console.log('SERVER DATA:', userData.today_repetitions, userData.total_repetitions);
