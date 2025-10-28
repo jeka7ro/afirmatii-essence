@@ -250,7 +250,7 @@ function loadStats() {
                     ...parsed.challenge,
                     todayRecords: parsed.challenge.todayRecords || []
                 };
-                checkDayProgress();
+                await checkDayProgress();
             }
             
             updateStats();
@@ -276,23 +276,26 @@ function startChallenge() {
 }
 
 // Verifică progresul zilnic - RESETEAZĂ LA 00:00
-function checkDayProgress() {
+async function checkDayProgress() {
     const today = new Date().toDateString(); // "Mon Oct 28 2025"
     const lastDate = stats.challenge.lastDate;
     
     // Dacă e o zi NOUĂ (00:00 - 23:59:59), resetează repetările de azi
     if (lastDate && lastDate !== today) {
         console.log('ZI NOUĂ - Resetare repetări de azi:', lastDate, '->', today);
+        
+        // Dacă a completat ieri (100 repetări), incrementează ziua
+        const yesterdayReps = stats.challenge.todayRepetitions;
+        if (yesterdayReps >= 100) {
+            stats.challenge.currentDay += 1;
+        }
+        
+        // RESETEAZĂ repetările de azi
         stats.challenge.todayRepetitions = 0;
         stats.challenge.todayRecords = [];
         stats.challenge.lastDate = today;
         
-        // Dacă a completat ieri (100 repetări), incrementează ziua
-        if (stats.challenge.todayRepetitions >= 100) {
-            stats.challenge.currentDay += 1;
-        }
-        
-        saveStats();
+        await saveCurrentUserData();
     } else if (!lastDate) {
         // Prima dată când rulează
         stats.challenge.lastDate = today;
