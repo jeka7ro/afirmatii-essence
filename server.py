@@ -40,6 +40,10 @@ else:
         conn = sqlite3.connect(DATABASE)
         conn.row_factory = sqlite3.Row
         return conn
+    
+    # Start backup thread for SQLite
+    backup_thread.start()
+    print("Starting SQLite backup thread (every 6 hours)")
 
 @app.after_request
 def after_request(response):
@@ -75,8 +79,9 @@ def run_backup_scheduler():
         time.sleep(60)
 
 # Start backup thread
+# Start backup thread only for SQLite
 backup_thread = threading.Thread(target=run_backup_scheduler, daemon=True)
-backup_thread.start()
+# Don't start yet - will start after DB_TYPE is determined
 
 def get_db():
     conn = sqlite3.connect(DATABASE)
