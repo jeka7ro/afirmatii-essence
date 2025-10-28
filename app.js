@@ -234,7 +234,7 @@ function saveStats() {
 }
 
 // NU ÎNCĂRCA DIN LOCALSTORAGE - DOAR DACĂ NU EXISTĂ USER LOGAT
-function loadStats() {
+async function loadStats() {
     if (!currentUser) {
         const saved = localStorage.getItem('stats');
         if (saved) {
