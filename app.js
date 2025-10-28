@@ -340,7 +340,8 @@ function updateChallengeDisplay() {
     }
     
     const daysLeft = Math.max(0, 30 - (stats.challenge.currentDay || 0));
-    const currentReps = stats.challenge.todayRepetitions || 0;
+    // Use todayRecords.length for accuracy, fallback to todayRepetitions
+    const currentReps = stats.challenge.todayRecords ? stats.challenge.todayRecords.length : (stats.challenge.todayRepetitions || 0);
     const targetReps = 100;
     
     console.log('Current reps:', currentReps, 'Target:', targetReps);
