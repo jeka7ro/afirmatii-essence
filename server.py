@@ -13,20 +13,28 @@ SUPER_ADMIN_EMAIL = 'jeka7ro@gmail.com'
 
 # Use PostgreSQL if available, otherwise SQLite
 DATABASE_URL = os.environ.get('DATABASE_URL')
+DB_TYPE = 'sqlite'  # default
 
+# Check if PostgreSQL is available and working
 if DATABASE_URL and DATABASE_URL.startswith('postgresql://'):
     try:
-        # PostgreSQL (production)
-        def get_db():
-            conn = psycopg2.connect(DATABASE_URL, sslmode='require')
-            conn.cursor_factory = RealDictCursor
-            return conn
+        # Test PostgreSQL connection
+        test_conn = psycopg2.connect(DATABASE_URL, sslmode='require', connect_timeout=5)
+        test_conn.close()
+        DB_TYPE = 'postgresql'
+        print("Using PostgreSQL database")
     except Exception as e:
         print(f"PostgreSQL connection failed: {e}. Falling back to SQLite.")
-        DATABASE_URL = None
+        DB_TYPE = 'sqlite'
 
-if not DATABASE_URL or not DATABASE_URL.startswith('postgresql://'):
-    # SQLite (development)
+if DB_TYPE == 'postgresql':
+    # PostgreSQL (production)
+    def get_db():
+        conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+        conn.cursor_factory = RealDictCursor
+        return conn
+else:
+    # SQLite (development/fallback)
     DATABASE = '/tmp/afirmatii_db.sqlite'
     def get_db():
         conn = sqlite3.connect(DATABASE)
