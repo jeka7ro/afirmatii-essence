@@ -128,7 +128,7 @@ async function saveCurrentUserData() {
             currentDay: stats.challenge.currentDay !== undefined ? stats.challenge.currentDay : (userData.currentDay || 0),
             todayRepetitions: stats.challenge.todayRepetitions !== undefined ? stats.challenge.todayRepetitions : (userData.todayRepetitions || 0),
             lastDate: stats.challenge.lastDate || userData.lastDate || new Date().toDateString(),
-            repetitionHistory: JSON.stringify(stats.challenge.todayRecords || [])
+            repetitionHistory: JSON.stringify(stats.challenge.repetition_history || stats.challenge.todayRecords || [])  // FIX: Use repetition_history
         };
         
         console.log('💾 Saving to server - AFFIRMATION:', data.affirmation);
