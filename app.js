@@ -131,10 +131,11 @@ async function saveCurrentUserData() {
             repetitionHistory: JSON.stringify(stats.challenge.todayRecords || [])
         };
         
+        console.log('💾 Saving to server - AFFIRMATION:', data.affirmation);
         console.log('Saving to server - totalRepetitions:', data.totalRepetitions, 'todayRepetitions:', data.todayRepetitions, 'currentDay:', data.currentDay);
         
         await apiCall(`/users/${currentUser}`, 'PUT', data);
-        console.log('User data saved to server:', data);
+        console.log('✅ User data saved to server. AFFIRMATION sent:', data.affirmation);
     } catch (error) {
         console.error('Error saving user data to server:', error);
     }
@@ -490,10 +491,14 @@ async function saveCustomAffirmation() {
     const affirmationEl = document.getElementById('affirmation-text');
     if (affirmationEl) {
         stats.customAffirmation = affirmationEl.value;
-        saveStats();
+        console.log('📝 Saving affirmation:', stats.customAffirmation);
         
         // Salvează și pe server
         await saveCurrentUserData();
+        
+        // Verifică dacă s-a salvat corect
+        const verifyData = await getCurrentUserData();
+        console.log('✅ Verified saved affirmation:', verifyData.affirmation);
         
         // Feedback vizual
         const btn = document.getElementById('save-affirmation-btn');
@@ -1038,6 +1043,7 @@ async function loadUserData() {
         currentUserEmail = userData.email || '';
         console.log('Current user email set to:', currentUserEmail);
         console.log('LOADED AFFIRMATION FROM SERVER:', stats.customAffirmation);
+        console.log('RAW userData.affirmation:', userData.affirmation, 'Type:', typeof userData.affirmation);
         
         // FOLOSEȘTE DOAR DATELE DE PE SERVER - IGNORĂ COMPLET LOCALSTORAGE
         stats.challenge = {
