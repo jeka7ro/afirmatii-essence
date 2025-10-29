@@ -17,3 +17,4 @@ Render free tier instances "spin down" after 15 minutes of inactivity. This caus
 - Frontend needs to be deployed on Vercel
 - All code is functional and tested locally
 
+
