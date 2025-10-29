@@ -2182,30 +2182,37 @@ document.getElementById('logout-btn').addEventListener('click', () => {
     }
 });
 
-// Toggle feed
-document.getElementById('toggle-feed-btn').addEventListener('click', () => {
-    showFeed();
-});
+// Toggle feed (removed button in UI; guard for safety)
+const feedBtn = document.getElementById('toggle-feed-btn');
+if (feedBtn) {
+    feedBtn.addEventListener('click', () => {
+        showFeed();
+    });
+}
 
-// Toggle chat
-document.getElementById('toggle-chat-btn').addEventListener('click', () => {
-    const chatContainer = document.getElementById('chat-container');
-    const isVisible = chatContainer.style.display !== 'none';
-    
-    chatContainer.style.display = isVisible ? 'none' : 'block';
-    
-    if (!isVisible) {
-        loadChatMessages();
-        startChatPolling();
-    } else {
+// Toggle chat (removed button in UI; guard for safety)
+const chatBtn = document.getElementById('toggle-chat-btn');
+if (chatBtn) {
+    chatBtn.addEventListener('click', () => {
+        const chatContainer = document.getElementById('chat-container');
+        const isVisible = chatContainer.style.display !== 'none';
+        chatContainer.style.display = isVisible ? 'none' : 'block';
+        if (!isVisible) {
+            loadChatMessages();
+            startChatPolling();
+        } else {
+            stopChatPolling();
+        }
+    });
+}
+
+const closeChatBtn = document.getElementById('close-chat-btn');
+if (closeChatBtn) {
+    closeChatBtn.addEventListener('click', () => {
+        document.getElementById('chat-container').style.display = 'none';
         stopChatPolling();
-    }
-});
-
-document.getElementById('close-chat-btn').addEventListener('click', () => {
-    document.getElementById('chat-container').style.display = 'none';
-    stopChatPolling();
-});
+    });
+}
 
 let chatPollInterval = null;
 
